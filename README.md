@@ -94,3 +94,7 @@ For example if you add the file:
 You can load it in the "Via URL" box by typing:
 `my_art.jpg`
 then hitting enter.
+
+
+## TODO
+- 英文换行逻辑为检测空格处理换行，中文应修改为字符与标点换行
