@@ -94,3 +94,9 @@ For example if you add the file:
 You can load it in the "Via URL" box by typing:
 `my_art.jpg`
 then hitting enter.
+
+
+## TODO
+- 居中冒号
+- 半角句号
+- 行末对齐
