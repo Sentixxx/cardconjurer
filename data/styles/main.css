@@ -1,4 +1,17 @@
 /*fonts*/
+
+@font-face {
+	font-family: CStext;
+	src: url("/data/fonts/DFHeiGB-W3_FTO.otf") format('opentype');
+}
+@font-face {
+	font-family: CSflavor;
+	src: url("/data/fonts/DFKaiGB-W5_FTO.otf") format('opentype');
+}
+@font-face {
+	font-family: CStitle;
+	src: url("/data/fonts/DFWeiBeiGB-W7_FTO.otf") format('opentype');
+}
 @font-face {
 	font-family: gothammedium;
 	src: url("/data/fonts/gotham-medium.ttf");
