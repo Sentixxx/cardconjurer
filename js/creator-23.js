@@ -3393,9 +3393,9 @@ function writeText(textObject, targetContext) {
 		rawText = params.get('copyright'); //so people using CC for custom card games without WotC's IP can customize their copyright info
 		if (rawText == 'none') { rawText = ''; }
 	}
-	if (rawText.toLowerCase().includes('{cardname}') || rawText.toLowerCase().includes('~')) {
-		rawText = rawText.replace(/{cardname}|~/ig, getInlineCardName());
-	}
+	// if (rawText.toLowerCase().includes('{cardname}') || rawText.toLowerCase().includes('~')) {
+	// 	rawText = rawText.replace(/{cardname}|~/ig, getInlineCardName());
+	// }
 	if (document.querySelector('#info-artist').value == '') {
 		rawText = rawText.replace('\uFFEE{elemidinfo-artist}', '');
 	}
