@@ -3470,14 +3470,21 @@ function writeText(textObject, targetContext) {
 		rawText = rawText.replace(/\*/g, '{fontbelerenbsc}*{fontsaloongirl}');
 	}
 	rawText = rawText.replace(/ - /g, ' — ');
-	var splitText = rawText.replace(/\n/g, '{line}').replace(/{-}/g, '\u2014').replace(/{divider}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}');
-	if (rawText.trim().startsWith('{flavor}') || rawText.trim().startsWith('{oldflavor}')) {
-		splitText = splitText.replace(/{flavor}/g, '{i}').replace(/{oldflavor}/g, '{i}');
-	} else {
-		splitText = splitText.replace(/{flavor}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}{i}').replace(/{oldflavor}/g, '{/indent}{lns}{lns}{up30}{i}');
-	}
-	splitText = splitText.replace(/{/g, splitString + '{').replace(/}/g, '}' + splitString).replace(/ /g, splitString + ' ' + splitString).split(splitString);
-
+	// var CStext = false;
+	// if(rawText.includes('{fontCStext}')) {
+	// 	CStext = true;
+	// }
+	var splitText = rawText.replace(/\n/g, '{line}').
+							replace(/{-}/g, '\u2014').
+							replace(/{divider}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}').
+							replace(/{flavor}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}{i}').
+							replace(/{oldflavor}/g, '{/indent}{lns}{lns}{up30}{i}').
+							replace(/{/g, splitString + '{').
+							replace(/}/g, '}' + splitString).
+							replace(/[\u4e00-\u9fff]/g, splitString + '$&' + splitString).
+							replace(/ /g, splitString + ' ' + splitString).
+							split(splitString);
+	
 	splitText = splitText.filter(item => item);
 	if (textObject.manaCost) {
 		splitText = splitText.filter(item => item != ' ');
