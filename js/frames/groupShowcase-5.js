@@ -1,5 +1,6 @@
 loadFramePacks([
 	{name:'Set Showcase Frames (Chronological)', value:'disabled'},
+	{name:'Pip-Boy (PIP)', value:'Pipboy'},
 	{name:'Dossier (MKM)', value:'Dossier'},
 	{name:'Scrolls of Middle-earth (LTR)', value:'Scroll'},
 	{name:'Enchanting Tales (WOT)', value:'EnchantingTales'},

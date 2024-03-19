@@ -38,6 +38,7 @@ const frameNames = new Map ([
 	//showcase
 	['Dossier (MKM)', 'Dossier'],
 	['Scrolls of Middle-earth (LTR)', 'Scroll'],
+	['Pip-Boy (PIP)', 'Pipboy'],
 	['Enchanting Tales (WOT)', 'EnchantingTales'],
 	['TARDIS (WHO)', 'TARDIS'],
 	['Ring (LTR)', 'Ring'],
