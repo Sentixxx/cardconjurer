@@ -126,6 +126,8 @@
 @font-face {
 	font-family: specialelite;
 	src: url('../fonts/SpecialElite-Regular.ttf') format('truetype');
+}
+@font-face {
 	font-family: neosans;
 	src: url('../fonts/NeoSansProRegular.OTF') format('opentype');
 }

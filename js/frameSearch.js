@@ -16,6 +16,8 @@ const frameNames = new Map ([
 	['Color Identity Pips', 'M15CIPips'],
 	['"The List" Stamp', 'TheList'],
 	['Lands', 'M15Lands'],
+	['Spree (Outlaws of Thunder Junction)', 'Spree'],
+	['Spree (Universes Beyond)', 'SpreeUB'],
 	['Cases (Murders at Karlov Manor)', 'Case'],
 	['Battles (March of the Machine)', 'Battle'],
 	['Prototype (Brothers\' War)', 'Prototype'],
