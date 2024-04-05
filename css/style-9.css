@@ -139,6 +139,30 @@
 	font-family: ocra;
 	src: url('../fonts/OCR A Std Regular.ttf') format('truetype');
 }
+@font-face {
+	font-family: decour;
+	src: url('../fonts/decour-cnd-regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: decouritalic;
+	src: url('../fonts/decour-cnd-regular-italic.ttf') format('truetype');
+}
+@font-face {
+	font-family: officina;
+	src: url('../fonts/officina-ser-itc-black.otf') format('opentype');
+}
+@font-face {
+	font-family: davisonamericana;
+	src: url('../fonts/Davison Americana CG Regular.otf') format('opentype');
+}
+@font-face {
+	font-family: saloongirl;
+	src: url('../fonts/saloon-girl.ttf') format('truetype');
+}
+@font-face {
+	font-family: arialblack;
+	src: url('../fonts/arial_black.ttf') format('truetype');
+}
 /*Variables*/
 :root {
 	--site-background: url('../img/lowpolyBackground.svg');

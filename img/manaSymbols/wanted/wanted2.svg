@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="714"
+   height="714"
+   viewBox="0 0 714 714"
+   version="1.1"
+   xml:space="preserve"
+   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+   id="svg3"
+   sodipodi:docname="wanted2.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs3" /><sodipodi:namedview
+   id="namedview3"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="1.1386555"
+   inkscape:cx="357"
+   inkscape:cy="357"
+   inkscape:window-width="3440"
+   inkscape:window-height="1369"
+   inkscape:window-x="1912"
+   inkscape:window-y="482"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg3" />
+    <g
+   transform="matrix(1,0,0,1,57,57)"
+   id="g1">
+        <circle
+   cx="300"
+   cy="300"
+   r="300"
+   style="fill:#d6b793;fill-opacity:1"
+   id="circle1" />
+    </g>
+    <g
+   transform="matrix(1,0,0,1,57,57)"
+   id="g2">
+        <path
+   d="M300,-57C102.966,-57 -57,102.966 -57,300C-57,497.034 102.966,657 300,657C497.034,657 657,497.034 657,300C657,102.966 497.034,-57 300,-57ZM300,0C465.575,0 600,134.425 600,300C600,465.575 465.575,600 300,600C134.425,600 0,465.575 0,300C0,134.425 134.425,0 300,0Z"
+   style="fill:#594c42;fill-opacity:1"
+   id="path1" />
+    </g>
+    <g
+   transform="matrix(1,0,0,1,57,57)"
+   id="g3">
+        <path
+   d="M242,454L360,454C407,454 421,451 437,399L477,398L441,522L156,522L155,488C369,279 373,248 375,217C380,149 331,127 305,127C279,127 236,144 194,230L157,214C213,57 307,64 337,65C411,67 459,137 457,196C455,276 420,288 242,454Z"
+   style="fill:#000000;fill-rule:nonzero"
+   id="path2" />
+    </g>
+</svg>
