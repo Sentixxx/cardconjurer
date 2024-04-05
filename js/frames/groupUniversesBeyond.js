@@ -5,6 +5,7 @@ loadFramePacks([
 	{name:'Universes Beyond (Extended art)', value:'UBExtendedArt'},
 
 	{name:'Sagas (Universes Beyond)', value:'SagaUB'},
+	{name:'Spree (Universes Beyond)', value:'SpreeUB'},
 
 	{name:'Addons', value:'disabled'},
 	{name:'Legend Crowns (Universes Beyond)', value:'UBLegendCrowns'},

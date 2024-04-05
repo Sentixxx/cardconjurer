@@ -127,6 +127,18 @@
 	font-family: specialelite;
 	src: url('../fonts/SpecialElite-Regular.ttf') format('truetype');
 }
+@font-face {
+	font-family: neosans;
+	src: url('../fonts/NeoSansProRegular.OTF') format('opentype');
+}
+@font-face {
+	font-family: neosansitalic;
+	src: url('../fonts/NeoSansProItalic.OTF') format('opentype');
+}
+@font-face {
+	font-family: ocra;
+	src: url('../fonts/OCR A Std Regular.ttf') format('truetype');
+}
 /*Variables*/
 :root {
 	--site-background: url('../img/lowpolyBackground.svg');

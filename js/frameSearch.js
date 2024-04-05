@@ -16,6 +16,8 @@ const frameNames = new Map ([
 	['Color Identity Pips', 'M15CIPips'],
 	['"The List" Stamp', 'TheList'],
 	['Lands', 'M15Lands'],
+	['Spree (Outlaws of Thunder Junction)', 'Spree'],
+	['Spree (Universes Beyond)', 'SpreeUB'],
 	['Cases (Murders at Karlov Manor)', 'Case'],
 	['Battles (March of the Machine)', 'Battle'],
 	['Prototype (Brothers\' War)', 'Prototype'],
@@ -38,6 +40,7 @@ const frameNames = new Map ([
 	//showcase
 	['Dossier (MKM)', 'Dossier'],
 	['Scrolls of Middle-earth (LTR)', 'Scroll'],
+	['Pip-Boy (PIP)', 'Pipboy'],
 	['Enchanting Tales (WOT)', 'EnchantingTales'],
 	['TARDIS (WHO)', 'TARDIS'],
 	['Ring (LTR)', 'Ring'],

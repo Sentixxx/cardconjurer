@@ -367,10 +367,14 @@
 								<input id='set-symbol-code' type='text' placeholder='Set Code' class='input' onchange='fetchSetSymbol();'>
 								<input id='set-symbol-rarity' type='text' placeholder='Rarity' class='input' onchange='fetchSetSymbol();'>
 							</div>
-							<label class='checkbox-container input margin-bottom'>Fetch from Gatherer
-								<input id='fetchSetSymbolFromGatherer' type='checkbox' checked onchange='fetchSetSymbol();'>
-								<span class='checkmark'></span>
-							</label>
+							<h5 class='margin-bottom padding input-description'>Load set symbols from:</h5>
+							<div class='input-grid margin-bottom'>
+								<select id='set-symbol-source' class='input' onchange='fetchSetSymbol();'>
+									<option value='cardconjurer'>CardConjurer</option>
+									<option value='gatherer'>Gatherer</option>
+									<option value='hexproof'>Hexproof.io</option>
+								</select>
+							</div>
 							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>
 								How to find set codes
 							</h5>

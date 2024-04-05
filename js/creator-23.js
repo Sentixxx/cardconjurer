@@ -1704,6 +1704,7 @@ function makeM15NewFrameByLetter(letter, mask = false, maskToRightHalf = false, 
 		var path = '/img/frames/m15/regular/m15PT';
 		if (style == 'ub') {
 			path = '/img/frames/m15/ub/pt/';
+			letter = letter.toLowerCase();
 		}
 		return {
 			'name': frameName + ' Power/Toughness',
@@ -1724,7 +1725,7 @@ function makeM15NewFrameByLetter(letter, mask = false, maskToRightHalf = false, 
 	}
 	var frame = {
 		'name': frameName + ' Frame',
-		'src': '/img/frames/m15/new/' + stylePath + letter + '.png',
+		'src': '/img/frames/m15/new/' + stylePath + letter.toLowerCase() + '.png',
 	}
 
 	// if (letter.includes('L') && letter.length > 1) {
@@ -3397,7 +3398,7 @@ function writeText(textObject, targetContext) {
 	// 	rawText = rawText.replace(/{cardname}|~/ig, getInlineCardName());
 	// }
 	if (document.querySelector('#info-artist').value == '') {
-		rawText = rawText.replace('\uFFEE{elemidinfo-artist}', '');
+		rawText = rawText.replace('\uFFEE{savex2}{elemidinfo-artist}', '');
 	}
 	if (rawText.includes('///')) {
 		rawText = rawText.replace(/\/\/\//g, '{flavor}');
@@ -3552,7 +3553,7 @@ function writeText(textObject, targetContext) {
 					}
 					lineContext.drawImage(getManaSymbol(barImageName).image, canvasMargin + (textWidth - barWidth) / 2, canvasMargin + barDistance * textSize, barWidth, barHeight);
 				} else if (possibleCode == 'i') {
-					if (textFont == 'gilllsans') {
+					if (textFont == 'gilllsans' || textFont == 'neosans') {
 						textFontExtension = 'italic';
 					} else if (textFont == 'mplantin') {
 						textFontExtension = 'i';
@@ -4140,11 +4141,9 @@ function artFromScryfall(scryfallResponse) {
 
 		// Find the art that matches the selected print
 		var index = artIllustrations.indexOf(illustrationID);
-		if (index >= 0) {
-			console.log("Art index should be " + index);
-		} else {
+		if (index < 0) {
+			// Couldn't find art
 			index = 0;
-			console.log("Couldn't find art")
 		}
 
 		// Use that art
@@ -4248,6 +4247,7 @@ function setSymbolEdited() {
 	if (document.querySelector('#lockSetSymbolURL').checked) {
 		localStorage.setItem('lockSetSymbolURL', card.setSymbolSource);
 	}
+	localStorage.setItem('set-symbol-source', document.querySelector('#set-symbol-source').value);
 	card.setSymbolX = document.querySelector('#setSymbol-x').value / card.width;
 	card.setSymbolY = document.querySelector('#setSymbol-y').value / card.height;
 	card.setSymbolZoom = document.querySelector('#setSymbol-zoom').value / 100;
@@ -4288,12 +4288,15 @@ function fetchSetSymbol() {
 		uploadSetSymbol(fixUri(`/img/setSymbols/custom/${setCode.toLowerCase()}-${setRarity}.png`), 'resetSetSymbol');
 	} else if (['cc', 'logan', 'joe'].includes(setCode.toLowerCase())) {
 		uploadSetSymbol(fixUri(`/img/setSymbols/custom/${setCode.toLowerCase()}-${setRarity}.svg`), 'resetSetSymbol');
-	} else if (document.querySelector("#fetchSetSymbolFromGatherer").checked) {
+	} else if (document.querySelector("#set-symbol-source").value == 'gatherer') {
 		if (setSymbolAliases.has(setCode.toLowerCase())) setCode = setSymbolAliases.get(setCode.toLowerCase());
 		uploadSetSymbol('http://gatherer.wizards.com/Handlers/Image.ashx?type=symbol&set=' + setCode + '&size=large&rarity=' + setRarity, 'resetSetSymbol');
+	} else if (document.querySelector("#set-symbol-source").value == 'hexproof') {
+		if (setSymbolAliases.has(setCode.toLowerCase())) setCode = setSymbolAliases.get(setCode.toLowerCase());
+		uploadSetSymbol('https://api.hexproof.io/symbols/set/' + setCode + '/' + setRarity, 'resetSetSymbol');
 	} else {
 		var extension = 'svg';
-		if (['moc', 'ltr', 'ltc', 'cmm', 'who', 'scd', 'woe', 'wot', 'woc', 'lci', 'lcc'].includes(setCode.toLowerCase())) {
+		if (['moc', 'ltr', 'ltc', 'cmm', 'who', 'scd', 'woe', 'wot', 'woc', 'lci', 'lcc', 'mkm', 'mkc', 'otj', 'otc'].includes(setCode.toLowerCase())) {
 			extension = 'png';
 		}
 		if (setSymbolAliases.has(setCode.toLowerCase())) setCode = setSymbolAliases.get(setCode.toLowerCase());
@@ -4698,7 +4701,7 @@ function changeCardIndex() {
 
 	var italicExemptions = ['Boast', 'Cycling', 'Visit', 'Prize', 'I', 'II', 'III', 'IV', 'I, II', 'II, III', 'III, IV', 'I, II, III', 'II, III, IV', 'I, II, III, IV', '• Khans', '• Dragons', '• Mirran', '• Phyrexian', 'Prototype', 'Companion', 'To solve', 'Solved'];
 	var rulesText = (cardToImport.oracle_text || '').replace(/(?:\((?:.*?)\)|[^"\n]+(?= — ))/g, function(a){
-	    if (italicExemptions.includes(a)) {return a;}
+	    if (italicExemptions.includes(a) || (cardToImport.keywords.indexOf('Spree') != -1 && a.startsWith('+'))) {return a;}
 	    return '{i}' + a + '{/i}';
 	});
 	rulesText = curlyQuotes(rulesText).replace(/{Q}/g, '{untap}').replace(/{\u221E}/g, "{inf}").replace(/• /g, '• {indent}');
@@ -5415,6 +5418,9 @@ if (!localStorage.getItem('autoFit')) {
 // lock set symbol code (user defaults)
 if (!localStorage.getItem('lockSetSymbolCode')) {
 	localStorage.setItem('lockSetSymbolCode', '');
+}
+if (localStorage.getItem('set-symbol-source')) {
+	document.querySelector('#set-symbol-source').value = localStorage.getItem('set-symbol-source');
 }
 document.querySelector('#lockSetSymbolCode').checked = '' != localStorage.getItem('lockSetSymbolCode');
 if (document.querySelector('#lockSetSymbolCode').checked) {
