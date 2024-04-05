@@ -3452,9 +3452,9 @@ function writeText(textObject, targetContext) {
 		rawText = params.get('copyright'); //so people using CC for custom card games without WotC's IP can customize their copyright info
 		if (rawText == 'none') { rawText = ''; }
 	}
-	// if (rawText.toLowerCase().includes('{cardname}') || rawText.toLowerCase().includes('~')) {
-	// 	rawText = rawText.replace(/{cardname}|~/ig, getInlineCardName());
-	// }
+	if (rawText.toLowerCase().includes('{cardname}') || rawText.toLowerCase().includes('~')) {
+		rawText = rawText.replace(/{cardname}|~/ig, getInlineCardName());
+	}
 	if (document.querySelector('#info-artist').value == '') {
 		rawText = rawText.replace('\uFFEE{savex2}{elemidinfo-artist}', '');
 	}
@@ -3477,21 +3477,7 @@ function writeText(textObject, targetContext) {
 		rawText = rawText.replace(/\*/g, '{fontbelerenbsc}*{fontsaloongirl}');
 	}
 	rawText = rawText.replace(/ - /g, ' — ');
-	// var CStext = false;
-	// if(rawText.includes('{fontCStext}')) {
-	// 	CStext = true;
-	// }
-	var splitText = rawText.replace(/\n/g, '{line}').
-							replace(/{-}/g, '\u2014').
-							replace(/{divider}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}').
-							replace(/{flavor}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}{i}').
-							replace(/{oldflavor}/g, '{/indent}{lns}{lns}{up30}{i}').
-							replace(/{/g, splitString + '{').
-							replace(/}/g, '}' + splitString).
-							replace(/[\u4e00-\u9fff]/g, splitString + '$&' + splitString).
-							replace(/ /g, splitString + ' ' + splitString).
-							split(splitString);
-	
+	var splitText = rawText.replace(/\n/g, '{line}').replace(/{-}/g, '\u2014').replace(/{divider}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}').replace(/{flavor}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}{i}').replace(/{oldflavor}/g, '{/indent}{lns}{lns}{up30}{i}').replace(/{/g, splitString + '{').replace(/}/g, '}' + splitString).replace(/ /g, splitString + ' ' + splitString).split(splitString);
 	splitText = splitText.filter(item => item);
 	if (textObject.manaCost) {
 		splitText = splitText.filter(item => item != ' ');
