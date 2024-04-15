@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="714"
+   height="714"
+   viewBox="0 0 714 714"
+   version="1.1"
+   xml:space="preserve"
+   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+   id="svg3"
+   sodipodi:docname="breakingNews2.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs3" /><sodipodi:namedview
+   id="namedview3"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="1.1386555"
+   inkscape:cx="357.87822"
+   inkscape:cy="356.99999"
+   inkscape:window-width="3440"
+   inkscape:window-height="1369"
+   inkscape:window-x="1912"
+   inkscape:window-y="482"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="g3" />
+    <g
+   id="g1"
+   transform="scale(1.19)">
+        <circle
+   cx="300"
+   cy="300"
+   r="300"
+   style="fill:#403a3d;fill-opacity:1"
+   id="circle1" />
+    </g>
+    
+    <g
+   id="g3"
+   transform="scale(1.19)">
+        <path
+   d="m 242,454 h 118 c 47,0 61,-3 77,-55 l 40,-1 -36,124 H 156 l -1,-34 C 369,279 373,248 375,217 c 5,-68 -44,-90 -70,-90 -26,0 -69,17 -111,103 L 157,214 C 213,57 307,64 337,65 c 74,2 122,72 120,131 -2,80 -37,92 -215,258 z"
+   style="fill:#e8e0da;fill-rule:nonzero;fill-opacity:1"
+   id="path2" />
+    </g>
+</svg>

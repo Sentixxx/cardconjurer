@@ -68,7 +68,3 @@ document.querySelector('#loadFrameVersion').onclick = async function() {
 }
 //loads available frames
 loadFramePack();
-//Only for the main version as the webpage loads:
-if (!card.text) {
-	document.querySelector('#loadFrameVersion').click();
-}

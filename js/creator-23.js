@@ -3413,6 +3413,8 @@ function writeText(textObject, targetContext) {
 		rawText = rawText.replace(/{flavor}(.*)/g, function(v) { return '{/indent}{lns}{bar}{lns}{fixtextalign}' + v.replace(/{flavor}/g, '').toUpperCase(); });
 	} else if (!card.showsFlavorBar) {
 		rawText = rawText.replace(/{flavor}/g, '{oldflavor}');
+	} else if (textObject.font == 'saloongirl') {
+		rawText = rawText.replace(/\*/g, '{fontbelerenbsc}*{fontsaloongirl}');
 	}
 	rawText = rawText.replace(/ - /g, ' — ');
 	var splitText = rawText.replace(/\n/g, '{line}').replace(/{-}/g, '\u2014').replace(/{divider}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}').replace(/{flavor}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}{i}').replace(/{oldflavor}/g, '{/indent}{lns}{lns}{up30}{i}').replace(/{/g, splitString + '{').replace(/}/g, '}' + splitString).replace(/ /g, splitString + ' ' + splitString).split(splitString);

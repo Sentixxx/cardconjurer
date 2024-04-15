@@ -1,5 +1,6 @@
 loadFramePacks([
 	{name:'Generic Margins', value:'Margin-1'},
+	{name:'Breaking News Margin', value:'MarginBreakingNews'},
 	{name:'Vault Margin', value:'MarginVault'},
 	{name:'Wanted Poster Margin', value:'MarginWanted'},
 	{name:'Enchanting Tales Margins', value:'MarginEnchantingTales'},

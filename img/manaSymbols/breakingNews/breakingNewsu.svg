@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="714"
+   height="714"
+   viewBox="0 0 714 714"
+   version="1.1"
+   xml:space="preserve"
+   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+   id="svg2"
+   sodipodi:docname="breakingNewsu.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs2" /><sodipodi:namedview
+   id="namedview2"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="1.1386555"
+   inkscape:cx="357.87822"
+   inkscape:cy="356.99999"
+   inkscape:window-width="3440"
+   inkscape:window-height="1369"
+   inkscape:window-x="1912"
+   inkscape:window-y="482"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="g1" />
+    <g
+   transform="matrix(1,0,0,1,57,57)"
+   id="g1">
+        <circle
+   cx="300"
+   cy="300"
+   style="fill:#00668b;fill-opacity:1;stroke-width:1.19"
+   id="circle1"
+   r="357" />
+        
+    </g>
+    <g
+   transform="matrix(1.19,0,0,1.19,-168.9919,150.8801)"
+   id="g2">
+        <path
+   d="m 546.93,375.53 c -28.722,29.23 -64.1,43.842 -106.13,43.842 -47.17,0 -84.59,-16.14 -112.27,-48.44 -26.15,-30.762 -39.22,-69.972 -39.22,-117.64 0,-51.26 22.302,-109.72 66.9,-175.34 36.38,-53.814 79.19,-100.98 128.41,-141.48 -7.182,32.814 -10.758,56.13 -10.758,69.972 0,31.794 9.984,62.802 29.976,93.05 24.612,35.88 43.31,62.56 56.14,79.968 19.992,30.26 29.988,59.73 29.988,88.42 10e-4,42.558 -14.346,78.44 -43.04,107.65 m -0.774,-164.17 c -7.686,-17.17 -16.662,-28.572 -26.916,-34.22 1.536,3.084 2.31,7.44 2.31,13.08 0,10.77 -3.072,26.14 -9.234,46.13 l -9.984,30.762 c 0,17.94 8.952,26.916 26.904,26.916 18.96,0 28.452,-12.57 28.452,-37.686 0,-12.804 -3.84,-27.792 -11.532,-44.988"
+   style="fill:#e5e0da;fill-opacity:1;fill-rule:nonzero"
+   id="path2" />
+    </g>
+</svg>
