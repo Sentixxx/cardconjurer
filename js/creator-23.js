@@ -4854,6 +4854,7 @@ function changeCardIndex() {
 	//text
 	var langFontCode = "";
 	if (cardToImport.lang == "ph") {langFontCode = "{fontphyrexian}"}
+	if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {langFontCode = "{fontCStitle}{fontsize+14}"}
 	var name = cardToImport.name || '';
 	if (name.startsWith('A-')) { name = name.replace('A-', '{alchemy}'); }
 
@@ -4889,14 +4890,24 @@ function changeCardIndex() {
 	if (card.text.rules) {
 		if (card.version == 'pokemon') {
 			if (cardToImport.type_line.toLowerCase().includes('creature')) {
-				card.text.rules.text = langFontCode + rulesText;
+				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+					card.text.rules.text = "{fontCStext}" + rulesText;
+				}
+				else {
+					card.text.rules.text = langFontCode + rulesText;
+				}
 				card.text.rulesnoncreature.text = '';
 
 				card.text.middleStatTitle.text = 'power';
 				card.text.rightStatTitle.text = 'toughness';
 
 			} else if (cardToImport.type_line.toLowerCase().includes('planeswalker')) {
-				card.text.rules.text = langFontCode + rulesText;
+				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+					card.text.rules.text = "{fontCStext}" + rulesText;
+				}
+				else {
+					card.text.rules.text = langFontCode + rulesText;
+				}
 				card.text.rulesnoncreature.text = '';
 
 				card.text.pt.text = '{' + (cardToImport.loyalty || '' + '}');
@@ -4904,7 +4915,12 @@ function changeCardIndex() {
 				card.text.middleStatTitle.text = '';
 				card.text.rightStatTitle.text = 'loyalty';
 			} else if (cardToImport.type_line.toLowerCase().includes('battle')) {
-				card.text.rules.text = langFontCode + rulesText;
+				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+					card.text.rules.text = "{fontCStext}" + rulesText;
+				}
+				else {
+					card.text.rules.text = langFontCode + rulesText;
+				}
 				card.text.rulesnoncreature.text = '';
 
 				card.text.pt.text = '{' + (cardToImport.defense || '' + '}');
@@ -4912,7 +4928,12 @@ function changeCardIndex() {
 				card.text.middleStatTitle.text = '';
 				card.text.rightStatTitle.text = 'defense';
 			} else {
-				card.text.rulesnoncreature.text = langFontCode + rulesText;
+				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+					card.text.rulesnoncreature.text = "{fontCStext}" + rulesText;
+				}
+				else {
+					card.text.rulesnoncreature.text = langFontCode + rulesText;
+				}
 				card.text.rules.text = '';
 
 				card.text.middleStatTitle.text = '';
@@ -4920,7 +4941,12 @@ function changeCardIndex() {
 			}
 
 		} else {
-			card.text.rules.text = langFontCode + rulesText;
+				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+					card.text.rules.text = "{fontCStext}" + rulesText;
+				}
+				else {
+					card.text.rules.text = langFontCode + rulesText;
+				}
 		}
 
 		if (cardToImport.flavor_text) {
@@ -4948,6 +4974,10 @@ function changeCardIndex() {
 
 			} else {
 				card.text.rules.text += '{flavor}';
+					if(cardToImport.lang == "cs" || cardToImport.lang == "zhs")
+					{
+						card.text.rules.text += '{fontCSflavor}';
+					}
 				card.text.rules.text += curlyQuotes(flavorText.replace('\n', '{lns}'));
 			}
 
@@ -4955,7 +4985,12 @@ function changeCardIndex() {
 		}
 	} else if (card.text.case) {
 		rulesText = rulesText.replace(/(\r\n|\r|\n)/g, '//{bar}//');
-		card.text.case.text = langFontCode + rulesText;
+		if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+			card.text.rules.text = "{fontCStext}" + rulesText;
+		}
+		else {
+			card.text.rules.text = langFontCode + rulesText;
+		}
 	}
 
 	if (card.text.pt) {
@@ -5016,7 +5051,12 @@ function changeCardIndex() {
 		document.querySelector('#info-number').value = cardToImport.collector_number || "";
 		document.querySelector('#info-rarity').value = (cardToImport.rarity || "")[0].toUpperCase();
 		document.querySelector('#info-set').value = (cardToImport.set || "").toUpperCase();
-		document.querySelector('#info-language').value = (cardToImport.lang || "").toUpperCase();
+		if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+			document.querySelector('#info-language').value = ("cs").toUpperCase();
+		}
+		else {
+			document.querySelector('#info-language').value = (cardToImport.lang || "").toUpperCase();
+		}
 		var setXhttp = new XMLHttpRequest();
 		setXhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
@@ -5414,6 +5454,9 @@ function processScryfallCard(card, responseCards) {
 			face.rarity = card.rarity;
 			face.collector_number = card.collector_number;
 			face.lang = card.lang;
+			if(card.lang == "zhs") {
+				face.lang = "cs";
+			}
 			if (card.lang != 'en') {
 				face.oracle_text = face.printed_text;
 				face.name = face.printed_name;
