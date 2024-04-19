@@ -3388,6 +3388,7 @@ function fontSizedEdited() {
 }
 function drawTextBuffer() {
 	clearTimeout(writingText);
+	
 	writingText = setTimeout(drawText, 500);
 }
 function autoFrameBuffer() {
@@ -3450,6 +3451,7 @@ function writeText(textObject, targetContext) {
 	if (textAllCaps) {
 		rawText = rawText.toUpperCase();
 	}
+	// console.log("name:" + textObject.name);
 	if ((textObject.name == 'wizards' || textObject.name == 'copyright') && params.get('copyright') != null && (params.get('copyright') != '' || card.margins)) {
 		rawText = params.get('copyright'); //so people using CC for custom card games without WotC's IP can customize their copyright info
 		if (rawText == 'none') { rawText = ''; }
@@ -3597,6 +3599,7 @@ function writeText(textObject, targetContext) {
 		lineContext.lineWidth = textOutlineWidth;
 		//Begin looping through words/codes
 		innerloop: for (word of splitText) {
+			//console.log(word)
 			var wordToWrite = word;
 			if (wordToWrite.includes('{') && wordToWrite.includes('}') || textManaCost || savedFont) {
 				var possibleCode = wordToWrite.toLowerCase().replace('{', '').replace('}', '');
@@ -4508,7 +4511,7 @@ async function bottomInfoEdited() {
 
 	if (document.querySelector('#enableCollectorInfo').checked) {
 		for (var textObject of Object.entries(card.bottomInfo)) {
-			if (["NOT FOR SALE", "Wizards of the Coast", "CardConjurer.com", "cardconjurer.com"].some(v => textObject[1].text.includes(v))) {
+			if (["NOT FOR SALE", "CardConjurer.com", "cardconjurer.com"].some(v => textObject[1].text.includes(v))) {
 				continue;
 			} else {
 				textObject[1].name = textObject[0];
