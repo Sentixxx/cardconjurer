@@ -816,35 +816,37 @@ function autoFrame() {
 			}
 		});
 
-		if (!colors.includes('W') && (rules.includes('plains') || card.text.type.text.toLowerCase().includes('plains'))) {
+		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
 			colors.push('W');
 		}
-		if (!colors.includes('U') && (rules.includes('island') || card.text.type.text.toLowerCase().includes('island'))) {
+		if (!colors.includes('U') && (rules.toLowerCase().includes('island') || card.text.type.text.toLowerCase().includes('island') || rules.toLowerCase().includes('海岛') || card.text.type.text.toLowerCase().includes('海岛'))) {
 			colors.push('U');
 		}
-		if (!colors.includes('B') && (rules.includes('swamp') || card.text.type.text.toLowerCase().includes('swamp'))) {
+		if (!colors.includes('B') && (rules.toLowerCase().includes('swamp') || card.text.type.text.toLowerCase().includes('swamp') || rules.toLowerCase().includes('沼泽') || card.text.type.text.toLowerCase().includes('沼泽'))) {
 			colors.push('B');
 		}
-		if (!colors.includes('R') && (rules.includes('mountain') || card.text.type.text.toLowerCase().includes('mountain'))) {
+		if (!colors.includes('R') && (rules.toLowerCase().includes('mountain') || card.text.type.text.toLowerCase().includes('mountain') || rules.toLowerCase().includes('山脉') || card.text.type.text.toLowerCase().includes('山脉'))) {
 			colors.push('R');
 		}
-		if (!colors.includes('G') && (rules.includes('forest') || card.text.type.text.toLowerCase().includes('forest'))) {
+		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || card.text.type.text.toLowerCase().includes('forest') || rules.toLowerCase().includes('树林') || card.text.type.text.toLowerCase().includes('树林'))) {
 			colors.push('G');
 		}
 
-		if (rules.toLowerCase().includes('search') && colors.length == 0) {
+		if ((rules.toLowerCase().includes('search') || rules.toLowerCase().includes('搜寻')) && colors.length == 0) {
 			// TODO: This doesn't match Bog Wreckage
-			if (rules.includes('into your hand') || (rules.includes('tapped') && !(rules.toLowerCase().includes('enters the battlefield tapped')) && !(rules.toLowerCase().includes('untap')))) {
+			if ((rules.includes('into your hand') || rules.includes('置于你手上')) || ((rules.includes('tapped') && !(rules.toLowerCase().includes('enters the battlefield tapped')) && !(rules.toLowerCase().includes('untap'))) || (rules.includes('横置') && !(rules.toLowerCase().includes('横置进入战场')) && !(rules.toLowerCase().includes('重置'))))) {
 				colors = [];
 			} else if (colors.length == 0) {
 				colors = ['W', 'U', 'B', 'R', 'G'];
 			}
 		}
 
-		if (rules.includes('any color') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
+		if (rules.includes('任意颜色') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
-
+		if (rules.includes('') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
+			colors = ['W', 'U', 'B', 'R', 'G'];
+		}
 
 	} else {
 		colors = [...new Set(card.text.mana.text.toUpperCase().split('').filter(char => ['W', 'U', 'B', 'R', 'G'].includes(char)))];
@@ -4614,13 +4616,13 @@ function drawCard() {
 	cardContext.drawImage(art, 0, 0, art.width * card.artZoom, art.height * card.artZoom);
 	cardContext.restore();
 	// frame elements
-	if (card.version.includes('planeswalker') && typeof planeswalkerPreFrameCanvas !== "undefined") {
+	if ((card.version.includes('planeswalker') || card.version.includes('鹏洛客')) && typeof planeswalkerPreFrameCanvas !== "undefined") {
 		cardContext.drawImage(planeswalkerPreFrameCanvas, 0, 0, cardCanvas.width, cardCanvas.height);
 	}
 	cardContext.drawImage(frameCanvas, 0, 0, cardCanvas.width, cardCanvas.height);
-	if (card.version.toLowerCase().includes('planeswalker') && typeof planeswalkerPostFrameCanvas !== "undefined") {
+	if ((card.version.toLowerCase().includes('planeswalker')  || card.version.includes('鹏洛客')) && typeof planeswalkerPostFrameCanvas !== "undefined") {
 		cardContext.drawImage(planeswalkerPostFrameCanvas, 0, 0, cardCanvas.width, cardCanvas.height);
-	} else if (card.version.toLowerCase().includes('planeswalker') && typeof planeswalkerCanvas !== "undefined") {
+	} else if ((card.version.toLowerCase().includes('planeswalker') || card.version.includes('鹏洛客')) && typeof planeswalkerCanvas !== "undefined") {
 		cardContext.drawImage(planeswalkerCanvas, 0, 0, cardCanvas.width, cardCanvas.height);
 	} else if (card.version.toLowerCase().includes('qrcode') && typeof qrCodeCanvas !== "undefined") {
 		cardContext.drawImage(qrCodeCanvas, 0, 0, cardCanvas.width, cardCanvas.height);
@@ -4881,7 +4883,7 @@ function changeCardIndex() {
 				card.text.middleStatTitle.text = 'power';
 				card.text.rightStatTitle.text = 'toughness';
 
-			} else if (cardToImport.type_line.toLowerCase().includes('planeswalker')) {
+			} else if (cardToImport.type_line.toLowerCase().includes('planeswalker') || cardToImport.type_line.toLowerCase().includes('鹏洛客')) {
 				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
 					card.text.rules.text = "{fontCStext}" + rulesText;
 				}
@@ -4988,7 +4990,7 @@ function changeCardIndex() {
 	if (card.text.pt && card.text.pt.text == undefined + '/' + undefined) {card.text.pt.text = '';}
 	if (card.text.pt && card.text.pt.text == undefined + '\n' + undefined) {card.text.pt.text = '';}
 	if (card.text.pt && card.text.pt.text == '{}') {card.text.pt.text = '';}
-	if (card.version.includes('planeswalker')) {
+	if (card.version.includes('planeswalker') || card.version.includes('鹏洛客')) {
 		card.text.loyalty.text = cardToImport.loyalty || '';
 		var planeswalkerAbilities = cardToImport.oracle_text.split('\n');
 		while (planeswalkerAbilities.length > 4) {
