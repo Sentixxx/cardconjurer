@@ -3941,15 +3941,15 @@ function writeText(textObject, targetContext) {
 				newLineSpacing = (textObject.lineSpacing || 0) * textSize;
 				newLine = false;
 			}
-			// while(wordToWrite == "{Lins}" || wordToWrite == "{Rins}") {
-			// 	if(wordToWrite == "{Lins}") {
-			// 		currentX += textSize * 0.1;
-			// 	}
-			// 	if(wordToWrite == "{Rins}") {
-			// 		currentX -= textSize * 0.1;
-			// 	}
-			// 	continue innerloop;
-			// }
+			while(wordToWrite == "{Lins}" || wordToWrite == "{Rins}") {
+				if(wordToWrite == "{Lins}") {
+					currentX += textSize * 0.1;
+				}
+				if(wordToWrite == "{Rins}") {
+					currentX -= textSize * 0.1;
+				}
+				continue innerloop;
+			}
 			if(Chinese) {
 				
 				if(textObject.text.includes("CStext")) {
