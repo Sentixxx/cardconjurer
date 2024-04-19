@@ -597,7 +597,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 	colors = colors.filter(color => color != 'D');
 	var rules;
 	if (style == 'Seventh') {
-		if (typeLine.includes('Land')) {
+		if (typeLine.includes('Land') || typeLine.includes("地")) {
 			if (colors.length == 0 || colors.length > 2) {
 				rules = 'L';
 			} else {
@@ -608,7 +608,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 				rules = colors[0];
 			} else if (colors.length >=2 ) {
 				rules = 'M';
-			} else if (typeLine.includes("Artifact")) {
+			} else if (typeLine.includes("Artifact") || typeLine.includes("神器")) {
 				rules = 'A';
 			} else {
 				rules = 'C';
@@ -616,7 +616,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 		}
 
 	} else {
-		if (typeLine.includes('Land')) {
+		if (typeLine.includes('Land') || typeLine.includes("地")) {
 			if (colors.length == 0) {
 				rules = 'L';
 			} else if (colors.length > 2) {
@@ -625,14 +625,14 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 				rules = colors[0] + 'L';
 			}
 		} else if (colors.length > 2) {
-			if (style == 'Etched' && typeLine.includes('Artifact')) {
+			if (style == 'Etched' && (typeLine.includes('Artifact')|| typeLine.includes("神器"))) {
 				rules = 'A';
 			} else {
 				rules = 'M';
 			}
 		} else if (colors.length != 0) {
 			rules = colors[0];
-		} else if (style == 'Borderless' && !typeLine.includes('Artifact')) {
+		} else if (style == 'Borderless' && !typeLine.includes('Artifact') && !typeLine.includes("神器")) {
 			rules = 'C';
 		} else {
 			rules = 'A';
@@ -641,7 +641,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 
 	var rulesRight;
 	if (colors.length == 2) {
-		if (typeLine.includes('Land')) {
+		if (typeLine.includes('Land') || typeLine.includes("地")) {
 			rulesRight = colors[1] + 'L';
 		} else if (style != 'Seventh') {
 			rulesRight = colors[1];
@@ -651,14 +651,14 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 	var pinline = rules;
 	var pinlineRight = rulesRight;
 
-	if (style == 'Seventh' && typeLine.includes('Land') && colors.length >= 2) {
+	if (style == 'Seventh' && (typeLine.includes('Land') || typeLine.includes("地")) && colors.length >= 2) {
 		pinline = 'L';
 		pinlineRight = null;
 	}
 
 	var typeTitle;
 	if (colors.length >= 2) {
-		if (isHybrid || typeLine.includes('Land')) {
+		if (isHybrid || typeLine.includes('Land') || typeLine.includes("地")) {
 			if (colors.length >= 3) {
 				typeTitle = 'M';
 			} else {
@@ -667,7 +667,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 		} else {
 			typeTitle = 'M';
 		}
-	} else if (typeLine.includes('Land')) {
+	} else if (typeLine.includes('Land') || typeLine.includes("地")) {
 		if (colors.length == 0) {
 			typeTitle = 'L';
 		} else if (style == 'Etched') {
@@ -683,7 +683,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 		}
 	} else if (colors.length == 1) {
 		typeTitle = colors[0];
-	} else if (style == 'Borderless' && !typeLine.includes('Artifact')) {
+	} else if (style == 'Borderless' && !typeLine.includes('Artifact') && !typeLine.includes("神器")) {
 		typeTitle = 'C';
 	} else {
 		typeTitle = 'A';
@@ -691,7 +691,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 
 	var pt;
 	if (power) {
-		if (typeLine.includes('Vehicle')) {
+		if (typeLine.includes('Vehicle') || typeLine.includes("载具")) {
 			pt = 'V';
 		} else if (typeTitle == 'L') {
 			pt = 'C';
@@ -702,12 +702,12 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 
 	var frame;
 	if (style == 'Seventh') {
-		if (typeLine.includes('Land')) {
+		if (typeLine.includes('Land') || typeLine.includes("地")) {
 			frame = 'L'
 		} else {
 			frame = pinline;
 		}
-	} else if (typeLine.includes('Land')) {
+	} else if (typeLine.includes('Land') || typeLine.includes("地")) {
 		if (style == 'Etched') {
 			if (colors.length > 2) {
 				frame = 'M';
@@ -719,9 +719,9 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 		} else {
 			frame = 'L';
 		}
-	} else if (typeLine.includes('Vehicle')) {
+	} else if (typeLine.includes('Vehicle') || typeLine.includes("载具")) {
 		frame = 'V';
-	} else if (typeLine.includes('Artifact')) {
+	} else if (typeLine.includes('Artifact') || typeLine.includes("神器")) {
 		frame = 'A';
 	} else if (colors.length > 2) {
 		frame = 'M';
@@ -738,7 +738,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 	}
 
 	var frameRight;
-	if (!(typeLine.includes('Vehicle') || typeLine.includes('Artifact'))) {
+	if (!(typeLine.includes('Vehicle') || typeLine.includes('Artifact')|| typeLine.includes("神器"))) {
 		if (colors.length == 2 && (isHybrid || style == 'Etched')) {
 			frameRight = colors[1];
 		}
@@ -922,7 +922,7 @@ async function autoUBFrame(colors, mana_cost, type_line, power) {
 
 	// Set frames
 
-	if (type_line.toLowerCase().includes('legendary')) {
+	if (type_line.toLowerCase().includes('legendary') || type_line.includes('传奇')) {
 		if (properties.pinlineRight) {
 			frames.push(makeUBFrameByLetter(properties.pinlineRight, 'Crown', true));
 		}
@@ -1033,7 +1033,7 @@ async function autoM15Frame(colors, mana_cost, type_line, power) {
 	}
 
 	// Set frames
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		if (style == 'Nyx') {
 			if (properties.pinlineRight) {
 				frames.push(makeM15FrameByLetter(properties.pinlineRight, 'Inner Crown', true, style));
@@ -1097,7 +1097,7 @@ async function autoM15NewFrame(colors, mana_cost, type_line, power, style = 'reg
 	}
 
 	// Set frames
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		if (style == 'Nyx') {
 			if (properties.pinlineRight) {
 				frames.push(makeM15NewFrameByLetter(properties.pinlineRight, 'Inner Crown', true, style));
@@ -1164,7 +1164,7 @@ async function autoM15EighthFrame(colors, mana_cost, type_line, power) {
 	}
 
 	// Set frames
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		if (style == 'Nyx') {
 			if (properties.pinlineRight) {
 				frames.push(makeM15FrameByLetter(properties.pinlineRight, 'Inner Crown', true, style));
@@ -1222,7 +1222,7 @@ async function autoM15EighthUBFrame(colors, mana_cost, type_line, power) {
 	}
 
 	// Set frames
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		if (style == 'Nyx') {
 			if (properties.pinlineRight) {
 				frames.push(makeM15EighthUBFrameByLetter(properties.pinlineRight, 'Inner Crown', true, style));
@@ -1278,7 +1278,7 @@ async function autoBorderlessFrame(colors, mana_cost, type_line, power) {
 	}
 
 	// Set frames
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		if (style == 'Nyx') {
 			if (properties.pinlineRight) {
 				frames.push(makeBorderlessFrameByLetter(properties.pinlineRight, 'Inner Crown', true));
@@ -1364,7 +1364,7 @@ async function autoExtendedArtFrame(colors, mana_cost, type_line, power, short) 
 	}
 
 	// Set frames
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		frames.push(makeExtendedArtFrameByLetter(properties.pinline, "Crown Outline", false, style, short));
 
 		if (style == 'Nyx') {
@@ -1427,7 +1427,7 @@ async function autoEtchedFrame(colors, mana_cost, type_line, power) {
 
 	// Set frames
 
-	if (type_line.includes('Legendary')) {
+	if (type_line.includes('Legendary') || type_line.includes('传奇')) {
 		if (style == 'Nyx') {
 			if (properties.frameRight) {
 				frames.push(makeEtchedFrameByLetter(properties.pinlineRight, 'Inner Crown', true));
@@ -1546,6 +1546,7 @@ function makeM15FrameByLetter(letter, mask = false, maskToRightHalf = false, sty
 		'GL': 'Green Land',
 		'ML': 'Multicolored Land'
 	}
+
 
 	if ((mask.includes('Crown') || mask == 'PT' || mask.includes('Stamp')) && letter.includes('L') && letter.length > 1) {
 		letter = letter[0];
