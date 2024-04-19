@@ -3414,6 +3414,8 @@ async function drawText() {
 	}
 }
 var justifyWidth = 90;
+var Last = "";
+var Chinese = false;
 function writeText(textObject, targetContext) {
 	//Most bits of info about text loaded, with defaults when needed
 	var textX = scaleX(textObject.x) || scaleX(0);
@@ -3436,6 +3438,7 @@ function writeText(textObject, targetContext) {
 	//Preps the text string
 	var splitString = '6GJt7eL8';
 	var rawText = textObject.text
+	
 	if (document.querySelector('#hide-reminder-text').checked && textObject.name && textObject.name != 'Title' && textObject.name != 'Type' && textObject.name != 'Mana Cost' && textObject.name != 'Power/Toughness') {
 		var rulesText = rawText;
 		var flavorText = '';
@@ -3489,9 +3492,10 @@ function writeText(textObject, targetContext) {
 					replace(/{flavor}/g, '{/indent}{lns}{bar}{lns}{fixtextalign}{i}').
 					replace(/{oldflavor}/g, '{/indent}{lns}{lns}{up30}{i}').replace(/{/g, splitString + '{').
 					replace(/}/g, '}' + splitString).
-					replace(/[\u4e00-\u9fff]/g, splitString + '$&' + splitString).
+					replace(/([\u4e00-\u9fff])/g, splitString + '$1' + splitString).
+					replace(/[\u3000-\u303F]/g, splitString + '$&' + splitString).
 					replace(/ /g, splitString + ' ' + splitString).
-					split(splitString);
+					split(splitString);	
 	splitText = splitText.filter(item => item);
 	if (textObject.manaCost) {
 		splitText = splitText.filter(item => item != ' ');
@@ -3600,8 +3604,12 @@ function writeText(textObject, targetContext) {
 		lineContext.lineWidth = textOutlineWidth;
 		//Begin looping through words/codes
 		innerloop: for (word of splitText) {
-			//console.log(word)
+			// console.log("word: " + word);
 			var wordToWrite = word;
+			if(wordToWrite.includes("CStext")) {
+				Chinese = true;
+			}
+			// console.log("Chinese: " + Chinese);
 			if (wordToWrite.includes('{') && wordToWrite.includes('}') || textManaCost || savedFont) {
 				var possibleCode = wordToWrite.toLowerCase().replace('{', '').replace('}', '');
 				wordToWrite = null;
@@ -3887,6 +3895,7 @@ function writeText(textObject, targetContext) {
 
 			//if the word goes past the max line width, go to the next line
 			if (wordToWrite && lineContext.measureText(wordToWrite).width + currentX >= textWidth && textArcRadius == 0) {
+				//console.log("newLine:" + wordToWrite)
 				if (textOneLine && startingTextSize > 1) {
 					//doesn't fit... try again at a smaller text size?
 					startingTextSize -= 1;
@@ -3896,6 +3905,11 @@ function writeText(textObject, targetContext) {
 			}
 			//if we need a new line, go to the next line
 			if ((newLine && !textOneLine) || splitText.indexOf(word) == splitText.length - 1) {
+				//console.log("newLine:" + wordToWrite)
+				if(Chinese && (wordToWrite == "。" || wordToWrite == "」" || wordToWrite == "）"|| wordToWrite == "：" || wordToWrite == "，" || wordToWrite == '；')) {
+						startingTextSize -= 1;
+						continue outerloop;
+				}
 				var horizontalAdjust = 0
 				if (textAlign == 'center') {
 					horizontalAdjust = (textWidth - currentX) / 2;
@@ -3928,13 +3942,62 @@ function writeText(textObject, targetContext) {
 				newLineSpacing = (textObject.lineSpacing || 0) * textSize;
 				newLine = false;
 			}
+			// while(wordToWrite == "{Lins}" || wordToWrite == "{Rins}") {
+			// 	if(wordToWrite == "{Lins}") {
+			// 		currentX += textSize * 0.1;
+			// 	}
+			// 	if(wordToWrite == "{Rins}") {
+			// 		currentX -= textSize * 0.1;
+			// 	}
+			// 	continue innerloop;
+			// }
+			if(Chinese) {
+				
+				if(textObject.text.includes("CStext")) {
+				console.log("Newline:" + newLine + wordToWrite);
+				if(Last == "）" || Last == "」") {
+					if(!newLine && currentX != startingCurrentX) {
+						currentX -= textSize * 0.5;
+					}
+				}
+				console.log("Last: " + Last);
+				if(Last == '。' && (wordToWrite == "）" || wordToWrite == "」")) {
+					if(!newLine && currentX != startingCurrentX) {
+						currentX -= textSize * 0.5;
+						console.log("currentX: " + currentX);
+					}
+				}
+				if(Last == '：' || Last == '；') {
+					if(!newLine && currentX != startingCurrentX) {
+						currentX -= textSize * 0.25;
+					}
+				}
+				if(wordToWrite == '：' || wordToWrite == '；') {
+					if(!newLine && currentX != startingCurrentX) {
+						currentX += textSize * 0.25;
+					}
+				}
+				if(wordToWrite == '（' || wordToWrite == '「') {
+					if(!newLine && currentX != startingCurrentX) {
+						if(Last == '。') {
+							currentX -= textSize;
+						}
+						else {
+							currentX -= textSize * 0.5;
+							console.log("current:" + currentX + wordToWrite);
+						}
+							// console.log("currentX(: " + currentX);
+					}
+				}
+				Last = wordToWrite;
+			}
+		}
 			//if there's a word to write, it's not a space on a new line, and it's allowed to write words, then we write the word
 			if (wordToWrite && (currentX != startingCurrentX || wordToWrite != ' ') && !textManaCost) {
 				var justifySettings = {
 					maxSpaceSize: 6,
 					minSpaceSize: 0
 				};
-
 				if (textArcRadius > 0) {
 					lineContext.fillTextArc(wordToWrite, currentX + canvasMargin, canvasMargin + textSize * textFontHeightRatio + lineY, textArcRadius, textArcStart, currentX, textOutlineWidth);
 				} else {
