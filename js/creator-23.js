@@ -4564,7 +4564,7 @@ async function bottomInfoEdited() {
 		for (var textObject of Object.entries(card.bottomInfo)) {
 			
 				if (["NOT FOR SALE"].some(v => textObject[1].text.includes(v))) {
-					if(params.get('nfs') == '' || params.get('nfs') == null) {
+					if(params.get('nfs') == null) {
 						continue;
 					}
 					else {
@@ -4573,7 +4573,7 @@ async function bottomInfoEdited() {
 					}
 				} 
 				else if(["Wizards of the Coast"].some(v => textObject[1].text.includes(v))) {
-					if(params.get('wizards') == '' || params.get('wizards') == null) {
+					if(params.get('wizards') == null) {
 						continue;
 					}
 					else {
