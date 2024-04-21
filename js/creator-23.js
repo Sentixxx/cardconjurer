@@ -815,7 +815,7 @@ function autoFrame() {
                 });
 			}
 		});
-		console.log(colors);
+		// console.log(colors);
 		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
 			colors.push('W');
 		}
