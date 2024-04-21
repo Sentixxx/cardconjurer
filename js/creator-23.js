@@ -845,11 +845,10 @@ function autoFrame() {
 				colors = ['W', 'U', 'B', 'R', 'G'];
 			}
 		}
-
-		if (rules.includes('任意颜色') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
+		if (rules.includes('any color') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
-		if (rules.includes('') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
+		if (rules.includes('任意颜色') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
 
