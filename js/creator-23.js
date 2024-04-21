@@ -4329,7 +4329,9 @@ function changeArtIndex() {
 	if (artIndexValue != 0 || artIndexValue == '0') {
 		const scryfallCardForArt = scryfallArt[artIndexValue];
 		uploadArt(scryfallCardForArt.image_uris.art_crop, 'autoFit');
-		artistEdited(scryfallCardForArt.artist);
+		if(localStorage.getItem('enableImportCollectorInfo') == 'true') {
+			artistEdited(scryfallCardForArt.artist);
+		}
 		if (params.get('mtgpics') != null) {
 			imageURL(`https://www.mtgpics.com/pics/art/${scryfallCardForArt.set.toLowerCase()}/${("00" + scryfallCardForArt.collector_number).slice(-3)}.jpg`, tryMTGPicsArt);
 		}
@@ -4704,6 +4706,7 @@ function removeDefaultCollector() {
 function setDefaultCollector() {
 	starDot = defaultCollector.starDot;
 	defaultCollector = {
+		artist: document.querySelector('#info-artist').value,
 		number: document.querySelector('#info-number').value,
 		rarity: document.querySelector('#info-rarity').value,
 		setCode: document.querySelector('#info-set').value,
@@ -5691,12 +5694,13 @@ document.querySelector('#autoLoadFrameVersion').checked = 'true' == localStorage
 // collector info (user defaults)
 var defaultCollector = JSON.parse(localStorage.getItem('defaultCollector') || '{}');
 if ('number' in defaultCollector) {
+	document.querySelector('#info-artist').value = defaultCollector.artist;
 	document.querySelector('#info-number').value = defaultCollector.number;
 	document.querySelector('#info-note').value = defaultCollector.note;
 	document.querySelector('#info-rarity').value = defaultCollector.rarity;
 	document.querySelector('#info-set').value = defaultCollector.setCode;
 	document.querySelector('#info-language').value = defaultCollector.lang;
-	if (defaultCollector.starDot) {setTimeout(function(){defaultCollector.starDot = false; toggleStarDot();}, 500);}
+	if (defaultCollector.starDot) {setTimeout(function(){defaultCollector.starDot = true; toggleStarDot();}, 500);}
 } else {
 	document.querySelector('#info-number').value = date.getFullYear();
 }
