@@ -816,10 +816,11 @@ function autoFrame() {
                 });
 			}
 		});
-
+		console.log(colors);
 		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
 			colors.push('W');
 		}
+		
 		if (!colors.includes('U') && (rules.toLowerCase().includes('island') || card.text.type.text.toLowerCase().includes('island') || rules.toLowerCase().includes('海岛') || card.text.type.text.toLowerCase().includes('海岛'))) {
 			colors.push('U');
 		}
@@ -835,17 +836,23 @@ function autoFrame() {
 
 		if ((rules.toLowerCase().includes('search') || rules.toLowerCase().includes('搜寻')) && colors.length == 0) {
 			// TODO: This doesn't match Bog Wreckage
-			if ((rules.includes('into your hand') || rules.includes('置于你手上')) || ((rules.includes('tapped') && !(rules.toLowerCase().includes('enters the battlefield tapped')) && !(rules.toLowerCase().includes('untap'))) || (rules.includes('横置') && !(rules.toLowerCase().includes('横置进入战场')) && !(rules.toLowerCase().includes('重置'))))) {
+			if ((rules.includes('into your hand') || rules.includes('置于你手上')) || 
+			(
+				(rules.includes('tapped') && !(rules.toLowerCase().includes('enters the battlefield tapped')) && !(rules.toLowerCase().includes('untap'))) || 
+				(rules.includes('横置') && !(rules.toLowerCase().includes('横置进入战场')) && !(rules.toLowerCase().includes('重置')))
+			)) {
 				colors = [];
 			} else if (colors.length == 0) {
 				colors = ['W', 'U', 'B', 'R', 'G'];
 			}
 		}
 
-		if (rules.includes('任意颜色') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
+		
+
+		if (rules.includes('any color') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
-		if (rules.includes('') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
+		if (rules.includes('任意颜色') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
 
@@ -1272,7 +1279,6 @@ async function autoBorderlessFrame(colors, mana_cost, type_line, power) {
 	//clear the draggable frames
 	card.frames = [];
 	document.querySelector('#frame-list').innerHTML = null;
-
 	var properties = cardFrameProperties(colors, mana_cost, type_line, power, 'Borderless');
 	var style = 'regular';
 	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
@@ -3954,7 +3960,7 @@ function writeText(textObject, targetContext) {
 			if(Chinese) {
 				
 				if(textObject.text.includes("CStext")) {
-				console.log("Newline:" + newLine + wordToWrite);
+				//console.log("Newline:" + newLine + wordToWrite);
 				if(Last == "）" || Last == "」") {
 					if(!newLine && currentX != startingCurrentX) {
 						currentX -= textSize * 0.5;
