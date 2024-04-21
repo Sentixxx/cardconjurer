@@ -820,7 +820,6 @@ function autoFrame() {
 		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
 			colors.push('W');
 		}
-		
 		if (!colors.includes('U') && (rules.toLowerCase().includes('island') || card.text.type.text.toLowerCase().includes('island') || rules.toLowerCase().includes('海岛') || card.text.type.text.toLowerCase().includes('海岛'))) {
 			colors.push('U');
 		}
@@ -847,12 +846,10 @@ function autoFrame() {
 			}
 		}
 
-		
-
-		if (rules.includes('any color') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
+		if (rules.includes('任意颜色') || rules.includes('any one color') || rules.includes('choose a color') || rules.includes('any combination of colors')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
-		if (rules.includes('任意颜色') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
+		if (rules.includes('') || rules.includes('任意颜色的单色') || rules.includes('选择一种颜色') || rules.includes('其颜色组合由你选择')) {
 			colors = ['W', 'U', 'B', 'R', 'G'];
 		}
 
@@ -4605,13 +4602,32 @@ async function bottomInfoEdited() {
 
 	if (document.querySelector('#enableCollectorInfo').checked) {
 		for (var textObject of Object.entries(card.bottomInfo)) {
-			if (["NOT FOR SALE", "CardConjurer.com", "cardconjurer.com"].some(v => textObject[1].text.includes(v))) {
+			
+				if (["NOT FOR SALE"].some(v => textObject[1].text.includes(v))) {
+					if(params.get('nfs') == '' || params.get('nfs') == null) {
+						continue;
+					}
+					else {
+						textObject[1].name = textObject[0];
+						await writeText(textObject[1], bottomInfoContext);
+					}
+				} 
+				else if(["Wizards of the Coast"].some(v => textObject[1].text.includes(v))) {
+					if(params.get('wizards') == '' || params.get('wizards') == null) {
+						continue;
+					}
+					else {
+						textObject[1].name = textObject[0];
+						await writeText(textObject[1], bottomInfoContext);
+					}
+				}
+				else if(["CardConjurer.com", "cardconjurer.com"].some(v => textObject[1].text.includes(v))) {
+					continue;
+				} else {
+					textObject[1].name = textObject[0];
+					await writeText(textObject[1], bottomInfoContext);
+				}
 				continue;
-			} else {
-				textObject[1].name = textObject[0];
-				await writeText(textObject[1], bottomInfoContext);
-			}
-			continue;
 		}
 	}
 
