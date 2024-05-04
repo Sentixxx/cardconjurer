@@ -815,7 +815,21 @@ function autoFrame() {
                 });
 			}
 		});
-		// console.log(colors);
+		var cslines = rules.split('\n');
+		cslines.forEach(function(line) {
+			var addIndex = line.indexOf('加');
+			var length = 1;
+			if (addIndex != -1) {
+				var upToAdd = line.substring(addIndex+length).toLowerCase();
+				// console.log(upToAdd);
+              	['W', 'U', 'B', 'R', 'G'].forEach(function (color) {
+					if (upToAdd.includes('{' + color.toLowerCase() + '}')) {
+                  		colors.push(color);
+                	}
+                });
+			}
+		});
+		//console.log("pre:" + colors);
 		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
 			colors.push('W');
 		}
@@ -831,7 +845,7 @@ function autoFrame() {
 		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || card.text.type.text.toLowerCase().includes('forest') || rules.toLowerCase().includes('树林') || card.text.type.text.toLowerCase().includes('树林'))) {
 			colors.push('G');
 		}
-
+		// console.log("color:" + colors);
 		if ((rules.toLowerCase().includes('search') || rules.toLowerCase().includes('搜寻')) && colors.length == 0) {
 			// TODO: This doesn't match Bog Wreckage
 			if ((rules.includes('into your hand') || rules.includes('置于你手上')) || 
@@ -857,6 +871,8 @@ function autoFrame() {
 			colors.push('D');
 		}
 	}
+	
+	
 
 	var group;
 	if (frame == 'M15Regular-1') {
@@ -3961,7 +3977,7 @@ function writeText(textObject, targetContext) {
 						currentX -= textSize * 0.5;
 					}
 				}
-				console.log("Last: " + Last);
+				//console.log("Last: " + Last);
 				if(Last == '。' && (wordToWrite == "）" || wordToWrite == "」")) {
 					if(!newLine && currentX != startingCurrentX) {
 						currentX -= textSize * 0.5;
