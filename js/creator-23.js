@@ -747,7 +747,7 @@ function autoFrame() {
 	if (frame == 'false') { autoFramePack = null; return; }
 
 	var colors = [];
-	if (card.text.type.text.toLowerCase().includes('land')) {
+	if (card.text.type.text.toLowerCase().includes('land') ||card.text.type.text.toLowerCase().includes('地')) {
 		var rules = card.text.rules.text;
 		var flavorIndex = rules.indexOf('{flavor}');
 		if (flavorIndex == -1) {
@@ -775,7 +775,21 @@ function autoFrame() {
                 });
 			}
 		});
-		// console.log(colors);
+		var cslines = rules.split('\n');
+		cslines.forEach(function(line) {
+			var addIndex = line.indexOf('加');
+			var length = 1;
+			if (addIndex != -1) {
+				var upToAdd = line.substring(addIndex+length).toLowerCase();
+				// console.log(upToAdd);
+              	['W', 'U', 'B', 'R', 'G'].forEach(function (color) {
+					if (upToAdd.includes('{' + color.toLowerCase() + '}')) {
+                  		colors.push(color);
+                	}
+                });
+			}
+		});
+		//console.log("pre:" + colors);
 		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
 			colors.push('W');
 		}
@@ -791,7 +805,7 @@ function autoFrame() {
 		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || card.text.type.text.toLowerCase().includes('forest') || rules.toLowerCase().includes('树林') || card.text.type.text.toLowerCase().includes('树林'))) {
 			colors.push('G');
 		}
-
+		// console.log("color:" + colors);
 		if ((rules.toLowerCase().includes('search') || rules.toLowerCase().includes('搜寻')) && colors.length == 0) {
 			// TODO: This doesn't match Bog Wreckage
 			if ((rules.includes('into your hand') || rules.includes('置于你手上')) || 
@@ -814,7 +828,7 @@ function autoFrame() {
 	} else {
 		colors = [...new Set(card.text.mana.text.toUpperCase().split('').filter(char => ['W', 'U', 'B', 'R', 'G'].includes(char)))];
 	}
-
+	
 	
 
 	var group;
@@ -3888,7 +3902,7 @@ function writeText(textObject, targetContext) {
 						currentX -= textSize * 0.5;
 					}
 				}
-				console.log("Last: " + Last);
+				//console.log("Last: " + Last);
 				if(Last == '。' && (wordToWrite == "）" || wordToWrite == "」")) {
 					if(!newLine && currentX != startingCurrentX) {
 						currentX -= textSize * 0.5;
