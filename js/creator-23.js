@@ -745,9 +745,9 @@ var autoFramePack;
 function autoFrame() {
 	var frame = document.querySelector('#autoFrame').value;
 	if (frame == 'false') { autoFramePack = null; return; }
-
 	var colors = [];
-	if (card.text.type.text.toLowerCase().includes('land') ||card.text.type.text.toLowerCase().includes('地')) {
+	console.log(card.text.type.text.toLowerCase().split('～')[0]);
+	if (card.text.type.text.toLowerCase().includes('land') || (card.text.type.text.toLowerCase().split('～')[0].includes('地'))) {
 		var rules = card.text.rules.text;
 		var flavorIndex = rules.indexOf('{flavor}');
 		if (flavorIndex == -1) {
