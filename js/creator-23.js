@@ -758,9 +758,10 @@ function autoFrame() {
 	var frame = document.querySelector('#autoFrame').value;
 	if (frame == 'false') { autoFramePack = null; return; }
 	var colors = [];
-	console.log(card.text.type.text.toLowerCase().split('～')[0]);
-	if (card.text.type.text.toLowerCase().includes('land') || (card.text.type.text.toLowerCase().split('～')[0].includes('地'))) {
-		var rules = card.text.rules.text;
+	var rules = card.text.rules.text;
+	var types = card.text.type.text.toLowerCase();
+	//console.log(card.text.type.text.toLowerCase().split('～')[0]);
+	if (types.includes('land') || (types.split('～')[0].includes('地'))) {
 		var flavorIndex = rules.indexOf('{flavor}');
 		if (flavorIndex == -1) {
 			flavorIndex = rules.indexOf('{oldflavor}');
@@ -802,19 +803,19 @@ function autoFrame() {
 			}
 		});
 		//console.log("pre:" + colors);
-		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || card.text.type.text.toLowerCase().includes('plains') || rules.toLowerCase().includes('平原') || card.text.type.text.toLowerCase().includes('平原'))) {
+		if (!colors.includes('W') && (rules.toLowerCase().includes('plains') || types.includes('plains') || rules.toLowerCase().includes('平原') || types.includes('平原'))) {
 			colors.push('W');
 		}
-		if (!colors.includes('U') && (rules.toLowerCase().includes('island') || card.text.type.text.toLowerCase().includes('island') || rules.toLowerCase().includes('海岛') || card.text.type.text.toLowerCase().includes('海岛'))) {
+		if (!colors.includes('U') && (rules.toLowerCase().includes('island') || types.includes('island') || rules.toLowerCase().includes('海岛') || types.includes('海岛'))) {
 			colors.push('U');
 		}
-		if (!colors.includes('B') && (rules.toLowerCase().includes('swamp') || card.text.type.text.toLowerCase().includes('swamp') || rules.toLowerCase().includes('沼泽') || card.text.type.text.toLowerCase().includes('沼泽'))) {
+		if (!colors.includes('B') && (rules.toLowerCase().includes('swamp') || types.includes('swamp') || rules.toLowerCase().includes('沼泽') || types.includes('沼泽'))) {
 			colors.push('B');
 		}
-		if (!colors.includes('R') && (rules.toLowerCase().includes('mountain') || card.text.type.text.toLowerCase().includes('mountain') || rules.toLowerCase().includes('山脉') || card.text.type.text.toLowerCase().includes('山脉'))) {
+		if (!colors.includes('R') && (rules.toLowerCase().includes('mountain') || types.includes('mountain') || rules.toLowerCase().includes('山脉') || types.includes('山脉'))) {
 			colors.push('R');
 		}
-		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || card.text.type.text.toLowerCase().includes('forest') || rules.toLowerCase().includes('树林') || card.text.type.text.toLowerCase().includes('树林'))) {
+		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || types.includes('forest') || rules.toLowerCase().includes('树林') || types.includes('树林'))) {
 			colors.push('G');
 		}
 		// console.log("color:" + colors);
@@ -839,6 +840,9 @@ function autoFrame() {
 
 	} else {
 		colors = [...new Set(card.text.mana.text.toUpperCase().split('').filter(char => ['W', 'U', 'B', 'R', 'G'].includes(char)))];
+		if(rules.toLowerCase().includes('devoid') || rules.toLowerCase().includes('虚色')) {
+			colors = [];
+		}
 	}
 	
 	
