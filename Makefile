@@ -3,4 +3,5 @@ start:
 build:
 	docker build -f Dockerfile --target "prod" . -t "cardconjurer-client"
 test:
-	docker run -dit -p 4242:4242 -v D:/MTG/cardconjurer:/usr/share/nginx/html "cardconjurer-client"
+	LOCALDIR=
+	docker run -dit -p 4242:4242 -v $(shell pwd):/usr/share/nginx/html "cardconjurer-client"
