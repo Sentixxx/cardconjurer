@@ -433,6 +433,7 @@
 								<option disabled selected='selected'>None</option>
 								<option disabled>General</option>
 								<option value="/img/watermarks/planeswalker.svg">Planeswalker</option>
+								<option value="/img/watermarks/desparked-planeswalker.svg">Desparked Planeswalker</option>
 								<option value="/img/watermarks/misc-star.svg">DCI Star</option>
 								<option value="/img/watermarks/misc-dci.svg">DCI Logo</option>
 								<option disabled>Monocolors</option>
@@ -600,6 +601,25 @@
 								<span class='checkmark'></span>
 							</label>
 						</div>
+
+						<div class='readable-background padding margin-bottom'>
+							<h5 class='padding input-description'>Serial Number (leave both blank to hide)</h5>
+							<div class='padding input-grid'>
+								<input id='serial-number' type='number' class='input' oninput='serialInfoEdited();' placeholder='001' min='0' value=''>
+								<input id='serial-total' type='number' class='input' oninput='serialInfoEdited();' placeholder='500' min='0' value=''>
+							</div>
+
+							<h5 class='padding input-description'>Placement (X, Y, Scale)</h5>
+							<div class='padding input-grid'>
+								<input id='serial-x' type='number' class='input' oninput='serialInfoEdited();' min='0' value='172'>
+								<input id='serial-y' type='number' class='input' oninput='serialInfoEdited();' min='0' value='1383'>
+								<input id='serial-scale' type='number' class='input' oninput='serialInfoEdited();' min='0' step='0.01' value='1'>
+							</div>
+							<div class='padding input-grid'>
+								<button class='input' onclick='resetSerial();'>Reset Serial Number Placement</button>
+							</div>
+						</div>
+
 						<div class='readable-background padding margin-bottom'>
 							<h5 class='input-description padding margin-bottom'>Toggle between star (seen on foils) and dot (seen on regular cards)</h5>
 							<div class='padding'>

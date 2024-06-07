@@ -16,6 +16,10 @@
 	src: url("../fonts/gotham-medium.ttf") format('truetype');
 }
 @font-face {
+	font-family: gothambold;
+	src: url("../fonts/gothambold.otf") format('opentype');
+}
+@font-face {
 	font-family: belerenb;
 	src: url("../fonts/beleren-b.ttf") format('truetype');
 }
