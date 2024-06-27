@@ -592,7 +592,8 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 	}
 
 	var isHybrid = manaCost.includes('/');
-
+	var isDevoid = colors.includes('D');
+	colors = colors.filter(color => color != 'D');
 	var rules;
 	if (style == 'Seventh') {
 		if (typeLine.includes('Land') || typeLine.includes("地")) {
@@ -604,7 +605,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 		} else {
 			if (colors.length == 1) {
 				rules = colors[0];
-			} else if (colors.length >=2) {
+			} else if (colors.length >=2 ) {
 				rules = 'M';
 			} else if (typeLine.includes("Artifact") || typeLine.includes("神器")) {
 				rules = 'A';
@@ -741,6 +742,18 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 			frameRight = colors[1];
 		}
 	}
+	if(isDevoid) {
+		colors = colors.filter(color => color != 'D');
+		pinline = 'C';
+		pinlineRight = null;
+		rules = 'C';
+		rulesRight = null;
+		if(power)
+			pt = 'C';
+		frame = 'C';
+		frameRight = null; 
+		console.log(pinline, pinlineRight, rules, rulesRight, pt, frame, frameRight)
+	}
 
 	return {
 		'pinline': pinline,
@@ -758,9 +771,16 @@ function autoFrame() {
 	var frame = document.querySelector('#autoFrame').value;
 	if (frame == 'false') { autoFramePack = null; return; }
 	var colors = [];
-	var rules = card.text.rules.text;
-	var types = card.text.type.text.toLowerCase();
-	//console.log(card.text.type.text.toLowerCase().split('～')[0]);
+	var type = card.text.type.text.toLowerCase();
+	var rules = card.text.rules.text.toLowerCase();
+	var name = card.text.title.text.toLowerCase();
+	for(var i = 0; i < rules.length - name.length; i++) {
+		//replace cardname with CARDNAME in rules
+		if (rules.slice(i, i + name.length) == name) {
+			rules = rules.slice(0, i) + '{CARDNAME}' + rules.slice(i + name.length);
+			i += 7;
+		}
+	}
 	if (types.includes('land') || (types.split('～')[0].includes('地'))) {
 		var flavorIndex = rules.indexOf('{flavor}');
 		if (flavorIndex == -1) {
@@ -769,6 +789,7 @@ function autoFrame() {
 		if (flavorIndex != -1) {
 			rules = rules.substring(0, flavorIndex);
 		}
+
 
 		var lines = rules.split('\n');
 
@@ -815,9 +836,11 @@ function autoFrame() {
 		if (!colors.includes('R') && (rules.toLowerCase().includes('mountain') || types.includes('mountain') || rules.toLowerCase().includes('山脉') || types.includes('山脉'))) {
 			colors.push('R');
 		}
-		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || types.includes('forest') || rules.toLowerCase().includes('树林') || types.includes('树林'))) {
+		if (!colors.includes('G') && (rules.toLowerCase().includes('forest') || types.includes('forest') || rules.toLowerCase().includes('树林') || types.includes('树林'))) 
+		{
 			colors.push('G');
 		}
+		
 		// console.log("color:" + colors);
 		if ((rules.toLowerCase().includes('search') || rules.toLowerCase().includes('搜寻')) && colors.length == 0) {
 			// TODO: This doesn't match Bog Wreckage
@@ -840,8 +863,8 @@ function autoFrame() {
 
 	} else {
 		colors = [...new Set(card.text.mana.text.toUpperCase().split('').filter(char => ['W', 'U', 'B', 'R', 'G'].includes(char)))];
-		if(rules.toLowerCase().includes('devoid') || rules.toLowerCase().includes('虚色')) {
-			colors = [];
+		if(rules.includes('devoid') || rules.toLowerCase().includes('虚色')) {
+			colors.push('D');
 		}
 	}
 	
@@ -854,46 +877,49 @@ function autoFrame() {
 	} else if (frame == 'M15RegularNew') {
 		autoM15NewFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
 		group = 'Accurate';
-	} else if (frame == 'M15Eighth') {
-		autoM15EighthFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-		group = 'Custom';
-	} else if (frame == 'M15EighthUB') {
-		autoM15EighthUBFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-		group = 'Custom';
-	} else if (frame == 'UB') {
-		autoUBFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-		group = 'Showcase-5';
-	} else if (frame == 'UBNew') {
-		autoUBNewFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-		group = 'Accurate';
-	} else if (frame == 'FullArtNew') {
-		autoFullArtNewFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-		group = 'Accurate';
-	} else if (frame == 'Circuit') {
-		autoCircuitFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-		group = 'Custom';
 	} else if (frame == 'Etched') {
 		group = 'Showcase-5';
 		autoEtchedFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-	} else if (frame == 'Praetors') {
-		group = 'Showcase-5';
-		autoPhyrexianFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
-	} else if (frame == 'Seventh') {
-		group = 'Misc-2';
-		autoSeventhEditionFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
 	} else if (frame == 'M15BoxTopper') {
 		group = 'Showcase-5';
 		autoExtendedArtFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text, false);
-	} else if (frame == 'M15ExtendedArtShort') {
-		group = 'Showcase-5';
-		autoExtendedArtFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text, true);
 	} else if (frame == '8th') {
 		group = 'Misc-2';
 		auto8thEditionFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text, false);
+	} if (frame == 'M15Eighth') {
+		autoM15EighthFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+		group = 'Custom';
 	} else if (frame == 'Borderless') {
-		// console.log('Borderless');
 		group = 'Showcase-5';
 		autoBorderlessFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+	} else {
+		//remove template without colorless mode
+		colors = colors.filter(color => color != 'D');
+		 if (frame == 'M15EighthUB') {
+			autoM15EighthUBFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+			group = 'Custom';
+		} else if (frame == 'UB') {
+			autoUBFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+			group = 'Showcase-5';
+		} else if (frame == 'UBNew') {
+			autoUBNewFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+			group = 'Accurate';
+		} else if (frame == 'FullArtNew') {
+			autoFullArtNewFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+			group = 'Accurate';
+		} else if (frame == 'Circuit') {
+			autoCircuitFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+			group = 'Custom';
+		} else if (frame == 'Praetors') {
+			group = 'Showcase-5';
+			autoPhyrexianFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+		} else if (frame == 'Seventh') {
+			group = 'Misc-2';
+			autoSeventhEditionFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text);
+		} else if (frame == 'M15ExtendedArtShort') {
+			group = 'Showcase-5';
+			autoExtendedArtFrame(colors, card.text.mana.text, card.text.type.text, card.text.pt.text, true);
+		}
 	}
 
 	if (autoFramePack != frame) {
@@ -1009,9 +1035,13 @@ async function autoM15Frame(colors, mana_cost, type_line, power) {
 	//clear the draggable frames
 	card.frames = [];
 	document.querySelector('#frame-list').innerHTML = null;
-
-	var properties = cardFrameProperties(colors, mana_cost, type_line, power);
 	var style = 'regular';
+	if(colors.includes('D')) {
+		style = 'devoid';
+		colors = colors.filter(color => color != 'D');
+	}
+	var properties = cardFrameProperties(colors, mana_cost, type_line, power);
+	
 	if (type_line.toLowerCase().includes('snow')) {
 		style = 'snow';
 	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact')) {
@@ -1612,6 +1642,11 @@ function makeM15FrameByLetter(letter, mask = false, maskToRightHalf = false, sty
 	var frame = {
 		'name': frameName + ' Frame',
 		'src': '/img/frames/m15/' + style.toLowerCase() + '/m15Frame' + letter + '.png',
+	}
+
+	if (style == 'devoid') {
+		frame.src = frame.src.replace('Frame' + letter, 'devoidFrame' + letter);
+	
 	}
 
 	if (style == 'snow') {

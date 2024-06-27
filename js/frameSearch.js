@@ -92,6 +92,7 @@ const frameNames = new Map ([
 	['Universes Beyond (Full art)', 'UBFull'],
 	['Universes Beyond (Extended art)', 'UBExtendedArt'],
 	['Full Text', 'FullText'],
+	['Full Text (Alt)', 'FullTextAlt'],
 	['Etched', 'Etched'],
 	['Etched (Nyx)', 'EtchedNyx'],
 	['Etched (Snow)', 'EtchedSnow'],
