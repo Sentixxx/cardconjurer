@@ -155,6 +155,18 @@
 	font-family: arialblack;
 	src: url('../fonts/arial_black.ttf') format('truetype');
 }
+@font-face {
+	font-family: dinnextbold;
+	src: url('../fonts/DIN-Next-Bold.otf') format('opentype');
+}
+@font-face {
+	font-family: dinnext;
+	src: url('../fonts/DIN-Next-Regular.otf') format('opentype');
+}
+@font-face {
+	font-family: dinnextmedium;
+	src: url('../fonts/DIN-Next-Medium.otf') format('opentype');
+}
 /*Variables*/
 :root {
 	--site-background: url('../img/lowpolyBackground.svg');

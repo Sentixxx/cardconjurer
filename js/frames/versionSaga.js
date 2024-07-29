@@ -92,7 +92,7 @@ function sagaEdited() {
 				sagaContext.fillText(romanNumeral(sagaCount), numeralTextX, numeralTextY - numeralTextSpread);
 				sagaContext.fillText(romanNumeral(sagaCount + 1), numeralTextX, numeralTextY + numeralTextSpread);
 				sagaCount += 2;
-			} else {
+			} else if (card.saga.abilities[i] > 2) {
 				var numeralSpread = 2 * scaleHeight(0.0358);
 				var numeralTextSpread = 2 * scaleHeight(0.0358);
 				sagaContext.drawImage(sagaChapter, numeralX, numeralY - numeralSpread, numeralWidth, numeralHeight);

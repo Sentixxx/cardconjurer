@@ -55,7 +55,7 @@ function addToManaSymbolList(folderPath, newManaSymbolList) {
 	}
 }
 
-addToManaSymbolList('/data/images/cardImages/manaSymbols/', ["0.svg", "1.svg", "2.svg", "3.svg", "4.svg", "5.svg", "6.svg", "7.svg", "8.svg", "9.svg", "10.svg", "11.svg", "12.svg", "13.svg", "14.svg", "15.svg", "16.svg", "17.svg", "18.svg", "19.svg", "20.svg", "w.svg", "u.svg", "b.svg", "r.svg", "g.svg", "2w.svg", "2u.svg", "2b.svg", "2r.svg", "2g.svg", "pw.svg", "pu.svg", "pb.svg", "pr.svg", "pg.svg", "wu.svg", "wb.svg", "ub.svg", "ur.svg", "br.svg", "bg.svg", "rg.svg", "rw.svg", "gw.svg", "gu.svg", "x.svg", "s.svg", "c.svg", "t.svg","untap.svg", "e.svg", "y.svg", "z.svg", "half.svg", "inf.svg", "chaos.svg", "l+", "l-", "l0", "oldtap.svg", "artistbrush.svg", "bar", "whitebar", "whiteBrush", "blackBrush", 'star.svg'])
+addToManaSymbolList('/data/images/cardImages/manaSymbols/', ["0.svg", "1.svg", "2.svg", "3.svg", "4.svg", "5.svg", "6.svg", "7.svg", "8.svg", "9.svg", "10.svg", "11.svg", "12.svg", "13.svg", "14.svg", "15.svg", "16.svg", "17.svg", "18.svg", "19.svg", "20.svg", "w.svg", "u.svg", "b.svg", "r.svg", "g.svg", "2w.svg", "2u.svg", "2b.svg", "2r.svg", "2g.svg", "pw.svg", "pu.svg", "pb.svg", "pr.svg", "pg.svg", "wu.svg", "wb.svg", "ub.svg", "ur.svg", "br.svg", "bg.svg", "rg.svg", "rw.svg", "gw.svg", "gu.svg", "x.svg", "s.svg", "c.svg", "t.svg","untap.svg", "e.svg", "y.svg", "z.svg", "half.svg", "inf.svg", "chaos.svg", "l+", "l-", "l0", "oldtap.svg", "artistbrush.svg", "bar", "whitebar", "whiteBrush", "blackBrush", 'star.svg', "p.svg"])
 
 function newCanvas(name) {
 	window[name + 'Canvas'] = document.createElement('canvas')
@@ -397,7 +397,7 @@ function loadMaskImages(listOfMasks) {
 			maskImageList.push(maskImage)
 			maskNameList.push(listOfMasks[i][0])
 		}
-		
+
 	}
 }
 function loadFrameImages(listOfFrames, frameClass) {

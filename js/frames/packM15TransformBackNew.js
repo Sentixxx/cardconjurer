@@ -4,7 +4,7 @@ var bounds = {x:0.7573, y:0.8848, width:0.188, height:0.0733};
 //defines available frames
 availableFrames = [
 	{name:'White Frame', src:'/img/frames/m15/transform/regular/new/backW.png', masks:masks},
-	{name:'Blue Frame', src:'/img/frames/m15/transform/regular//new/backU.png', masks:masks},
+	{name:'Blue Frame', src:'/img/frames/m15/transform/regular/new/backU.png', masks:masks},
 	{name:'Black Frame', src:'/img/frames/m15/transform/regular/new/backB.png', masks:masks},
 	{name:'Red Frame', src:'/img/frames/m15/transform/regular/new/backR.png', masks:masks},
 	{name:'Green Frame', src:'/img/frames/m15/transform/regular/new/backG.png', masks:masks},

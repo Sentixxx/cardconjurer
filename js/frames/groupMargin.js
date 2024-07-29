@@ -1,8 +1,9 @@
 loadFramePacks([
 	{name:'Generic Margins', value:'Margin-1'},
+	{name:'Memory Corridor Margins', value:'MarginMemoryCorridor'},
 	{name:'Breaking News Margin', value:'MarginBreakingNews'},
-	{name:'Vault Margin', value:'MarginVault'},
-	{name:'Wanted Poster Margin', value:'MarginWanted'},
+	{name:'Vault Margins', value:'MarginVault'},
+	{name:'Wanted Poster Margins', value:'MarginWanted'},
 	{name:'Enchanting Tales Margins', value:'MarginEnchantingTales'},
 	{name:'LTR Ring Margins', value:'MarginRing'},
 	{name:'D&D Module Margins', value:'MarginDNDModule'},
