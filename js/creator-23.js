@@ -777,6 +777,7 @@ function autoFrame() {
 	var frame = document.querySelector('#autoFrame').value;
 	if (frame == 'false') { autoFramePack = null; return; }
 	var colors = [];
+	var types = card.text.type.text.toLowerCase();
 	var rules = card.text.rules.text.toLowerCase();
 	var name = card.text.title.text.toLowerCase();
 	for(var i = 0; i < rules.length - name.length; i++) {
