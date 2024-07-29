@@ -1,5 +1,6 @@
 loadFramePacks([
 	{name:'Set Showcase Frames (Chronological)', value:'disabled'},
+	{name:'Memory Corridor (ACR)', value:'MemoryCorridor'},
 	{name:'Breaking News (OTP)', value:'BreakingNews'},
 	{name:'Vault (BIG)', value:'Vault'},
 	{name:'Wanted Poster (OTJ)', value:'Wanted'},

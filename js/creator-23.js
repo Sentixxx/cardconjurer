@@ -133,10 +133,10 @@ async function resetCardIrregularities({canvas = [getStandardWidth(), getStandar
 		}
 	});
 	if (resetOthers) {
-		setBottomInfoStyle();		
+		setBottomInfoStyle();
 		//onload
 		card.onload = null;
-		
+
 		card.hideBottomInfoBorder = false;
 		card.showsFlavorBar = true;
 	}
@@ -323,8 +323,8 @@ const mana = new Map();
 // var manaSymbols = [];
 loadManaSymbols(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
 				 'w', 'u', 'b', 'r', 'g', 'c', 'x', 'y', 'z', 't', 'untap', 's', 'oldtap', 'originaltap', 'purple', "inf", "alchemy"]);
-loadManaSymbols(true, ['e', 'a']);
-loadManaSymbols(['wu', 'wb', 'ub', 'ur', 'br', 'bg', 'rg', 'rw', 'gw', 'gu', '2w', '2u', '2b', '2r', '2g', 'wp', 'up', 'bp', 'rp', 'gp', 'p',
+loadManaSymbols(true, ['e', 'a', 'p']);
+loadManaSymbols(['wu', 'wb', 'ub', 'ur', 'br', 'bg', 'rg', 'rw', 'gw', 'gu', '2w', '2u', '2b', '2r', '2g', 'wp', 'up', 'bp', 'rp', 'gp', 'h',
 				 'wup', 'wbp', 'ubp', 'urp', 'brp', 'bgp', 'rgp', 'rwp', 'gwp', 'gup', 'purplew', 'purpleu', 'purpleb', 'purpler', 'purpleg',
 				 '2purple', 'purplep', 'cw', 'cu', 'cb', 'cr', 'cg'], [1.2, 1.2]);
 loadManaSymbols(['bar.png', 'whitebar.png']);
@@ -1119,7 +1119,7 @@ async function autoM15NewFrame(colors, mana_cost, type_line, power, style = 'reg
 				frames.push(makeM15NewFrameByLetter(properties.pinlineRight, 'Inner Crown', true, style));
 			}
 
-			frames.push(makeM15NewFrameByLetter(properties.pinline, 'Inner Crown', false, style));			
+			frames.push(makeM15NewFrameByLetter(properties.pinline, 'Inner Crown', false, style));
 		}
 
 		if (properties.pinlineRight) {
@@ -4787,8 +4787,8 @@ function drawCard() {
 	} else {
 		cardContext.drawImage(bottomInfoCanvas, 0, 0, cardCanvas.width, cardCanvas.height);
 	}
-	
-	
+
+
 	// cutout the corners
 	cardContext.globalCompositeOperation = 'destination-out';
 	if (!card.noCorners && (card.marginX == 0 && card.marginY == 0)) {
@@ -4874,7 +4874,7 @@ function scryfallCardFromText(text) {
 	}
 
 	lines = lines.map(item => item.trim()).filter(item => item != "");
-  
+
   	var name = lines.shift();
   	var manaCost;
   	var manaCostStartIndex = name.indexOf("{");
@@ -4882,26 +4882,26 @@ function scryfallCardFromText(text) {
   	  manaCost = name.substring(manaCostStartIndex).trim();
   	  name = name.substring(0, manaCostStartIndex).trim();
   	}
-  
+
  	 var cardObject = {
  	   "name": name,
  	   "lang": "en"
  	 };
-  	
+
  	 if (manaCost !== undefined) {
   	  cardObject.mana_cost = manaCost;
  	 }
-  	
+
   	if (lines.count == 0) {
   	  return cardObject;
   	}
-  	
+
  	 cardObject.type_line = lines.shift().trim();
-  
+
   if (lines.count == 0) {
     return cardObject;
   }
-  
+
   var regex = /[0-9+\-*]+\/[0-9+*]+/
   var match = lines[lines.length-1].match(regex);
   if (match) {
@@ -4910,13 +4910,13 @@ function scryfallCardFromText(text) {
     cardObject.toughness = pt[1];
     lines.pop();
   }
-  
+
   if (lines.count == 0) {
     return cardObject;
   }
-  
+
   cardObject.oracle_text = lines.join("\n");
-  
+
   return cardObject;
 }
 
@@ -5014,7 +5014,7 @@ function changeCardIndex() {
 				card.text.middleStatTitle.text = '';
 				card.text.rightStatTitle.text = '';
 			}
-			
+
 		} else {
 				if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
 					card.text.rules.text = "{fontCStext}" + rulesText;
@@ -5023,7 +5023,7 @@ function changeCardIndex() {
 					card.text.rules.text = langFontCode + rulesText;
 				}
 		}
-		
+
 		if (cardToImport.flavor_text) {
 			var flavorText = cardToImport.flavor_text;
 			var flavorTextCounter = 1;
@@ -5046,7 +5046,7 @@ function changeCardIndex() {
 					card.text.rules.text += '{flavor}';
 					card.text.rulesnoncreature.text += curlyQuotes(flavorText.replace('\n', '{lns}'));
 				}
-				
+
 			} else {
 				if (!cardToImport.oracle_text || cardToImport.oracle_text == '') {
 					card.text.rules.text += '{i}';
@@ -5060,7 +5060,7 @@ function changeCardIndex() {
 				card.text.rules.text += curlyQuotes(flavorText.replace('\n', '{lns}'));
 			}
 
-			
+
 		}
 	} else if (card.text.case) {
 		rulesText = rulesText.replace(/(\r\n|\r|\n)/g, '//{bar}//');
@@ -5168,7 +5168,7 @@ function changeCardIndex() {
 						document.querySelector('#info-number').value = number;
 					}
 
-					
+
 					bottomInfoEdited();
 				}
 			}
