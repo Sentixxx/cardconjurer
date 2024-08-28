@@ -38,6 +38,7 @@ const frameNames = new Map ([
 	['Colorshifted (Planar Chaos)', 'Colorshifted'],
 	['Brawl Legend Crowns', 'Brawl'],
 	//showcase
+	['Woodland (BLB)', 'Woodland'],
 	['Memory Corridor (ACR) (Assassin\'s Creed)', 'MemoryCorridor'],
 	['Breaking News (OTP)', 'BreakingNews'],
 	['Vault (BIG)', 'Vault'],
