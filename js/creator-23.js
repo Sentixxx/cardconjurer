@@ -4345,7 +4345,7 @@ function changeArtIndex() {
 	if (artIndexValue != 0 || artIndexValue == '0') {
 		const scryfallCardForArt = scryfallArt[artIndexValue];
 		uploadArt(scryfallCardForArt.image_uris.art_crop, 'autoFit');
-		if(localStorage.getItem('enableImportCollectorInfo') == 'true') {
+		if(localStorage.getItem('enableImportCollectorInfo') == 'true' || localStorage.getItem('enableImportArtist') == 'true') {
 			artistEdited(scryfallCardForArt.artist);
 		}
 		if (params.get('mtgpics') != null) {
@@ -4700,6 +4700,12 @@ function enableCollectorInfo() {
 }
 function enableImportCollectorInfo() {
 	localStorage.setItem('enableImportCollectorInfo', document.querySelector('#enableImportCollectorInfo').checked);
+}
+function enableImportArtist() {
+	localStorage.setItem(
+        "enableImportArtist",
+        document.querySelector("#enableImportArtist").checked
+    );
 }
 function setAutoFrame() {
 	var value = document.querySelector('#autoFrame').value;
@@ -5160,60 +5166,73 @@ function changeCardIndex() {
 		});
 	textEdited();
 	//collector's info
-	if (localStorage.getItem('enableImportCollectorInfo') == 'true') {
-		document.querySelector('#info-number').value = cardToImport.collector_number || "";
-		document.querySelector('#info-rarity').value = (cardToImport.rarity || "")[0].toUpperCase();
-		document.querySelector('#info-set').value = (cardToImport.set || "").toUpperCase();
-		if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
-			document.querySelector('#info-language').value = ("cs").toUpperCase();
-		}
-		else {
-			document.querySelector('#info-language').value = (cardToImport.lang || "").toUpperCase();
-		}
-		var setXhttp = new XMLHttpRequest();
-		setXhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var setObject = JSON.parse(this.responseText)
-				if (document.querySelector('#enableNewCollectorStyle').checked) {
-					var number = document.querySelector('#info-number').value;
+	if (
+        localStorage.getItem("enableImportCollectorInfo") == "true"
+    ) {
+        document.querySelector("#info-number").value =
+            cardToImport.collector_number || "";
+        document.querySelector("#info-rarity").value = (cardToImport.rarity ||
+            "")[0].toUpperCase();
+        document.querySelector("#info-set").value = (
+            cardToImport.set || ""
+        ).toUpperCase();
+        if (cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
+            document.querySelector("#info-language").value = "cs".toUpperCase();
+        } else {
+            document.querySelector("#info-language").value = (
+                cardToImport.lang || ""
+            ).toUpperCase();
+        }
+        var setXhttp = new XMLHttpRequest();
+        setXhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var setObject = JSON.parse(this.responseText);
+                if (
+                    document.querySelector("#enableNewCollectorStyle").checked
+                ) {
+                    var number = document.querySelector("#info-number").value;
 
-					while (number.length < 4) {
-						number = '0' + number;
-					}
+                    while (number.length < 4) {
+                        number = "0" + number;
+                    }
 
-					document.querySelector('#info-number').value = number;
+                    document.querySelector("#info-number").value = number;
 
-					bottomInfoEdited();
-				} else if (setObject.printed_size) {
-					var number = document.querySelector('#info-number').value;
+                    bottomInfoEdited();
+                } else if (setObject.printed_size) {
+                    var number = document.querySelector("#info-number").value;
 
-					while (number.length < 3) {
-						number = '0' + number;
-					}
+                    while (number.length < 3) {
+                        number = "0" + number;
+                    }
 
-					var printedSize = setObject.printed_size;
-					while (printedSize.length < 3) {
-						printedSize = '0' + printedSize;
-					}
+                    var printedSize = setObject.printed_size;
+                    while (printedSize.length < 3) {
+                        printedSize = "0" + printedSize;
+                    }
 
-					if (parseInt(number) <= parseInt(printedSize)) {
-						document.querySelector('#info-number').value = number + "/" + printedSize;
-					} else {
-						document.querySelector('#info-number').value = number;
-					}
+                    if (parseInt(number) <= parseInt(printedSize)) {
+                        document.querySelector("#info-number").value =
+                            number + "/" + printedSize;
+                    } else {
+                        document.querySelector("#info-number").value = number;
+                    }
 
-
-					bottomInfoEdited();
-				}
-			}
-		}
-		setXhttp.open('GET', "https://api.scryfall.com/sets/" + cardToImport.set, true);
-		try {
-			setXhttp.send();
-		} catch {
-			console.log('Scryfall API search failed.')
-		}
-	}
+                    bottomInfoEdited();
+                }
+            }
+        };
+        setXhttp.open(
+            "GET",
+            "https://api.scryfall.com/sets/" + cardToImport.set,
+            true
+        );
+        try {
+            setXhttp.send();
+        } catch {
+            console.log("Scryfall API search failed.");
+        }
+    }
 	//art
 	document.querySelector('#art-name').value = cardToImport.name;
 	fetchScryfallData(cardToImport.name, artFromScryfall, 'art');
@@ -5724,6 +5743,12 @@ if (!localStorage.getItem('enableImportCollectorInfo')) {
 	localStorage.setItem('enableImportCollectorInfo', 'false');
 } else {
 	document.querySelector('#enableImportCollectorInfo').checked = (localStorage.getItem('enableImportCollectorInfo') == 'true');
+}
+if (!localStorage.getItem("enableImportArtist")) {
+    localStorage.setItem("enableImportArtist", "false");
+} else {
+    document.querySelector("#enableImportArtist").checked =
+        localStorage.getItem("enableImportArtist") == "true";
 }
 if (!localStorage.getItem('enableNewCollectorStyle')) {
 	localStorage.setItem('enableNewCollectorStyle', 'false');
