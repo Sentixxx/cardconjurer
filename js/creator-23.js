@@ -3517,7 +3517,7 @@ function writeText(textObject, targetContext) {
 		newSplitText = [];
 		splitText.forEach((item, index) => {
 			if (item.includes('{') && item.includes('}')) {
-				newSplitText.push(item);
+				newSplitText.push(item, '{lns}');
 			} else if (item == ' ') {
 				newSplitText.push(`{down${scaleHeight(0.01)}}`);
 			} else {
@@ -3760,7 +3760,7 @@ function writeText(textObject, targetContext) {
 					if (word.includes('set')) {
 						var bottomTextSubstring = card.bottomInfo.midLeft.text.substring(0, card.bottomInfo.midLeft.text.indexOf('  {savex}')).replace('{elemidinfo-set}', document.querySelector('#info-set').value || '').replace('{elemidinfo-language}', document.querySelector('#info-language').value || '');
 						justifyWidth = lineContext.measureText(bottomTextSubstring).width;
-					} else if (word.includes('number') && wordToWrite.includes('/') && card.version != 'pokemon') {
+					} else if (word.includes('number') && wordToWrite.includes('/') && !['pokemon', '8thPlaytest'].includes(card.version)) {
 						fillJustify = true;
 						wordToWrite = Array.from(wordToWrite).join(' ');
 					}

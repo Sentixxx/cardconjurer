@@ -1,5 +1,7 @@
 loadFramePacks([
 	{name:'Set Showcase Frames (Chronological)', value:'disabled'},
+	{name:'Paranormal (DSK)', value:'Paranormal'},
+	{name:'Bloomburrow Borderless (BLB)', value:'BloomburrowBorderless'},
 	{name:'Woodland (BLB)', value:'Woodland'},
 	{name:'Memory Corridor (ACR)', value:'MemoryCorridor'},
 	{name:'Breaking News (OTP)', value:'BreakingNews'},
@@ -7,6 +9,9 @@ loadFramePacks([
 	{name:'Wanted Poster (OTJ)', value:'Wanted'},
 	{name:'Pip-Boy (PIP)', value:'Pipboy'},
 	{name:'Dossier (MKM)', value:'Dossier'},
+	{name:'Legends of Ixalan - Pattern 1 (LCI)', value:'IxalanLegends1'},
+	{name:'Legends of Ixalan - Pattern 2 (LCI)', value:'IxalanLegends2'},
+	{name:'Legends of Ixalan - Pattern 3 (LCI)', value:'IxalanLegends3'},
 	{name:'Scrolls of Middle-earth (LTR)', value:'Scroll'},
 	{name:'Enchanting Tales (WOT)', value:'EnchantingTales'},
 	{name:'Eldraine Storybooks: Adventures (WOE)', value:'StorybookWOE'},
