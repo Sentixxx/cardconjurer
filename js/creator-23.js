@@ -780,11 +780,13 @@ function autoFrame() {
 	var types = card.text.type.text.toLowerCase();
 	var rules = card.text.rules.text.toLowerCase();
 	var name = card.text.title.text.toLowerCase();
-	for(var i = 0; i < rules.length - name.length; i++) {
-		//replace cardname with CARDNAME in rules
-		if (rules.slice(i, i + name.length) == name) {
-			rules = rules.slice(0, i) + '{CARDNAME}' + rules.slice(i + name.length);
-			i += 7;
+	if(name != "") {
+		for(var i = 0; i < rules.length - name.length; i++) {
+			//replace cardname with CARDNAME in rules
+			if (rules.slice(i, i + name.length) == name) {
+				rules = rules.slice(0, i) + '{CARDNAME}' + rules.slice(i + name.length);
+				i += 7;
+			}
 		}
 	}
 	if (card.text.type.text.toLowerCase().includes('land')) {
