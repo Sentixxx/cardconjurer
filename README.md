@@ -87,3 +87,10 @@ http://localhost:4242/
 `cardconjurer/local_art/my_art.jpg`
 您可以通过输入以下内容在"Via URL"框中加载它：
 `my_art.jpg`，然后按回车键。
+
+## 使用中文字体
+
+如果你希望在你的卡图中使用中文字体，可以使用以下代码来添加中文字体：
+{fontCStitle} 中文标题/类别字体
+{fontCStext} 中文正文字体
+{fontCSflavor} 中文风味文字
