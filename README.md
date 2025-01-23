@@ -12,6 +12,9 @@ Card Conjurer 是由一位热衷于《万智牌》的玩家创建的，并逐渐
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg?longCache=true&style=popout)](https://www.paypal.me/kyleburtondonate) ← 捐赠 Card Conjurer 的原作者 Kyle。
 
+## 使用可执行文件启动
+Windows: 直接运行launcher.exe即可
+
 ## 使用 Docker 启动（http://localhost:4242/）
 
 <details>
