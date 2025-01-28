@@ -5713,8 +5713,8 @@ async function fetchLocalData(cardName, callback = console.log, isDatabaseEnable
 				face_name: itemArray[3],
 				flavorName: itemArray[4],
                 type_line: itemArray[5],
-                oracle_text: itemArray[6],
-                flavor_text: itemArray[7],
+                oracle_text: itemArray[6].replace(/\\n/g, '\n'),
+                flavor_text: itemArray[7].replace(/\\n/g, '\n'),
 				mana_cost: itemArray[10],
                 lang: 'cs',
             };
