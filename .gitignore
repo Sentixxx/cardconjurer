@@ -3,6 +3,8 @@ CORS.json
 *.bat
 *.bak
 dev/*
+*.sqlite
+zhs.*
 
 # dependencies
 /node_modules

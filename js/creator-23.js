@@ -4864,8 +4864,35 @@ function downloadCard(alt = false, jpeg = false) {
 		}
 	}
 }
+
+function localImportCard(cardObject) {
+	console.log(cardObject);
+	scryfallCard = cardObject
+	const importIndex = document.querySelector("#import-index");
+	importIndex.innerHTML = null;
+	var optionIndex = 0;
+	cardObject.forEach((card) => {
+		if (card.type && card.type != "Card") {
+			var option = document.createElement("option");
+			var title = `${card.name} `;
+			if (document.querySelector("#importAllPrints").checked) {
+				title += `(${card.set.toUpperCase()} #${
+					card.collector_number
+				})`;
+			} else {
+				title += `(${card.type_line})`;
+			}
+			option.innerHTML = title;
+			option.value = optionIndex;
+			importIndex.appendChild(option);
+		}
+		optionIndex++;
+	});
+	changeCardIndex();
+}
 //IMPORT/SAVE TAB
 function importCard(cardObject) {
+	console.log(cardObject);
 	scryfallCard = cardObject;
 	const importIndex = document.querySelector('#import-index');
 	importIndex.innerHTML = null;
@@ -4972,7 +4999,11 @@ function changeCardIndex() {
 	if (card.text.mana) {card.text.mana.text = cardToImport.mana_cost || '';}
 	if (card.text.type) {
 		if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {
-			cardToImport.type_line = cardToImport.type_line.replace(' ～', '～');
+			cardToImport.type_line = cardToImport.type_line.replace("～", "～");
+			cardToImport.type_line = cardToImport.type_line.replace(
+                " — ",
+                "～"
+            );
 		}
 		card.text.type.text = langFontCode + cardToImport.type_line || '';}
 
@@ -5242,7 +5273,11 @@ function loadAvailableCards(cardKeys = JSON.parse(localStorage.getItem('cardKeys
 }
 function importChanged() {
 	var unique = document.querySelector('#importAllPrints').checked ? 'prints' : '';
-	fetchScryfallData(document.querySelector("#import-name").value, importCard, unique);
+	if(document.querySelector("#enableDatabase").checked){
+        fetchLocalData(document.querySelector("#import-name").value, importCard, true);
+    } else{
+		fetchScryfallData(document.querySelector("#import-name").value, importCard, unique);
+	}
 }
 function saveCard(saveFromFile) {
 	var cardKeys = JSON.parse(localStorage.getItem('cardKeys')) || [];
@@ -5630,7 +5665,40 @@ function fetchScryfallCardByCodeNumber(code, number, callback = console.log) {
 		console.log('Scryfall API search failed.')
 	}
 }
-
+async function fetchLocalData(cardName, callback = console.log, isDatabaseEnabled) {
+	if (!isDatabaseEnabled) {
+		fetchScryfallData(cardName, callback, '');
+	} else {
+		if(cardName == '' || cardName == null) {
+			return;
+		}
+		// console.log(db);
+		let sql_str = "SELECT zhs.*, cards.manaCost FROM zhs JOIN cards ON zhs.uuid = cards.uuid WHERE zhs.name LIKE '%" + cardName + "%'";
+		const res = db.exec(sql_str);
+		const json_res = JSON.stringify(res);
+		const json_obj = JSON.parse(json_res)[0].values;
+		console.log(json_obj);
+		const processedArray = json_obj.map((itemArray) => {
+            // 将一维数组转换为对象
+            const resultObject = {
+				object: 'card',
+                id: itemArray[0],
+                number: itemArray[1],
+                name: itemArray[2],
+				face_name: itemArray[3],
+				flavorName: itemArray[4],
+                type_line: itemArray[5],
+                oracle_text: itemArray[6],
+                flavor_text: itemArray[7],
+				mana_cost: itemArray[10],
+                lang: 'cs',
+            };
+            return resultObject;
+        });
+		console.log(processedArray);
+		callback(processedArray);
+	}
+}
 //SCRYFALL STUFF MAY BE CHANGED IN THE FUTURE
 function fetchScryfallData(cardName, callback = console.log, unique = '') {
 	var xhttp = new XMLHttpRequest();
