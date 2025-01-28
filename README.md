@@ -97,3 +97,7 @@ http://localhost:4242/
 {fontCStitle} 中文标题/类别字体
 {fontCStext} 中文正文字体
 {fontCSflavor} 中文风味文字
+
+## 使用本地数据库
+如果你希望使用本地数据库
+请从[sbwsz](https://onedrive.live.com/?id=4B4B47486B41D73C!1078446&resid=4B4B47486B41D73C!1078446&authkey=!ABPz1zAV13mR1UI&cid=4b4b47486b41d73c)处获取数据库文件，下载后放入`data`文件夹中
