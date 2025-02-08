@@ -650,14 +650,12 @@
 								<input id='importAllPrints' type='checkbox' onchange="importChanged();">
 								<span class='checkmark'></span>
 							</label>
-							<label class='checkbox-container input margin-bottom'>Use local database
-								<input id="enableDatabase" type="checkbox" onchange="importChanged();">
-								<span class='checkmark'></span>
-							</label>
-							<label class='checkbox-container input margin-bottom'>Use SBWSZ database
-								<input id="enableSBWSZ" type="checkbox" onchange="importChanged();">
-								<span class='checkmark'></span>
-							</label>
+							<h5 class='padding input-description'>Select a datasource for card imports</h5>
+							<select class='input' id='datasource' onchange='importChanged();'>
+								<option value="scryfall">Scryfall</option>
+								<option value="sbwsz">SBWSZ</option>
+								<option value="local">Local</option>
+							</select>
 							<h5 class='padding margin-bottom input-description'>Select a specific card to import</h5>
 							<select class='input margin-bottom' id='import-index' onchange='changeCardIndex();'></select>
 							<h5 class='padding input-description'>Select a language for card imports (not all languages will always be available)</h5>

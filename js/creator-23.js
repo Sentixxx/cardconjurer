@@ -5244,12 +5244,12 @@ function changeCardIndex() {
     }
 	//art
 	document.querySelector('#art-name').value = cardToImport.name;
-	if(!document.querySelector('#enableSBWSZ').checked && !document.querySelector('#enableDatabase').checked) {
+	if(document.querySelector("#datasource").value == "scryfall") {
 		fetchScryfallData(cardToImport.name, artFromScryfall, 'art');
 	}
 	if (document.querySelector('#importAllPrints').checked) {
-		// document.querySelector('#art-index').value = document.querySelector('#import-index').value;
-		// changeArtIndex();
+		document.querySelector('#art-index').value = document.querySelector('#import-index').value;
+		changeArtIndex();
 	}
 	//set symbol
 	if (!document.querySelector('#lockSetSymbolCode').checked) {
@@ -5275,11 +5275,12 @@ function loadAvailableCards(cardKeys = JSON.parse(localStorage.getItem('cardKeys
 }
 function importChanged() {
 	var unique = document.querySelector('#importAllPrints').checked ? 'prints' : '';
-	if(document.querySelector("#enableDatabase").checked){
-        fetchLocalData(document.querySelector("#import-name").value, importCard, true);
-    } else if(document.querySelector("#enableSBWSZ").checked){
-		fetchSBWSZData(document.querySelector("#import-name").value, importCard, unique);
-	} else{
+	var datasource = document.querySelector("#datasource").value;
+	if(datasource === "local"){
+		fetchLocalData(document.querySelector("#import-name").value, importCard, true);
+	} else if(datasource === "sbwsz"){
+		fetchSBWSZData(document.querySelector("#import-name").value, importCard, unique); 
+	} else {
 		fetchScryfallData(document.querySelector("#import-name").value, importCard, unique);
 	}
 }
