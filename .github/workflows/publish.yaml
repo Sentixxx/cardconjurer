@@ -1,32 +1,53 @@
-# name: publish
+name: publish
 
-# on:
-#   push:
-#     branches:
-#     - master
+on:
+  push:
+    branches:
+      - cn-release
+  workflow_dispatch:
 
-# permissions:
-#   id-token: write
-#   contents: read
+jobs:
+  upload:
+    runs-on: ubuntu-latest
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-#     steps:
-#     - uses: actions/checkout@v4
-#       with:
-#         fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files_ignore: |
+            .github/**
+            .git/**
+            launcher*
+            Makefile
+            Dockerfile
 
-#     - name: Configure AWS Credentials
-#       uses: aws-actions/configure-aws-credentials@v4
-#       with:
-#         aws-region: us-east-1
-#         role-to-assume: arn:aws:iam::353102230615:role/cardconjurer-publish
+      - name: Install OSS CLI
+        run: |
+          curl -o ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.11/ossutil64
+          chmod +x ossutil64
+          sudo mv ossutil64 /usr/local/bin/ossutil
 
-#     - name: Restore file timestamps
-#       uses: chetan/git-restore-mtime-action@v2
+      - name: Configure OSS CLI
+        run: |
+          echo "[Credentials]" > ~/.ossutilconfig
+          echo "accessKeyID=${{ secrets.ALIYUN_OSS_ACCESS_KEY_ID }}" >> ~/.ossutilconfig
+          echo "accessKeySecret=${{ secrets.ALIYUN_OSS_ACCESS_KEY_SECRET }}" >> ~/.ossutilconfig
+          echo "endpoint=${{ secrets.ALIYUN_OSS_ENDPOINT }}" >> ~/.ossutilconfig
 
-#     - name: Sync files to the S3 bucket
-#       run: |
-#         aws s3 sync --exclude '.git/*' --delete ./ s3://cardconjurer.app/
+      - name: Upload changed files to OSS
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            ossutil cp "$file" "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/$file" -u --include "*"
+          done
+
+    env:
+      ALIYUN_OSS_BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
+      ALIYUN_OSS_ACCESS_KEY_ID: ${{ secrets.ALIYUN_OSS_ACCESS_KEY_ID }}
+      ALIYUN_OSS_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_OSS_ACCESS_KEY_SECRET }}
+      ALIYUN_OSS_ENDPOINT: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
