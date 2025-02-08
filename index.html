@@ -92,19 +92,5 @@
 		</div>
 	</div>
 
-	<script>
-		let db;
-		// 加载SQLite数据库
-		const loadDatabase = async () => {
-			// 等待sql.js库加载完成
-			const SQL = await initSqlJs({ locateFile: filename => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${filename}` });
-			const response = await fetch('data/zhs.sqlite'); // 更新为您的SQLite文件路径
-			const data = await response.arrayBuffer();
-			db = new SQL.Database(new Uint8Array(data));
-		};
-
-		loadDatabase();
-	</script>
-
 </body>
 </html>

@@ -5269,7 +5269,9 @@ function changeCardIndex() {
     }
 	//art
 	document.querySelector('#art-name').value = cardToImport.name;
-	fetchScryfallData(cardToImport.name, artFromScryfall, 'art');
+	if(!document.querySelector('#enableSBWSZ').checked && !document.querySelector('#enableDatabase').checked) {
+		fetchScryfallData(cardToImport.name, artFromScryfall, 'art');
+	}
 	if (document.querySelector('#importAllPrints').checked) {
 		// document.querySelector('#art-index').value = document.querySelector('#import-index').value;
 		// changeArtIndex();
@@ -5300,7 +5302,9 @@ function importChanged() {
 	var unique = document.querySelector('#importAllPrints').checked ? 'prints' : '';
 	if(document.querySelector("#enableDatabase").checked){
         fetchLocalData(document.querySelector("#import-name").value, importCard, true);
-    } else{
+    } else if(document.querySelector("#enableSBWSZ").checked){
+		fetchSBWSZData(document.querySelector("#import-name").value, importCard, unique);
+	} else{
 		fetchScryfallData(document.querySelector("#import-name").value, importCard, unique);
 	}
 }
@@ -5461,7 +5465,7 @@ function uploadSavedCards(event) {
 function loadTutorialVideo() {
 	var video = document.querySelector('.video > iframe');
 	if (video.src == '') {
-		video.src = 'https://www.youtube-nocookie.com/embed/e4tnOiub41g?rel=0';
+		video.src = 'https://player.bilibili.com/player.html?isOutside=true&aid=113906324346763&bvid=BV1mZFsegE2p&cid=28127986929&p=1';
 	}
 }
 // GUIDELINES
@@ -5617,6 +5621,7 @@ function stretchSVGReal(data, frameObject) {
 	});
 	return returnData;
 }
+
 function processScryfallCard(card, responseCards) {
 	if ('card_faces' in card) {
 		card.card_faces.forEach(face => {
@@ -5690,6 +5695,16 @@ function fetchScryfallCardByCodeNumber(code, number, callback = console.log) {
 		console.log('Scryfall API search failed.')
 	}
 }
+let db = null;
+
+async function loadDatabase() {
+    const [SQL, response] = await Promise.all([
+        initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}` }),
+        fetch('data/zhs.sqlite').then(res => res.arrayBuffer())
+    ]);
+    return new SQL.Database(new Uint8Array(response));
+}
+
 async function fetchLocalData(cardName, callback = console.log, isDatabaseEnabled) {
 	if (!isDatabaseEnabled) {
 		fetchScryfallData(cardName, callback, '');
@@ -5697,12 +5712,14 @@ async function fetchLocalData(cardName, callback = console.log, isDatabaseEnable
 		if(cardName == '' || cardName == null) {
 			return;
 		}
-		// console.log(db);
+
+		if(db == null) {
+			db = await loadDatabase();
+		}
 		let sql_str = "SELECT zhs.*, cards.manaCost FROM zhs JOIN cards ON zhs.uuid = cards.uuid WHERE zhs.name LIKE '%" + cardName + "%'";
 		const res = db.exec(sql_str);
 		const json_res = JSON.stringify(res);
 		const json_obj = JSON.parse(json_res)[0].values;
-		console.log(json_obj);
 		const processedArray = json_obj.map((itemArray) => {
             // 将一维数组转换为对象
             const resultObject = {
@@ -5720,8 +5737,99 @@ async function fetchLocalData(cardName, callback = console.log, isDatabaseEnable
             };
             return resultObject;
         });
-		console.log(processedArray);
 		callback(processedArray);
+	}
+}
+function getValidString(...values) {
+	return values.find(value => value?.trim?.() !== "" && value !== null) ?? "";
+}
+
+
+async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
+	if(cardName == '') {
+		return;
+	}
+	var xhttp = new XMLHttpRequest();
+
+	responseCards = [];
+	var unique_map = {};
+	xhttp.onreadystatechange = function () {
+		if (this.readyState == 4 && this.status == 200) {
+			let importedCards = JSON.parse(this.responseText).results;
+			console.log(importedCards);
+	
+			if (!Array.isArray(importedCards) || importedCards.length === 0) {
+				notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
+				return;
+			}
+	
+			let fetchPromises = importedCards.map(card => {
+				return new Promise((resolve, reject) => {
+					let xhttp_single = new XMLHttpRequest();
+					xhttp_single.onreadystatechange = function () {
+						if (this.readyState == 4) {
+							if (this.status == 200) {
+								let cardDetails = JSON.parse(this.responseText).data;
+								cardDetails.forEach(cardDetail => {
+									if ('zhs_faceName' in cardDetail && cardDetail.zhs_faceName != '' && cardDetail.zhs_faceName != null) {
+										cardDetail.name = getValidString(cardDetail.zhs_faceName, cardDetail.faceName);
+									} else {
+										cardDetail.name = getValidString(cardDetail.zhs_name, cardDetail.translatedName);
+									}
+									
+									cardDetail.lang = "cs";
+									cardDetail.oracle_text = getValidString(cardDetail.zhs_text, cardDetail.translatedText);
+									cardDetail.type_line = getValidString(cardDetail.zhs_type, cardDetail.translatedType);
+									cardDetail.mana_cost = getValidString(cardDetail.manaCost);
+									cardDetail.flavor_text = getValidString(cardDetail.zhs_flavorText, cardDetail.zhs_translatedFlavorText);
+									cardDetail.flavorName = getValidString(cardDetail.translatedFlavorName, cardDetail.zhs_translatedFlavorName);
+									cardDetail.set = card.setCode;
+									cardDetail.number = card.number;
+									responseCards.push(cardDetail);
+								});
+								resolve();
+							} else {
+								reject(`Failed to fetch ${card.setCode}/${card.number}`);
+							}
+						}
+					};
+					if(unique_map[card.name]) {
+						resolve();
+						return;
+					}
+					unique_map[card.name] = true;
+					xhttp_single.open('GET', `https://api.sbwsz.com/card/${card.setCode}/${card.number}`, true);
+					xhttp_single.send();
+				});
+			});
+	
+			Promise.all(fetchPromises)
+				.then(() => {
+					// console.log(responseCards);
+					callback(responseCards);
+				})
+				.catch(error => {
+					console.error(error);
+					callback(responseCards);
+				});
+		} else if (this.readyState == 4 && this.status == 404 && !unique && cardName != '') {
+			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
+		}
+	};
+	
+	const query = {
+		type: 'basic',
+		key: 'name',
+		operator: ':',
+		value: cardName,
+	}
+	const encodeQuery = encodeURIComponent(JSON.stringify(query));
+	const url = `https://api.sbwsz.com/search?q=${encodeQuery}`;
+	xhttp.open('GET', url, true);
+	try {
+		xhttp.send();
+	} catch {
+		console.log('SBWSZ API search failed.')
 	}
 }
 //SCRYFALL STUFF MAY BE CHANGED IN THE FUTURE
@@ -5734,6 +5842,7 @@ function fetchScryfallData(cardName, callback = console.log, unique = '') {
 			importedCards.forEach(card => {
 				processScryfallCard(card, responseCards);
 			});
+			console.log(responseCards);
 			callback(responseCards);
 		} else if (this.readyState == 4 && this.status == 404 && !unique && cardName != '') {
 			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
