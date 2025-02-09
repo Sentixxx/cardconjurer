@@ -10,10 +10,11 @@
 	<div class='main-content'>
 		<!-- Popups -->
 		<div id='frame-element-editor' class='frame-element-editor'>
-			<h2 class='frame-element-editor-title'>Frame Image Editor</h2>
+			<h2 class='frame-element-editor-title'>牌框图像编辑器</h2>
 			<h2 class='frame-element-editor-close' onclick='this.parentElement.classList.remove("opened");'>X</h2>
 			<div>
 				<h5 class='input-description'>X</h5>
+
 				<input id='frame-editor-x' class='input' type='number' placeholder='X' step='1'>
 			</div>
 			<div>
@@ -21,41 +22,47 @@
 				<input id='frame-editor-y' class='input' type='number' placeholder='X' step='1'>
 			</div>
 			<div>
-				<h5 class='input-description'>Width</h5>
+				<h5 class='input-description'>宽度</h5>
 				<input id='frame-editor-width' class='input' type='number' placeholder='X' step='1'>
 			</div>
 			<div>
-				<h5 class='input-description'>Height</h5>
+
+				<h5 class='input-description'>高度</h5>
 				<input id='frame-editor-height' class='input' type='number' placeholder='X' step='1'>
 			</div>
 			<div>
-				<h5 class='input-description'>Opacity</h5>
+
+				<h5 class='input-description'>透明度</h5>
 				<input id='frame-editor-opacity' class='input' type='number' placeholder='Opacity' max='100' min='0' step='1'>
 			</div>
 			<div>
-				<h5 class='input-description'>Erase</h5>
-				<label class='checkbox-container input'>Erase Card
-					<input id='frame-editor-erase' type='checkbox' placeholder='Erase'>
+				<h5 class='input-description'>擦除</h5>
+				<label class='checkbox-container input'>擦除卡片
+					<input id='frame-editor-erase' type='checkbox' placeholder='擦除'>
 					<span class='checkmark'></span>
+
 				</label>
 			</div>
 			<div>
-				<h5 class='input-description'>Blending Mode</h5>
-				<label class='checkbox-container input'>Preserve Alpha
-					<input id='frame-editor-alpha' type='checkbox' placeholder='Preserve Alpha'>
+				<h5 class='input-description'>混合模式</h5>
+				<label class='checkbox-container input'>保留Alpha
+					<input id='frame-editor-alpha' type='checkbox' placeholder='保留Alpha'>
 					<span class='checkmark'></span>
+
 				</label>
 			</div>
 			<div>
-				<label class='checkbox-container input'>Color Overlay
-					<input id='frame-editor-color-overlay-check' type='checkbox' placeholder='Color Overlay'>
+				<label class='checkbox-container input'>颜色叠加
+					<input id='frame-editor-color-overlay-check' type='checkbox' placeholder='颜色叠加'>
 					<span class='checkmark'></span>
 				</label>
+
 				<input id='frame-editor-color-overlay' class='input' type='color' placeholder='Color' value='#000000'>
 			</div>
 			<div>
-				<h5 class='input-description'>HSL Adjustments</h5>
+				<h5 class='input-description'>HSL 调整</h5>
 				<input id='frame-editor-hsl-hue-slider' class='input' type='range' min='-180' max='180' value='0' step='1'>
+
 				<input id='frame-editor-hsl-hue' class='input' type='number' min='-180' max='180' value='0' step='1'>
 				<input id='frame-editor-hsl-saturation-slider' class='input' type='range' min='-100' max='100' value='0' step='1'>
 				<input id='frame-editor-hsl-saturation' class='input' type='number' min='-100' max='100' value='0' step='1'>
@@ -63,19 +70,22 @@
 				<input id='frame-editor-hsl-lightness' class='input' type='number' min='-100' max='100' value='0' step='1'>
 			</div>
 			<div>
-				<h5 class='input-description'>Select and remove masks</h5>
+				<h5 class='input-description'>选择并删除蒙版</h5>
 				<select id='frame-editor-masks' class='input margin-bottom'></select>
-				<button onclick='frameElementMaskRemoved();' class='input'>Remove mask</button>
+				<button onclick='frameElementMaskRemoved();' class='input'>删除蒙版</button>
 			</div>
+
 			<div class='drop-area'>
-	            <h5 class='margin-bottom padding input-description'>Drag and drop masks to add</h5>
+	            <h5 class='margin-bottom padding input-description'>拖放蒙版以添加</h5>
 	            <input type='file' multiple accept='.png, .svg, .jpg, .jpeg, .bmp' placeholder='File Upload' class='input' oninput='uploadFiles(event.target.files, uploadMaskOption);' data-dropFunction='uploadMaskOption' data-otherParams=''>
 			</div>
+
 		</div>
 		<div id='textbox-editor' class='textbox-editor'>
-			<h2 class='textbox-editor-title'>Textbox Editor</h2>
+			<h2 class='textbox-editor-title'>文本框编辑器</h2>
 			<h2 class='textbox-editor-close' onclick='this.parentElement.classList.remove("opened");'>X</h2>
 			<div>
+
 				<h5 class='input-description'>X</h5>
 				<input id='textbox-editor-x' class='input' type='number' placeholder='X' step='1'>
 			</div>
@@ -84,294 +94,366 @@
 				<input id='textbox-editor-y' class='input' type='number' placeholder='X' step='1'>
 			</div>
 			<div>
-				<h5 class='input-description'>Width</h5>
+				<h5 class='input-description'>宽度</h5>
 				<input id='textbox-editor-width' class='input' type='number' placeholder='X' step='1'>
 			</div>
+
 			<div>
-				<h5 class='input-description'>Height</h5>
+				<h5 class='input-description'>高度</h5>
 				<input id='textbox-editor-height' class='input' type='number' placeholder='X' step='1'>
 			</div>
+
 		</div>
 		<!-- Regular stuff -->
 		<div class='creator-grid margin-bottom-large'>
 			<canvas class='creator-canvas box-shadow' id='previewCanvas' width='1005' height='1407'></canvas>
 			<div class='creator-menu box-shadow'>
 				<div id='creator-menu-tabs' class='creator-menu-tabs'>
-					<h3 class='selectable readable-background selected' onclick='toggleCreatorTabs(event, "frame")'>Frame</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "text")'>Text</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "art")'>Art</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "setSymbol")'>Set Symbol</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "watermark")'>Watermark</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "bottomInfo")'>Collector</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "import")'>Import/Save</h3>
-					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "tutorial"); loadTutorialVideo();'>Tutorial</h3>
+					<h3 class='selectable readable-background selected' onclick='toggleCreatorTabs(event, "frame")'>牌框</h3>
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "text")'>文本</h3>
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "art")'>卡图</h3>
+
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "setSymbol")'>系列图标</h3>
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "watermark")'>水印</h3>
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "bottomInfo")'>收藏家信息</h3>
+
+
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "import")'>导入/保存</h3>
+					<h3 class='selectable readable-background' onclick='toggleCreatorTabs(event, "tutorial"); loadTutorialVideo();'>教程</h3>
 				</div>
 				<div id='creator-menu-sections' class='margin-bottom'>
+
 					<div id='creator-menu-frame'>
 						<div class='readable-background margin-bottom padding'>
 							<h5 class='margin-bottom padding input-description'>
-								Select a Frame Group and a Frame Pack, or type to search. Then you may Load the selected Frame Version (loading the frame version configures text placement, art size, etc...)</h5>
+								选择一个牌框组和一个牌框包，或者输入搜索。然后你可以加载选中的牌框版本（加载牌框版本配置文本位置、卡图大小等...）</h5>
 							<div class='input-grid margin-bottom'>
+
 								<select id='selectFrameGroup' onchange='loadScript("/js/frames/group" + this.value + ".js")' class='input'>
-									<option disabled>Standard Frames</option>
-									<option value='Standard-3'>Regular</option>
-									<option value='Token-2'>Tokens</option>
-									<option value='Saga-1'>Sagas</option>
-									<option value='Planeswalker'>Planeswalkers</option>
-									<option value='Modal-1'>Modal DFC's</option>
-									<option value='DFC'>Transform</option>
-									<option disabled>Special Frames</option>
-									<option value='Showcase-5'>Showcase Frames</option>
-									<option value='UniversesBeyond'>Universes Beyond</option>
+									<option disabled>标准牌框</option>
+									<option value='Standard-3'>常规</option>
+									<option value='Token-2'>衍生物</option>
+									<option value='Saga-1'>传记</option>
+									<option value='Planeswalker'>鹏洛客</option>
+
+									<option value='Modal-1'>双面</option>
+									<option value='DFC'>转化</option>
+									<option disabled>特殊牌框</option>
+									<option value='Showcase-5'>展示牌框</option>
+									<option value='UniversesBeyond'>无疆新宇宙</option>
 									<option value='Promo-2'>Promos (Tall Art)</option>
-									<option value='Textless-4'>Textless/Fullart</option>
-									<option disabled>Other Frames</option>
-									<option value='Custom'>Custom</option>
-									<option value='Misc-2'>Old/Misc</option>
-									<option value='Accurate'>Accurate Frames</option>
-									<option value='Margin'>1/8th Inch Margin</option>
-									<option disabled>Other Games</option>
+									<option value='Textless-4'>无文本/全卡图</option>
+									<option disabled>其他牌框</option>
+
+
+									<option value='Custom'>自定义</option>
+									<option value='Misc-2'>旧/其他</option>
+									<option value='Accurate'>准确牌框</option>
+									<option value='Margin'>1/8英寸边距</option>
+									<option disabled>其他游戏</option>
 									<option value='FleshAndBlood'>Flesh and Blood</option>
+
 								</select>
 								<select id='selectFramePack' onchange='loadScript("/js/frames/pack" + this.value + ".js")' class='input'></select>
 								<div class="autocomplete"><input id='frameSearch' onchange="frameSearch(this.value)" type='text' class='input' placeholder='Search Frames...'></div>
 							</div>
 							<div class='input-grid margin-bottom'>
-								<button id='loadFrameVersion' class='input'>Load Frame Version</button>
+								<button id='loadFrameVersion' class='input'>加载牌框版本</button>
 							</div>
-							<h5 class='input-description margin-bottom'>Automatically load Frame Version when loading Frame Packs</h5>
-							<label class='checkbox-container input'>Auto load
+							<h5 class='input-description margin-bottom'>自动加载牌框版本当加载牌框包时</h5>
+							<label class='checkbox-container input'>自动加载
+
 								<input id='autoLoadFrameVersion' type='checkbox' onchange='autoLoadFrameVersion();' checked>
 								<span class='checkmark'></span>
 							</label>
 						</div>
 						<div class='readable-background margin-bottom padding'>
-							<h5 class='margin-bottom padding input-description'>Select a Frame Image and a Mask, then add it to your card</h5>
+							<h5 class='margin-bottom padding input-description'>选择一个牌框图像和一个蒙版，然后将其添加到你的卡片上</h5>
 							<div class='split-grid margin-bottom'>
 								<div id='frame-picker' class='frame-picker'></div>
 								<div id='mask-picker' class='mask-picker'></div>
+
 							</div>
 							<div class='input-grid margin-bottom'>
-								<button id='addToFull' class='input' onclick='addFrame()'>Add Frame to Card</button>
-								<button id='addToRightHalf' class='input' onclick='addFrame([{src:"/img/frames/maskRightHalf.png", name:"Right Half"}])'>Add Frame to Card (Right Half)</button>
+								<button id='addToFull' class='input' onclick='addFrame()'>添加牌框到卡片</button>
+								<button id='addToRightHalf' class='input' onclick='addFrame([{src:"/img/frames/maskRightHalf.png", name:"Right Half"}])'>添加牌框到卡片（右半部分）</button>
 							</div>
-							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>More options</h5>
+
+							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>更多选项</h5>
 								<div>
 									<div class='input-grid margin-bottom'>
-										<button id='addToLeftHalf' class='input' onclick='addFrame([{src:"/img/frames/maskLeftHalf.png", name:"Left Half"}])'>Add Frame to Card (Left Half)</button>
-										<button id='addToMiddleThird' class='input' onclick='addFrame([{src:"/img/frames/maskMiddleThird.png", name:"Middle Third"}])'>Add Frame to Card (Middle Third)</button>
+
+										<button id='addToLeftHalf' class='input' onclick='addFrame([{src:"/img/frames/maskLeftHalf.png", name:"Left Half"}])'>添加牌框到卡片（左半部分）</button>
+										<button id='addToMiddleThird' class='input' onclick='addFrame([{src:"/img/frames/maskMiddleThird.png", name:"Middle Third"}])'>添加牌框到卡片（中间三分之一）</button>
 									</div>
-									<h5 class='padding input-description'>You can now double click frames and masks to add them to the card. You can do so while holding the shift, control, or alt keys to add to the right half, left half, or middle third, respectively.</h5>
+
+									<h5 class='padding input-description'>现在可以双击牌框和蒙版来将它们添加到卡片上。你可以按住shift、control或alt键来添加到右半部分、左半部分或中间三分之一，分别。</h5>
 								</div>
-							<h5 id='selectedPreview' class='padding input-description'>(Selected: White Frame, No Mask)</h5>
+
+							<h5 id='selectedPreview' class='padding input-description'>(已选: 白色牌框, 无蒙版)</h5>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Drag to reorder frame images</h5>
+							<h5 class='margin-bottom padding input-description'>拖动重新排序牌框图像</h5>
+
+
 							<div id='frame-list' class='frame-list margin-bottom'></div>
-							<h5 class='padding input-description'>You may also click to edit opacity, position, size, and more</h5>
+							<h5 class='padding input-description'>你也可以点击编辑透明度、位置、大小等</h5>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Upload custom frame images</h5>
+
+							<h5 class='margin-bottom padding input-description'>上传自定义牌框图像</h5>
 							<div class='input-grid'>
 								<div class='padding drop-area'>
-						            <h5 class='margin-bottom padding input-description'>Drag and drop</h5>
+
+						            <h5 class='margin-bottom padding input-description'>拖放</h5>
 						            <input type='file' multiple accept='.png, .svg, .jpg, .jpeg, .bmp' placeholder='File Upload' class='input' oninput='uploadFiles(event.target.files, uploadFrameOption);' data-dropFunction='uploadFrameOption' data-otherParams=''>
 						        </div>
+
 						        <div>
 									<input type='url' placeholder='Via URL' class='input' onchange='imageURL(this.value, uploadFrameOption);'>
 								</div>
 							</div>
 						</div>
 						<div class='readable-background padding'>
-							<h5 class='input-description margin-bottom'>Rounded Corners (When Downloaded)</h5>
-							<label class='checkbox-container input margin-bottom'>Rounded Corners
+							<h5 class='input-description margin-bottom'>圆角（当下载时）</h5>
+							<label class='checkbox-container input margin-bottom'>圆角
 								<input id='rounded-corners' checked="true" type='checkbox' onchange='setRoundedCorners(this.checked);'>
 								<span class='checkmark'></span>
+
 							</label>
-							<h5 class='input-description margin-bottom'>Show guidelines for text, art, watermark, and set symbols</h5>
-							<label class='checkbox-container input margin-bottom'>Guidelines
+							<h5 class='input-description margin-bottom'>显示文本、卡图、水印和系列图标的指示线</h5>
+							<label class='checkbox-container input margin-bottom'>指示线
 								<input id='show-guidelines' type='checkbox' onchange='drawCard();'>
 								<span class='checkmark'></span>
+
+
 							</label>
-							<h5 class='input-description margin-bottom'>Highlight transparencies in card</h5>
-							<label class='checkbox-container input'>Transparencies
+							<h5 class='input-description margin-bottom'>突出显示卡片中的透明度</h5>
+							<label class='checkbox-container input'>透明度
 								<input id='highlight-transparencies' type='checkbox' onchange='toggleCardBackgroundColor(this.checked);'>
+
 								<span class='checkmark'></span>
 							</label>
 						</div>
 					</div>
 					<div id='creator-menu-text' class='hidden'>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Select a text area to edit</h5>
+							<h5 class='margin-bottom padding input-description'>选择一个文本区域进行编辑</h5>
 							<div id='text-options' class='input-grid'></div>
 						</div>
+
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Enter card text</h5>
+							<h5 class='margin-bottom padding input-description'>输入卡片文本</h5>
 							<textarea id='text-editor' class='input margin-bottom' oninput='textEdited();'></textarea>
 							<div class='padding input-grid'>
-								<button class='input' onclick="toggleTextTag('i');">Italic</button>
-								<button class='input' onclick="toggleTextTag('bold');">Bold</button>
+								<button class='input' onclick="toggleTextTag('i');">斜体</button>
+
+								<button class='input' onclick="toggleTextTag('bold');">加粗</button>
 							</div>
-							<h5 class='margin-bottom padding input-description'>Edit the placement and size of the selected textbox</h5>
-							<button class='input' onclick='textboxEditor();'>Edit Bounds</button>
-							<h5 class='margin-bottom padding input-description'>Adjust font size</h5>
+							<h5 class='margin-bottom padding input-description'>编辑选中的文本框的位置和大小</h5>
+							<button class='input' onclick='textboxEditor();'>编辑边界</button>
+
+							<h5 class='margin-bottom padding input-description'>调整字体大小</h5>
 							<input id="text-editor-font-size" class="input" type="number" placeholder="0" value="0" step="1" oninput="fontSizedEdited();">
 						</div>
 						<div class='readable-background padding margin-bottom'>
+
 							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>
-								Text Code / Mana Symbol Code Reference
+								文本代码 / 法术符号代码参考
 							</h5>
 							<div class='padding'>
-								<h5 class='margin-top'>Text Codes:</h5>
+
+								<h5 class='margin-top'>文本代码:</h5>
 								<div class='text-codes margin-bottom padding'>
-									<h5>Code</h5><h5>Result</h5>
-									<h5>{cardname}</h5><h5>Inserts the name of the card (or use a tilde: ~)</h5>
-									<h5>{Lins}</h5><h5>Inserts a small space on left</h5>
-									<h5>{Rins}</h5><h5>Remove a small space on left</h5>
-									<h5>{-}</h5><h5>Inserts an em-dash</h5>
-									<h5>{i}</h5><h5>Italicizes text</h5>
-									<h5>{/i}</h5><h5>Removes italicization</h5>
-									<h5>{bold}</h5><h5>Bolds text</h5>
-									<h5>{/bold}</h5><h5>Removes bold</h5>
-									<h5>{lns}</h5><h5>Moves to the next line without an extra space (stands for line-no-space)</h5>
-									<h5>{divider}</h5><h5>Moves to the next line and draws the flavor text bar</h5>
-									<h5>{flavor}</h5><h5>Moves to the next line, draws the flavor text bar, and italicizes</h5>
-									<h5>{oldflavor}</h5><h5>Italicizes and adds line breaks</h5>
-									<h5>{fontsize#pt}</h5><h5>Changes the font size to #pt (absolute)</h5>
-									<h5>{fontsize#}</h5><h5>Changes the font size by # pixels (relative - use negative integers to shrink text - ie '{fontsize-12}')</h5>
-									<h5>{fontcolor___}</h5><h5>Changes the font color to ___ (ie '{fontcolor#00FF00}')</h5>
-									<h5>{left}</h5><h5>Aligns text to the left</h5>
-									<h5>{center}</h5><h5>Aligns text to the center</h5>
-									<h5>{right}</h5><h5>Aligns text to the right</h5>
-									<h5>{justify-left}</h5><h5>Justifies text to the left</h5>
-									<h5>{justify-center}</h5><h5>Justifies text to the center</h5>
-									<h5>{justify-right}</h5><h5>Justifies text to the right</h5>
-									<h5>{permashift#,$}</h5><h5>Moves the text # pixels right and $ pixels down. Recommended for moving the text over large distances</h5>
-									<h5>{up#}</h5><h5>Moves the text # pixels up</h5>
-									<h5>{down#}</h5><h5>Moves the text # pixels down</h5>
-									<h5>{left#}</h5><h5>Moves the text # pixels left</h5>
-									<h5>{right#}</h5><h5>Moves the text # pixels right</h5>
-									<h5>{shadow#}</h5><h5>Changes the shadow distance to # (use {shadow0} to remove the shadow)</h5>
-									<h5>{shadowcolor#}</h5><h5>Changes the shadow color to #</h5>
-									<h5>{indent}</h5><h5>Indents the rest of the paragraph to the current point</h5>
-									<h5>{/indent}</h5><h5>Removes paragraph indendation</h5>
-									<h5>{kerning#}</h5><h5>Changes the kerning (letter spacing) to #</h5>
-									<h5>{roll___}</h5><h5>Used for dice-rolling cards (like from AFR) - whatever you fill in for '___' will be bolded, and alternating paragraphs will be shaded.</h5>
-									<h5>Notes</h5><h5>For colors, you may use HTML color codes (ie 'green'), hex color codes (ie '#00FF00'), or rgb (ie 'rgb(0,255,0)'')</h5>
+									<h5>代码</h5><h5>结果</h5>
+									<h5>{cardname}</h5><h5>插入卡片名称（或使用波浪号：~）</h5>
+
+									<h5>{Lins}</h5><h5>在左边插入一个小空间</h5>
+									<h5>{Rins}</h5><h5>在左边删除一个小空间</h5>
+									<h5>{-}</h5><h5>插入一个em-dash</h5>
+
+									<h5>{i}</h5><h5>斜体化文本</h5>
+									<h5>{/i}</h5><h5>移除斜体</h5>
+									<h5>{bold}</h5><h5>加粗文本</h5>
+									<h5>{/bold}</h5><h5>移除加粗</h5>
+
+									<h5>{lns}</h5><h5>移动到下一行，不带额外空间（代表行-无空间）</h5>
+
+									<h5>{divider}</h5><h5>移动到下一行并绘制风味文本条</h5>
+									<h5>{flavor}</h5><h5>移动到下一行，绘制风味文本条，并斜体化</h5>
+									<h5>{oldflavor}</h5><h5>斜体化并添加换行符</h5>
+
+									<h5>{fontsize#pt}</h5><h5>将字体大小更改为#pt（绝对）</h5>
+									<h5>{fontsize#}</h5><h5>将字体大小更改为#像素（相对 - 使用负整数缩小文本 - ie '{fontsize-12}')</h5>
+									<h5>{fontcolor___}</h5><h5>将字体颜色更改为___（ie '{fontcolor#00FF00}')</h5>
+
+									<h5>{left}</h5><h5>将文本对齐到左边</h5>
+									<h5>{center}</h5><h5>将文本对齐到中心</h5>
+									<h5>{right}</h5><h5>将文本对齐到右边</h5>
+									<h5>{justify-left}</h5><h5>将文本对齐到左边</h5>
+
+									<h5>{justify-center}</h5><h5>将文本对齐到中心</h5>
+									<h5>{justify-right}</h5><h5>将文本对齐到右边</h5>
+									<h5>{permashift#,$}</h5><h5>移动文本#像素右移$像素。推荐用于移动文本到较大距离</h5>
+
+									<h5>{up#}</h5><h5>移动文本#像素向上</h5>
+									<h5>{down#}</h5><h5>移动文本#像素向下</h5>
+									<h5>{left#}</h5><h5>移动文本#像素向左</h5>
+									<h5>{right#}</h5><h5>移动文本#像素向右</h5>
+
+									<h5>{shadow#}</h5><h5>更改阴影距离为#（使用{shadow0}移除阴影）</h5>
+									<h5>{shadowcolor#}</h5><h5>更改阴影颜色为#</h5>
+
+									<h5>{indent}</h5><h5>将段落缩进到当前点</h5>
+									<h5>{/indent}</h5><h5>移除段落缩进</h5>
+									<h5>{kerning#}</h5><h5>更改字距为#</h5>
+
+									<h5>{roll___}</h5><h5>用于骰子卡（如AFR）- 无论你填入什么，都会加粗，交替段落会变暗。</h5>
+
+									<h5>Notes</h5><h5>对于颜色，你可以使用HTML颜色代码（如'green'）、十六进制颜色代码（如'#00FF00'）或rgb（如'rgb(0,255,0)'）</h5>
 								</div>
-								<h5>Mana Symbol Codes:</h5>
+								<h5>法术符号代码:</h5>
 								<div class='text-codes padding'>
-									<h5>Code</h5><h5>Result</h5>
-									<h5>{1}, {2}... {20}</h5><h5>Generic mana (works for numbers 1 through 20)</h5>
-									<h5>{w}, {u}, {b}, {r}, {g}</h5><h5>Colored mana</h5>
-									<h5>{wu}, {wb}, {ub}... {2w}, {2u}...</h5><h5>Hybrid mana</h5>
-									<h5>{pw}, {pu}...</h5><h5>Phyrexian mana</h5>
-									<h5>{wup}, {wbp}, {ubp}...</h5><h5>Hybrid phyrexian mana</h5>
-									<h5>{t}, {untap}</h5><h5>Respective tapping-related symbol</h5>
-									<h5>{oldtap}, {originaltap}</h5><h5>Old tap symbols</h5>
-									<h5>{x}, {y}, {z}</h5><h5>Respective variable-related symbol</h5>
-									<h5>{c}</h5><h5>Colorless-specific mana</h5>
-									<h5>{s}</h5><h5>Snow mana</h5>
-									<h5>{e}</h5><h5>Energy symbol</h5>
-									<h5>{+1}</h5><h5>+1 loyalty icon</h5>
-									<h5>{planeswalker}</h5><h5>Planeswalker icon</h5>
-									<h5>{chaos}</h5><h5>Chaos symbol (planechase)</h5>
-									<h5>{p}</h5><h5>Bloomburrow pawprint symbol</h5>
-									<h5>Notes</h5><h5>Hybrid/Phyrexian mana only works with WUBRG</h5>
+
+									<h5>代码</h5><h5>结果</h5>
+									<h5>{1}, {2}... {20}</h5><h5>通用法术力（适用于1到20）</h5>
+									<h5>{w}, {u}, {b}, {r}, {g}</h5><h5>五色法术力</h5>
+
+									<h5>{wu}, {wb}, {ub}... {2w}, {2u}...</h5><h5>混血法术力</h5>
+									<h5>{pw}, {pu}...</h5><h5>非瑞法术力</h5>
+									<h5>{wup}, {wbp}, {ubp}...</h5><h5>三色混血法术力</h5>
+
+
+									<h5>{t}, {untap}</h5><h5>相应的横置/重置符号</h5>
+									<h5>{oldtap}, {originaltap}</h5><h5>旧的横置/重置符号</h5>
+
+
+									<h5>{x}, {y}, {z}</h5><h5>相应的变量相关符号</h5>
+									<h5>{c}</h5><h5>无色法术力</h5>
+									<h5>{s}</h5><h5>雪法术力</h5>
+									<h5>{e}</h5><h5>能量</h5>
+
+									<h5>{+1}</h5><h5>+1忠诚指示物</h5>
+									<h5>{planeswalker}</h5><h5>鹏洛客标志</h5>
+									<h5>{chaos}</h5><h5>混沌标（Planechase）</h5>
+									<h5>{p}</h5><h5>BLB爪印符号</h5>
+
+
+									<h5>Notes</h5><h5>混血/非瑞法术力只适用于WUBRG</h5>
 								</div>
 							</div>
 						</div>
+
 						<div class='readable-background padding margin-bottom'>
-							<label class='checkbox-container input'>Hide reminder text
+							<label class='checkbox-container input'>隐藏提示文本
 								<input id='hide-reminder-text' type='checkbox' onchange='textEdited();'>
 								<span class='checkmark'></span>
 							</label>
 						</div>
+
 						<div class='readable-background padding'>
-							<h5 class='padding input-description'>Add a textbox to your card</h5>
+							<h5 class='padding input-description'>添加一个文本框到你的卡片</h5>
 							<div class='padding input-grid'>
-								<button class='input' onclick='addTextbox("Nickname");'>Nickname</button>
-								<button class='input' onclick='addTextbox("Power/Toughness");'>Power/Toughness</button>
-								<button class='input' onclick='addTextbox("DateStamp");'>Date Stamp</button>
+								<button class='input' onclick='addTextbox("Nickname");'>昵称</button>
+
+
+								<button class='input' onclick='addTextbox("Power/Toughness");'>力量/血量</button>
+								<button class='input' onclick='addTextbox("DateStamp");'>日期戳</button>
 							</div>
 						</div>
+
 					</div>
 					<div id='creator-menu-art' class='hidden'>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Choose/upload your art</h5>
+							<h5 class='margin-bottom padding input-description'>选择/上传你的卡图</h5>
 							<div class='input-grid margin-bottom'>
 								<div class='padding drop-area'>
-						            <h5 class='margin-bottom padding input-description'>Drag and drop</h5>
+						            <h5 class='margin-bottom padding input-description'>拖放</h5>
+
 						            <input type='file' multiple accept='.png, .svg, .jpg, .jpeg, .bmp' placeholder='File Upload' class='input' oninput='uploadFiles(event.target.files, uploadArt, document.querySelector("#art-update-autofit").checked ? "autoFit" : "");' data-dropFunction='uploadArt' data-otherParams='autoFit'>
 						        </div>
 						        <div>
 									<input type='url' placeholder='Via URL' class='input' onchange='uploadArt(this.value, document.querySelector("#art-update-autofit").checked ? "autoFit" : "");'>
 									<h5 class='input-description margin-bottom'></h5>
-										<label class='checkbox-container input'>Autofit when setting art
+										<label class='checkbox-container input'>设置卡图时自适应
 											<input id='art-update-autofit' type='checkbox' onchange='setAutofit();'>
 											<span class='checkmark'></span>
 										</label>
+
 								</div>
 							</div>
-							<h5 class='margin-bottom padding input-description'>Or enter a card name</h5>
-							<input id='art-name' type='text' placeholder='Enter Card Name' class='input margin-bottom' onchange="fetchScryfallData(this.value, artFromScryfall, 'art');">
-							<h5 class='padding margin-bottom input-description'>Select a specific card art to load</h5>
+							<h5 class='margin-bottom padding input-description'>或输入一个卡牌名称</h5>
+							<input id='art-name' type='text' placeholder='输入卡名' class='input margin-bottom' onchange="fetchScryfallData(this.value, artFromScryfall, 'art');">
+							<h5 class='padding margin-bottom input-description'>选择一个特定的卡图</h5>
+
 							<select class='input margin-bottom' id='art-index' onchange='changeArtIndex();'></select>
-							<h5 class='margin-bottom padding input-description'>And credit the artist</h5>
+							<h5 class='margin-bottom padding input-description'>并注明艺术家</h5>
 							<div class='input-grid'>
-								<input id='art-artist' type='text' class='input' oninput='artistEdited(this.value);' placeholder='Artist'>
+								<input id='art-artist' type='text' class='input' oninput='artistEdited(this.value);' placeholder='艺术家'>
 							</div>
+
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Position/scale your art (X, Y, Scale, Rotation)<br>Art is now visually adjustable! Click and drag anywhere on the card to move your art around. Hold shift while doing so to scale, or control to rotate.</h5>
+							<h5 class='margin-bottom padding input-description'>位置/缩放你的卡图 (X, Y, 缩放, 旋转)<br>卡图现在可以视觉调整了！点击并拖动卡片上的任何位置来移动你的卡图。按住shift键进行缩放，或按住control键进行旋转。</h5>
 							<div class='input-grid margin-bottom'>
+
 								<input id='art-x' type='number' class='input' oninput='artEdited();' value=0>
 								<input id='art-y' type='number' class='input' oninput='artEdited();' value=0>
 								<input id='art-zoom' type='number' class='input' oninput='artEdited();' value=100 step=0.1 min=0>
 								<input id='art-rotate' type='number' class='input' oninput='artEdited();' value=0 step=1 min=0 max=360>
 							</div>
 							<div class='input-grid'>
-								<button class='input' onclick='autoFitArt();'>Auto Fit Art</button>
+								<button class='input' onclick='autoFitArt();'>自动适应卡图</button>
 							</div>
 						</div>
+
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='input-description margin-bottom'>Make the art grayscale</h5>
-							<label class='checkbox-container input'>Grayscale
+							<h5 class='input-description margin-bottom'>使卡图变为灰度</h5>
+							<label class='checkbox-container input'>灰度
 								<input id='grayscale-art' type='checkbox' onchange='drawCard();'>
+
 								<span class='checkmark'></span>
 							</label>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='padding margin-bottom input-description'>Clears the art, making it blank</h5>
-							<button class='input margin-bottom' onclick='uploadArt(blank.src);'>Remove Art</button>
+							<h5 class='padding margin-bottom input-description'>清除卡图，使其变为空白</h5>
+							<button class='input margin-bottom' onclick='uploadArt(blank.src);'>清除卡图</button>
 						</div>
+
+
 						<div class='readable-background padding'>
-							<h5 class='input-description margin-bottom'>Show guidelines for text, art, watermark, and set symbols</h5>
-							<label class='checkbox-container input'>Guidelines
+							<h5 class='input-description margin-bottom'>显示文本、卡图、水印和套牌符号的指示线</h5>
+							<label class='checkbox-container input'>指示线
 								<input id='show-guidelines-2' type='checkbox' onchange='drawCard();'>
 								<span class='checkmark'></span>
+
+
 							</label>
 						</div>
 					</div>
 					<div id='creator-menu-setSymbol' class='hidden'>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Choose/upload your set symbol</h5>
+							<h5 class='margin-bottom padding input-description'>选择/上传你的系列图标</h5>
 							<div class='input-grid margin-bottom'>
 								<div class='padding drop-area'>
-						            <h5 class='margin-bottom padding input-description'>Drag and drop</h5>
+
+						            <h5 class='margin-bottom padding input-description'>拖放</h5>
 						            <input type='file' multiple accept='.png, .svg, .jpg, .jpeg, .bmp' placeholder='File Upload' class='input' oninput='uploadFiles(event.target.files, uploadSetSymbol, "resetSetSymbol");' data-dropFunction='uploadSetSymbol' data-otherParams='resetSetSymbol'>
 						        </div>
 						        <div>
+
 									<input type='url' placeholder='Via URL' class='input' onchange='imageURL(this.value, uploadSetSymbol, "resetSetSymbol");'>
 								</div>
 							</div>
-							<h5 class='margin-bottom padding input-description'>Or enter a set code/rarity</h5>
+							<h5 class='margin-bottom padding input-description'>或输入一个系列代码/稀有度</h5>
 							<div class='input-grid margin-bottom'>
-								<input id='set-symbol-code' type='text' placeholder='Set Code' class='input' onchange='fetchSetSymbol();'>
-								<input id='set-symbol-rarity' type='text' placeholder='Rarity' class='input' onchange='fetchSetSymbol();'>
+								<input id='set-symbol-code' type='text' placeholder='系列代码' class='input' onchange='fetchSetSymbol();'>
+
+								<input id='set-symbol-rarity' type='text' placeholder='稀有度' class='input' onchange='fetchSetSymbol();'>
 							</div>
-							<h5 class='margin-bottom padding input-description'>Load set symbols from:</h5>
+							<h5 class='margin-bottom padding input-description'>从以下位置加载系列图标：</h5>
 							<div class='input-grid margin-bottom'>
+
 								<select id='set-symbol-source' class='input' onchange='fetchSetSymbol();'>
 									<option value='cardconjurer'>CardConjurer</option>
 									<option value='gatherer'>Gatherer</option>
@@ -379,49 +461,60 @@
 								</select>
 							</div>
 							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>
-								How to find set codes
+								如何找到系列代码
 							</h5>
 							<div class='padding'>
-								<h5 class='margin-top'>Set codes are the two-three character combinations that represent sets. For sets released after 2015, the three-character set code can be found in the lower left hand corner.</h5>
-								<h5 class='margin-top'>For older sets, the code may be different depending on your use:</h5>
-								<p class='margin-top padding'>Set symbol images are named using the same codes as used in <a class='underline' href='https://scryfall.com/sets' target='_blank'>Scryfall</a>.</p>
-								<p class='padding'>For watermarks, please reference <a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank'>Keyrune</a>.</p>
+
+								<h5 class='margin-top'>系列代码是代表系列的两个或三个字符组合。对于2015年之后发布的系列，可以在左下角找到三字符系列代码。</h5>
+								<h5 class='margin-top'>对于较早的系列，代码可能因使用情况而有所不同：</h5>
+
+								<p class='margin-top padding'>系列图标图像使用与<a class='underline' href='https://scryfall.com/sets' target='_blank'>Scryfall</a>相同的代码命名。</p>
+
+								<p class='padding'>对于水印，请参考<a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank'>Keyrune</a>。</p>
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Position/scale your Set Symbol (X, Y, Scale)</h5>
+
+							<h5 class='margin-bottom padding input-description'>位置/缩放你的系列图标 (X, Y, 缩放)</h5>
 							<div class='input-grid margin-bottom'>
+
 								<input id='setSymbol-x' type='number' class='input' oninput='setSymbolEdited();' value=0>
 								<input id='setSymbol-y' type='number' class='input' oninput='setSymbolEdited();' value=0>
 								<input id='setSymbol-zoom' type='number' class='input' oninput='setSymbolEdited();' value=100 step=0.1 min=0>
 							</div>
 							<div class='input-grid'>
-								<button class='input' onclick='resetSetSymbol();'>Reset Set Symbol</button>
+								<button class='input' onclick='resetSetSymbol();'>重置系列图标</button>
 							</div>
 						</div>
+
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='padding margin-bottom input-description'>Clears the Set Symbol, making it blank</h5>
-							<button class='input margin-bottom' onclick='uploadSetSymbol(blank.src);'>Remove Set Symbol</button>
+							<h5 class='padding margin-bottom input-description'>清除系列图标，使其变为空白</h5>
+							<button class='input margin-bottom' onclick='uploadSetSymbol(blank.src);'>清除系列图标</button>
 						</div>
+
 						<div class='readable-background padding'>
-							<h5 class='input-description margin-bottom'>Lock the set symbol code (saves between reloads)</h5>
-							<label class='checkbox-container input margin-bottom'>Lock set symbol code
+							<h5 class='input-description margin-bottom'>锁定系列代码（在重新加载时保存）</h5>
+							<label class='checkbox-container input margin-bottom'>锁定系列代码
 								<input id='lockSetSymbolCode' type='checkbox' onchange='lockSetSymbolCode();'>
+
 								<span class='checkmark'></span>
 							</label>
-							<h5 class='input-description margin-bottom'>Lock the set symbol URL (saves between reloads)</h5>
-							<label class='checkbox-container input'>Lock set symbol URL
+							<h5 class='input-description margin-bottom'>锁定系列图标URL（在重新加载时保存）</h5>
+							<label class='checkbox-container input'>锁定系列图标URL
 								<input id='lockSetSymbolURL' type='checkbox' onchange='lockSetSymbolURL();'>
+
 								<span class='checkmark'></span>
 							</label>
 						</div>
 					</div>
 					<div id='creator-menu-watermark' class='hidden'>
-					<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Choose/upload your watermark</h5>
+						<div class='readable-background padding margin-bottom'>
+							<h5 class='margin-bottom padding input-description'>选择/上传你的水印</h5>
 							<div class='input-grid'>
 								<div class='padding drop-area'>
-						            <h5 class='margin-bottom padding input-description'>Drag and drop</h5>
+
+						            <h5 class='margin-bottom padding input-description'>拖放</h5>
+
 						            <input type='file' multiple accept='.png, .svg, .jpg, .jpeg, .bmp' placeholder='File Upload' class='input' oninput='uploadFiles(event.target.files, uploadWatermark, "resetWatermark");' data-dropFunction='uploadWatermark' data-otherParams='resetWatermark'>
 						        </div>
 						        <div>
@@ -429,7 +522,7 @@
 									<input type='text' placeholder='Via Set Code' class='input' onchange='getSetSymbolWatermark(this.value);'>
 								</div>
 							</div>
-							<h5 class='margin-bottom padding input-description'>Select lore-based watermarks</h5>
+							<h5 class='margin-bottom padding input-description'>选择基于lore的水印</h5>
 							<select class='input padding margin-bottom' onchange='getSetSymbolWatermark(fixUri(this.value));'>
 								<option disabled selected='selected'>None</option>
 								<option disabled>General</option>
@@ -493,23 +586,28 @@
 								<option value="/img/watermarks/faction-league-of-dastardly-doom.svg">League of Dastardly Doom</option>
 								<option value="/img/watermarks/faction-goblin-explosioneers.svg">Goblin Explosioneers</option>
 								<option value="/img/watermarks/faction-crossbreed-labs.svg">Crossbreed Labs</option>
-								<option disabled>Custome</option>
-								<option value="/img/watermarks/purple.svg">Purple Mana</option>
+								<option disabled>自定义</option>
+								<option value="/img/watermarks/purple.svg">紫色法术力</option>
 							</select>
 							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>
-								How to find set codes
+								如何找到系列代码
+
 							</h5>
 							<div class='padding'>
-								<h5 class='margin-top'>Set codes are the two-three character combinations that represent sets. For sets released after 2015, the three-character set code can be found in the lower left hand corner.</h5>
-								<h5 class='margin-top'>For older sets, the code may be different depending on your use:</h5>
-								<p class='margin-top padding'>Set symbol images are named using the same codes as used in <a class='underline' href='https://scryfall.com/sets' target='_blank'>Scryfall</a>.</p>
-								<p class='padding'>For watermarks, please reference <a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank'>Keyrune</a>.</p>
+								<h5 class='margin-top'>系列代码是代表系列的两个或三个字符组合。对于2015年之后发布的系列，可以在左下角找到三字符系列代码。</h5>
+								<h5 class='margin-top'>对于较早的系列，代码可能因使用情况而有所不同：</h5>
+
+								<p class='margin-top padding'>系列图标图像使用与<a class='underline' href='https://scryfall.com/sets' target='_blank'>Scryfall</a>相同的代码命名。</p>
+
+								<p class='padding'>对于水印，请参考<a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank'>Keyrune</a>。</p>
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Select watermark colors (left, right)</h5>
+
+							<h5 class='margin-bottom padding input-description'>选择水印颜色（左，右）</h5>
 							<div class='input-grid margin-bottom'>
 								<select class='input' id='watermark-left' onchange='watermarkLeftColor(this.value);'>
+
 									<option value="none">None</option>
 					                <option value="default">Actual Image</option>
 					                <option value="#b79d58" selected="selected">White</option>
@@ -538,36 +636,43 @@
 					                <option value="#000000">True Black</option>
 								</select>
 							</div>
-							<h5 class='margin-bottom padding input-description'>Or choose them manually (left, right)</h5>
+							<h5 class='margin-bottom padding input-description'>或者手动选择（左，右）</h5>
 							<div class='input-grid margin-bottom'>
 								<input class='input' type='color' placeholder='Color' value='#000000' onchange='watermarkLeftColor(this.value);'>
+
 								<input class='input' type='color' placeholder='Color' value='#000000' onchange='watermarkRightColor(this.value);'>
 							</div>
-							<h5 class='margin-bottom padding input-description'>And enter an opacity</h5>
+							<h5 class='margin-bottom padding input-description'>并输入一个不透明度</h5>
 							<div class='input-grid margin-bottom'>
+
 								<input id='watermark-opacity' type='number' class='input' oninput='watermarkEdited();' value=40 step=1 min=0 max=100>
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='margin-bottom padding input-description'>Position/scale your watermark (X, Y, Scale)</h5>
+							<h5 class='margin-bottom padding input-description'>位置/缩放你的水印 (X, Y, 缩放)</h5>
 							<div class='input-grid margin-bottom'>
 								<input id='watermark-x' type='number' class='input' oninput='watermarkEdited();' value=0>
+
 								<input id='watermark-y' type='number' class='input' oninput='watermarkEdited();' value=0>
 								<input id='watermark-zoom' type='number' class='input' oninput='watermarkEdited();' value=100 step=0.1 min=0>
 							</div>
 							<div class='input-grid'>
-								<button class='input' onclick='resetWatermark();'>Reset Watermark</button>
+								<button class='input' onclick='resetWatermark();'>重置水印</button>
 							</div>
 						</div>
+
 						<div class='readable-background padding'>
-							<h5 class='padding margin-bottom input-description'>Clears the watermark, making it blank</h5>
-							<button class='input margin-bottom' onclick='uploadWatermark(blank.src);'>Remove Watermark</button>
+							<h5 class='padding margin-bottom input-description'>清除水印，使其变为空白</h5>
+							<button class='input margin-bottom' onclick='uploadWatermark(blank.src);'>去除水印</button>
 						</div>
+
+
 					</div>
 					<div id='creator-menu-bottomInfo' class='hidden'>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='padding margin-bottom input-description'>Enter the card number, rarity, set code, language, and artist's name</h5>
+							<h5 class='padding margin-bottom input-description'>输入卡牌编号、稀有度、系列代码、语言和艺术家名称</h5>
 							<div class='padding input-grid'>
+
 								<input id='info-number' type='text' class='input' oninput='bottomInfoEdited();' placeholder='Number' value=''>
 								<input id='info-rarity' type='text' class='input' oninput='bottomInfoEdited();' placeholder='Rarity' value='P'>
 								<input id='info-note' type='text' class='input' oninput='bottomInfoEdited();' placeholder='Note' value=''>
@@ -582,123 +687,148 @@
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='input-description margin-bottom'>Enable importing collector information</h5>
-							<label class='checkbox-container input margin-bottom'>Enable imports
+							<h5 class='input-description margin-bottom'>启用收藏信息导入</h5>
+							<label class='checkbox-container input margin-bottom'>启用导入
 								<input id='enableImportCollectorInfo' type='checkbox' onchange='enableImportCollectorInfo();'>
 								<span class='checkmark'></span>
+
 							</label>
-							<label class='checkbox-container input margin-bottom'>Enable import Artist
+							<label class='checkbox-container input margin-bottom'>启用艺术家导入
 								<input id='enableImportArtist' type='checkbox' onchange='enableImportArtist();'>
 								<span class='checkmark'></span>
+
 							</label>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='input-description margin-bottom'>Collector info style</h5>
-							<label class='checkbox-container input margin-bottom'>Use new (post-ONE) collector info style
+							<h5 class='input-description margin-bottom'>收藏信息样式</h5>
+							<label class='checkbox-container input margin-bottom'>使用新的（后ONE）收藏信息样式
 								<input id='enableNewCollectorStyle' type='checkbox' onchange='enableNewCollectorInfoStyle();'>
 								<span class='checkmark'></span>
+
+
 							</label>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='input-description margin-bottom'>Show collector info</h5>
-							<label class='checkbox-container input margin-bottom'>Show collector info (uncheck to hide)
+							<h5 class='input-description margin-bottom'>显示收藏信息</h5>
+							<label class='checkbox-container input margin-bottom'>显示收藏信息（取消选中以隐藏）
 								<input id='enableCollectorInfo' type='checkbox' onchange='enableCollectorInfo();'>
 								<span class='checkmark'></span>
+
 							</label>
 						</div>
 
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='padding input-description'>Serial Number (leave both blank to hide)</h5>
+							<h5 class='padding input-description'>编号（留空以隐藏）</h5>
 							<div class='padding input-grid'>
 								<input id='serial-number' type='number' class='input' oninput='serialInfoEdited();' placeholder='001' min='0' value=''>
+
 								<input id='serial-total' type='number' class='input' oninput='serialInfoEdited();' placeholder='500' min='0' value=''>
 							</div>
 
-							<h5 class='padding input-description'>Placement (X, Y, Scale)</h5>
+							<h5 class='padding input-description'>位置（X, Y, 缩放）</h5>
 							<div class='padding input-grid'>
 								<input id='serial-x' type='number' class='input' oninput='serialInfoEdited();' min='0' value='172'>
+
 								<input id='serial-y' type='number' class='input' oninput='serialInfoEdited();' min='0' value='1383'>
 								<input id='serial-scale' type='number' class='input' oninput='serialInfoEdited();' min='0' step='0.01' value='1'>
 							</div>
 							<div class='padding input-grid'>
-								<button class='input' onclick='resetSerial();'>Reset Serial Number Placement</button>
+								<button class='input' onclick='resetSerial();'>重置编号位置</button>
 							</div>
 						</div>
 
+
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='input-description padding margin-bottom'>Toggle between star (seen on foils) and dot (seen on regular cards)</h5>
+							<h5 class='input-description padding margin-bottom'>在星号（在闪卡上可见）和点号（在普通卡上可见）之间切换</h5>
 							<div class='padding'>
-								<button class='input padding' onclick='toggleStarDot();'>Toggle Star/Dot</button>
+								<button class='input padding' onclick='toggleStarDot();'>切换星号/点号</button>
 							</div>
+
+
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='input-description padding margin-bottom'>Save current collector info as default</h5>
+							<h5 class='input-description padding margin-bottom'>保存当前收藏信息作为默认值</h5>
 							<div class='padding'>
-								<button class='input padding' onclick='setDefaultCollector();'>Save as Default</button>
+								<button class='input padding' onclick='setDefaultCollector();'>保存为默认值</button>
+
 							</div>
-							<h5 class='input-description padding margin-bottom'>Clear your saved default collector info</h5>
+							<h5 class='input-description padding margin-bottom'>清除你的保存默认收藏信息</h5>
 							<div class='padding'>
-								<button class='input padding' onclick='removeDefaultCollector();'>Clear Saved Defaults</button>
+								<button class='input padding' onclick='removeDefaultCollector();'>清除保存的默认值</button>
 							</div>
 						</div>
+
 					</div>
 					<div id='creator-menu-import' class='hidden'>
 						<div class='readable-background margin-bottom padding'>
-							<h5 class='padding margin-bottom input-description'>Import a real card by name</h5>
+							<h5 class='padding margin-bottom input-description'>通过名称导入一张真实卡牌</h5>
 							<input id='import-name' class='input margin-bottom' type='text' onchange='importChanged();' placeholder='Enter Card Name'>
-							<label class='checkbox-container input margin-bottom'>Include all unique prints as options
+							<label class='checkbox-container input margin-bottom'>包括所有版本
 								<input id='importAllPrints' type='checkbox' onchange="importChanged();">
+
 								<span class='checkmark'></span>
 							</label>
-							<h5 class='padding input-description'>Select a datasource for card imports</h5>
+							<h5 class='padding input-description'>选择一张卡牌导入的数据源</h5>
 							<select class='input' id='datasource' onchange='importChanged();'>
 								<option value="scryfall">Scryfall</option>
+
 								<option value="sbwsz">SBWSZ</option>
 								<option value="local">Local</option>
 							</select>
-							<h5 class='padding margin-bottom input-description'>Select a specific card to import</h5>
+							<h5 class='padding margin-bottom input-description'>选择一张特定的卡牌导入</h5>
 							<select class='input margin-bottom' id='import-index' onchange='changeCardIndex();'></select>
-							<h5 class='padding input-description'>Select a language for card imports (not all languages will always be available)</h5>
+							<h5 class='padding input-description'>选择一张卡牌导入的语言（并非所有语言都始终可用）</h5>
+
 							<select class='input' id='import-language' onchange='importChanged();'>
-								<option value="en">English</option>
-								<option value="es">Spanish</option>
-								<option value="fr">French</option>
-								<option value="de">German</option>
-								<option value="it">Italian</option>
-								<option value="pt">Portuguese</option>
-								<option value="ja">Japanese</option>
-								<option value="ko">Korean</option>
-								<option value="ru">Russian</option>
-								<option value="zhs">Simplified Chinese</option>
-								<option value="zht">Traditional Chinese</option>
+								<option value="en">英语</option>
+								<option value="es">西班牙语</option>
+								<option value="fr">法语</option>
+								<option value="de">德语</option>
+								<option value="it">意大利语</option>
+								<option value="pt">葡萄牙语</option>
+								<option value="ja">日语</option>
+								<option value="ko">韩语</option>
+
+								<option value="ru">俄语</option>
+								<option value="zhs">简体中文</option>
+								<option value="zht">繁体中文</option>
 								<option value="ph">Phyrexian</option>
+
 							</select>
+
+
 						</div>
 						<div class='readable-background margin-bottom padding'>
-							<h5 class='padding margin-bottom input-description'>Save your current card</h5>
-							<button class='input margin-bottom' onclick='saveCard();'>Save Card</button>
-							<h5 class='padding margin-bottom input-description'>Load a saved card</h5>
+							<h5 class='padding margin-bottom input-description'>保存当前卡牌</h5>
+							<button class='input margin-bottom' onclick='saveCard();'>保存卡牌</button>
+							<h5 class='padding margin-bottom input-description'>加载保存的卡牌</h5>
+
 							<select id='load-card-options' class='input margin-bottom' type='text' onchange='loadCard(this.value);'></select>
-							<h5 class='padding margin-bottom input-description'>Delete selected card</h5>
-							<button class='input' onclick='deleteCard();'>Delete Card</button>
+							<h5 class='padding margin-bottom input-description'>删除选中的卡牌</h5>
+							<button class='input' onclick='deleteCard();'>删除卡牌</button>
 						</div>
 						<div class='readable-background padding margin-bottom'>
-							<h5 class='padding margin-bottom input-description'>Download all saved cards</h5>
-							<button class='input margin-bottom' onclick='downloadSavedCards();'>Download All</button>
-							<h5 class='padding margin-bottom input-description'>Upload previously downloaded file of saved cards (downloaded from above)</h5>
+
+							<h5 class='padding margin-bottom input-description'>下载所有保存的卡牌</h5>
+							<button class='input margin-bottom' onclick='downloadSavedCards();'>下载所有</button>
+							<h5 class='padding margin-bottom input-description'>上传之前下载的保存卡牌文件（从上面下载）</h5>
+
 							<input type='file' accept='.cardconjurer,.txt' class='input margin-bottom' oninput='uploadSavedCards(event);'>
-							<h5 class='padding margin-bottom input-description'>Delete ALL saved cards</h5>
-							<button class='input margin-bottom' onclick='deleteSavedCards();'>Delete All</button>
+							<h5 class='padding margin-bottom input-description'>删除所有保存的卡牌</h5>
+							<button class='input margin-bottom' onclick='deleteSavedCards();'>删除所有</button>
 						</div>
+
 						<div class='readable-background padding margin-bottom'>
 							<h5 class='collapsible collapsed padding input-description' onclick='toggleCollapse(event);'>
-								How are my cards saved?
+								我的卡牌是如何保存的？
 							</h5>
 							<div class='padding'>
-								<h5 class='margin-top'>Cards are saved on your computer under your browser's localstorage, which usually has a limit of 5MB and cannot be changed.</h5>
-								<h5 class='margin-top'>Unfortunately, this means that if you save a lot of cards, you could run out of space.</h5>
-								<h5 class='margin-top'>Your localstorage runs out of space especially fast when you upload images directly from your computer, because the image itself has to be saved. However, if possible, uploading images via URL will save massive amounts of space, allowing you to save many more cards.</h5>
-								<h5 class='margin-top'>And if you do run out of space, don't worry! You can download all saved cards then delete all saved cards,  freeing up all 5MB of space. And when you'd like to edit the cards you previously downloaded/deleted, you can reupload them via the file upload (under "Upload previously downloaded cards").</h5>
+								<h5 class='margin-top'>卡片保存在您的计算机上，位于浏览器本地存储中，通常限制为5MB，无法更改。</h5>
+
+								<h5 class='margin-top'>不幸的是，这意味着如果您保存大量卡片，您可能会用完空间。</h5>
+								<h5 class='margin-top'>当您直接从计算机上传图像时，本地存储空间会特别快地用完，因为图像本身必须保存。然而，如果可能，通过URL上传图像将节省大量空间，允许您保存更多卡片。</h5>
+								<h5 class='margin-top'>如果您确实用完了空间，不用担心！您可以下载所有保存的卡片，然后删除所有保存的卡片，释放所有5MB的空间。当您想编辑之前下载/删除的卡片时，可以通过文件上传重新上传它们（在“上传之前下载的卡片”下）。</h5>
+
 							</div>
 						</div>
 					</div>
@@ -710,24 +840,28 @@
 							<h5 class='padding input-description'>The biggest difference is that you must click the "Load Frame Version" button after selecting your frame pack to load necessary details, such as text placement.</h5>
 						</div> -->
 						<div class='padding readable-background margin-bottom'>
-							<h5 class='padding input-description'>Here is a tutorial that covers the basics of using Card Conjurer:</h5>
+							<h5 class='padding input-description'>以下是使用Card Conjurer的基础教程：</h5>
 						</div>
 						<div class='video'>
 							<iframe width="560" height="315" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+
 						</div>
 					</div>
 				</div>
 				<div class='readable-background padding margin-bottom'>
-					<h5 class='padding input-description'>Automatically update frame</h5>
+					<h5 class='padding input-description'>自动更新牌框</h5>
 					<div class='padding input-grid'>
 						<select id="autoFrame" class="input" onchange="setAutoFrame()">
-							<option value="false">Disabled</option>
-							<option value="M15Regular-1">Regular</option>
-							<option value="M15BoxTopper">Extended Art</option>
-							<option value="M15ExtendedArtShort">Extended Art (Shorter Textbox)</option>
+							<option value="false">禁用</option>
+
+
+							<option value="M15Regular-1">标准</option>
+							<option value="M15BoxTopper">扩展艺术</option>
+							<option value="M15ExtendedArtShort">扩展艺术（短文本框）</option>
 							<option value="UB">Universes Beyond</option>
-							<option value="Etched">Etched</option>
-							<option value="Borderless">Borderless (Alt)</option>
+							<option value="Etched">蚀刻</option>
+							<option value="Borderless">无边框（备用）</option>
+
 							<option value="Praetors">Phyrexian</option>
 							<option value="8th">8th Edition</option>
 							<option value="Seventh">Seventh Edition</option>
@@ -746,16 +880,18 @@
 						<button class='input' onclick='autoFrame("UB");'>Universes Beyond</button> -->
 					</div>
 					<div class='padding input-grid'>
-						<label class='checkbox-container input'>Use Nyx frame for all Enchantments (where applicable)
+						<label class='checkbox-container input'>使用星彩牌框（适用于所有结界）
 							<input id='autoframe-always-nyx' type='checkbox' onchange='setAutoframeNyx(this.checked);'>
 							<span class='checkmark'></span>
 						</label>
 					</div>
 				</div>
 				<div class='readable-background padding'>
-					<h3 class='download padding' onclick='downloadCard();'>Download your card</h3>
-					<h5 onclick='downloadCard(false, true);' id='downloadJpg' href='' target='_blank' class='padding download input-description' style='text-align: left;'>Click here to download as JPEG</h5>
-					<h5 onclick='downloadCard(true);' id='downloadAlt' href='' target='_blank' class='padding download input-description' style='text-align: left;'>Click here for an alternative download</h5>
+					<h3 class='download padding' onclick='downloadCard();'>下载您的卡片</h3>
+					<h5 onclick='downloadCard(false, true);' id='downloadJpg' href='' target='_blank' class='padding download input-description' style='text-align: left;'>点击这里下载为JPEG</h5>
+
+					<h5 onclick='downloadCard(true);' id='downloadAlt' href='' target='_blank' class='padding download input-description' style='text-align: left;'>点击这里获取备用下载</h5>
+
 					<!-- <label class='checkbox-container input margin-bottom'>800 DPI
 						<input id='high-res' type='checkbox' onchange='toggleHighRes();'>
 						<span class='checkmark'></span>
