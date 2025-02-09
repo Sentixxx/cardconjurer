@@ -5786,7 +5786,19 @@ async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
 									cardDetail.flavorName = getValidString(cardDetail.translatedFlavorName, cardDetail.zhs_translatedFlavorName);
 									cardDetail.set = card.setCode;
 									cardDetail.number = card.number;
+
+									if(cardDetail.toughness == null) {
+										delete cardDetail.toughness;
+									}
+									if(cardDetail.power == null) {
+										delete cardDetail.power;
+									}
+
+									cardDetail.flavorText = cardDetail?.flavorText?.replace(/\\n/g, '\n');
+									cardDetail.oracle_text = cardDetail?.oracle_text?.replace(/\\n/g, '\n');
 									responseCards.push(cardDetail);
+
+
 								});
 								resolve();
 							} else {
