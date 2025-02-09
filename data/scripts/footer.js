@@ -30,22 +30,16 @@ document.getElementById('footer').innerHTML = `
         <div>Navigation</div>
         <hr>
         <div>
-            <a href='/'>Home</a><br>
-            <a href='/creator'>New Card Creator</a><br>
+            <a href='/'>主页</a><br>
+            <a href='/creator'>制卡</a><br>
         </div>
     </div>
     <div>
+
         <div>Legal</div>
         <hr>
         <div>
-            <a href='/legal'>Terms and Conditions</a><br>
-        </div>
-    </div>
-    <div>
-        <div>Contact</div>
-        <hr>
-        <div>
-            <label class="truncate"><a href="mailto:CardConjurerMTG@gmail.com?subject=Card Conjurer" target="_blank">CardConjurerMTG@gmail.com</a></label>
+            <a href='/legal'>条款和条件</a><br>
         </div>
     </div>
     <script defer src="/data/scripts/animations.js"></script>
