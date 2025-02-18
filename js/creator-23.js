@@ -159,7 +159,7 @@ async function setBottomInfoStyle() {
 				rarity: {text:'{loadx}{elemidinfo-rarity}', x:0.0647, y:0.9377, width:0.8707, height:0.0171, oneLine:true, font:'gothammedium', size:0.0171, color:card.bottomInfoColor, outlineWidth:0.003},
 				bottomLeft: {text:'NOT FOR SALE', x:0.0647, y:0.9719, width:0.8707, height:0.0143, oneLine:true, font:'gothammedium', size:0.0143, color:card.bottomInfoColor, outlineWidth:0.003},
 				wizards: {name:'wizards', text:'{ptshift0,0.0172}\u2122 & \u00a9 {elemidinfo-year} Wizards of the Coast', x:0.0647, y:0.9377, width:0.8707, height:0.0167, oneLine:true, font:'mplantin', size:0.0162, color:card.bottomInfoColor, align:'right', outlineWidth:0.003},
-				bottomRight: {text:'{ptshift0,0.0172}CardConjurer.com', x:0.0647, y:0.9548, width:0.8707, height:0.0143, oneLine:true, font:'mplantin', size:0.0143, color:card.bottomInfoColor, align:'right', outlineWidth:0.003}
+				bottomRight: {text:'{ptshift0,0.0172}card.sentixx.top', x:0.0647, y:0.9548, width:0.8707, height:0.0143, oneLine:true, font:'mplantin', size:0.0143, color:card.bottomInfoColor, align:'right', outlineWidth:0.003}
 			});
 		}
 }
@@ -4608,7 +4608,7 @@ async function bottomInfoEdited() {
 					}
 				} 
 				else if(["Wizards of the Coast"].some(v => textObject[1].text.includes(v))) {
-					if(params.get('wizards') == null) {
+					if(params.get('wizards') == null && document.querySelector('#enableCopyright').checked == false) {
 						continue;
 					}
 					else {
@@ -4616,8 +4616,14 @@ async function bottomInfoEdited() {
 						await writeText(textObject[1], bottomInfoContext);
 					}
 				}
-				else if(["CardConjurer.com", "cardconjurer.com"].some(v => textObject[1].text.includes(v))) {
-					continue;
+				else if(["CardConjurer.com", "card.sentixx.top"].some(v => textObject[1].text.includes(v))) {
+					if(params.get('copyright') == null && document.querySelector('#enableWebsiteInfo').checked == false) {
+						continue;
+					}
+					else {
+						textObject[1].name = textObject[0];
+						await writeText(textObject[1], bottomInfoContext);
+					}
 				} else {
 					textObject[1].name = textObject[0];
 					await writeText(textObject[1], bottomInfoContext);
@@ -4684,6 +4690,14 @@ function enableImportArtist() {
         "enableImportArtist",
         document.querySelector("#enableImportArtist").checked
     );
+}
+function enableCopyright() {
+	localStorage.setItem('enableCopyright', document.querySelector('#enableCopyright').checked);
+	bottomInfoEdited()
+}
+function enableWebsiteInfo() {
+	localStorage.setItem('enableWebsiteInfo', document.querySelector('#enableWebsiteInfo').checked);
+	bottomInfoEdited()
 }
 function setAutoFrame() {
 	var value = document.querySelector('#autoFrame').value;
