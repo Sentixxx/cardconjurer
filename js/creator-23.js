@@ -720,7 +720,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 		}
 	} else if (typeLine.includes('Vehicle') || typeLine.includes("载具")) {
 		frame = 'V';
-	} else if (typeLine.includes('Artifact') || typeLine.includes("神器")) {
+	} else if (typeLine.includes('Artifact') || (typeLine.includes("神器") && !typeLine.includes("神器师"))) {
 		frame = 'A';
 	} else if (colors.length > 2) {
 		frame = 'M';
