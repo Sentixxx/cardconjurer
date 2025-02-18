@@ -8,13 +8,14 @@ if (debugging) {
 
 //To save the server from being overloaded? Maybe?
 function fixUri(input) {
-	/* --- DISABLED FOR LOCAL VERSION --
-	var prefix = 'https://card-conjurer.storage.googleapis.com';//'https://raw.githubusercontent.com/ImKyle4815/cardconjurer/remake';
+	//--- DISABLED FOR LOCAL VERSION --
+	var prefix = 'https://cardconjurer-zh.oss-cn-hongkong.aliyuncs.com';//'https://raw.githubusercontent.com/ImKyle4815/cardconjurer/remake';
 	if (input.includes(prefix) || input.includes('http') || input.includes('data:image') || window.location.href.includes('localhost')) {
 		return input;
 	} else {
+		input = input.replace('+','%2B');
 		return prefix + input; //input.replace('/img/frames', prefix + '/img/frames');
-	} */
+	}
 	return input;
 }
 function setImageUrl(image, source) {
@@ -368,6 +369,7 @@ function loadManaSymbols(matchColor, manaSymbolPaths, size = [1, 1]) {
 		manaSymbol.image = new Image();
 		manaSymbol.image.crossOrigin = 'anonymous';
 		var manaSymbolPath = '/img/manaSymbols/' + manaSymbol.path;
+		// aliyun + -> ' '
 		if (!manaSymbolPath.includes('.png')) {
 			manaSymbolPath += '.svg';
 		}
