@@ -96,7 +96,7 @@ function generateSVGs() {
     }
     backPath += 'v' + (-materialThickness) + 'h' + materialThickness + 'Z"></path><path fill="transparent" stroke="red" d="M' + ((materialThickness + rowCount * (materialThickness + cardWidth) + 2 * padding) / 2 - cardWidth / 4) + ' ' + (padding + materialThickness) + 'h' + (cardWidth / 2) + 'v' + materialThickness + 'h' + (-cardWidth / 2) + 'Z"></path>'
     back.innerHTML = backPath
-    console.log(back)
+    // console.log(back)
 
     //front
     sizeSVG(front, materialThickness + rowCount * (materialThickness + cardWidth) + 2 * padding, 2 * padding + materialThickness + cardHeight)
