@@ -756,7 +756,7 @@ function cardFrameProperties(colors, manaCost, typeLine, power, style) {
 			pt = 'C';
 		frame = 'C';
 		frameRight = null; 
-		console.log(pinline, pinlineRight, rules, rulesRight, pt, frame, frameRight)
+		// console.log(pinline, pinlineRight, rules, rulesRight, pt, frame, frameRight)
 	}
 
 	return {
@@ -3988,7 +3988,7 @@ function writeText(textObject, targetContext) {
 				if(Last == '。' && (wordToWrite == "）" || wordToWrite == "」")) {
 					if(!newLine && currentX != startingCurrentX) {
 						currentX -= textSize * 0.5;
-						console.log("currentX: " + currentX);
+						// console.log("currentX: " + currentX);
 					}
 				}
 				if(Last == '：' || Last == '；') {
@@ -4008,7 +4008,7 @@ function writeText(textObject, targetContext) {
 						}
 						else {
 							currentX -= textSize * 0.5;
-							console.log("current:" + currentX + wordToWrite);
+							// console.log("current:" + currentX + wordToWrite);
 						}
 							// console.log("currentX(: " + currentX);
 					}
@@ -4614,6 +4614,7 @@ async function loadBottomInfo(textObjects = []) {
 	bottomInfoEdited();
 }
 async function bottomInfoEdited() {
+	// console.log("bottomInfoEdited");
 	await bottomInfoContext.clearRect(0, 0, bottomInfoCanvas.width, bottomInfoCanvas.height);
 	card.infoNumber = document.querySelector('#info-number').value;
 	card.infoRarity = document.querySelector('#info-rarity').value;
@@ -4625,7 +4626,6 @@ async function bottomInfoEdited() {
 
 	if (document.querySelector('#enableCollectorInfo').checked) {
 		for (var textObject of Object.entries(card.bottomInfo)) {
-			
 				if (["NOT FOR SALE"].some(v => textObject[1].text.includes(v))) {
 					if(params.get('nfs') == null) {
 						continue;
@@ -4644,12 +4644,16 @@ async function bottomInfoEdited() {
 						await writeText(textObject[1], bottomInfoContext);
 					}
 				}
-				else if(["CardConjurer.com", "card.sentixx.top"].some(v => textObject[1].text.includes(v))) {
+				else if(["CardConjurer.com", "card.sentixx.top"].some(v => v && textObject[1].text.includes(v)) || (textObject[1].name != null && textObject[1].name == 'bottomRight')) {
 					if(params.get('copyright') == null && document.querySelector('#enableWebsiteInfo').checked == false) {
 						continue;
 					}
 					else {
 						textObject[1].name = textObject[0];
+						textObject[1].text = '{ptshift0,0.0172}' + (document.querySelector('#extra-info')?.value || 'card.sentixx.top');
+						// console.log(document.querySelector('#extra-info')?.value);
+						// console.log(textObject[1]);
+						// console.log(textObject[0]);
 						await writeText(textObject[1], bottomInfoContext);
 					}
 				} else {
@@ -4908,7 +4912,7 @@ function downloadCard(alt = false, jpeg = false) {
 }
 
 function localImportCard(cardObject) {
-	console.log(cardObject);
+	// console.log(cardObject);
 	scryfallCard = cardObject
 	const importIndex = document.querySelector("#import-index");
 	importIndex.innerHTML = null;
@@ -4934,7 +4938,7 @@ function localImportCard(cardObject) {
 }
 //IMPORT/SAVE TAB
 function importCard(cardObject) {
-	console.log(cardObject);
+	// console.log(cardObject);
 	scryfallCard = cardObject;
 	const importIndex = document.querySelector('#import-index');
 	importIndex.innerHTML = null;
@@ -5774,7 +5778,7 @@ async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
 	xhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			let importedCards = JSON.parse(this.responseText).results;
-			console.log(importedCards);
+			// console.log(importedCards);
 	
 			if (!Array.isArray(importedCards) || importedCards.length === 0) {
 				notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
@@ -5872,7 +5876,7 @@ function fetchScryfallData(cardName, callback = console.log, unique = '') {
 			importedCards.forEach(card => {
 				processScryfallCard(card, responseCards);
 			});
-			console.log(responseCards);
+			// console.log(responseCards);
 			callback(responseCards);
 		} else if (this.readyState == 4 && this.status == 404 && !unique && cardName != '') {
 			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
