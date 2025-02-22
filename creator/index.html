@@ -696,14 +696,16 @@
 								<input id='enableCopyright' type='checkbox' onchange='enableCopyright();'>
 								<span class='checkmark'></span>
 							</label>
-							<label class='checkbox-container input margin-bottom'>启用网站信息
-								<input id='enableWebsiteInfo' type='checkbox' onchange='enableWebsiteInfo();'>
+							<label class='checkbox-container input margin-bottom'>启用额外信息
+								<input id='enableWebsiteInfo' type='checkbox' onchange='enableWebsiteInfo(); document.getElementById("extra-info-container").style.display = this.checked ? "block" : "none";'>
 								<span class='checkmark'></span>
 							</label>
+							<div id='extra-info-container' class='padding input-grid' style='display:none'>
+								<input id='extra-info' type='text' class='input' oninput='bottomInfoEdited();' placeholder='额外信息' value='card.sentixx.top'>
+							</div>
 							<label class='checkbox-container input margin-bottom'>启用艺术家导入
 								<input id='enableImportArtist' type='checkbox' onchange='enableImportArtist();'>
 								<span class='checkmark'></span>
-
 							</label>
 						</div>
 						<div class='readable-background padding margin-bottom'>
