@@ -9,13 +9,14 @@ if (debugging) {
 //To save the server from being overloaded? Maybe?
 function fixUri(input) {
 	//--- DISABLED FOR LOCAL VERSION --
-	var prefix = 'https://cardconjurer-zh.oss-cn-hongkong.aliyuncs.com';//'https://raw.githubusercontent.com/ImKyle4815/cardconjurer/remake';
-	if (input.includes(prefix) || input.includes('http') || input.includes('data:image') || window.location.href.includes('localhost')) {
-		return input;
-	} else {
-		input = input.replace('+','%2B');
-		return prefix + input; //input.replace('/img/frames', prefix + '/img/frames');
-	}
+	// var prefix = 'https://card.sentixx.top';//'https://raw.githubusercontent.com/ImKyle4815/cardconjurer/remake';
+	// if (input.includes(prefix) || input.includes('http') || input.includes('data:image') || window.location.href.includes('localhost')) {
+	// 	return input;
+	// } else {
+	// 	input = input.replace('+','%2B');
+	// 	return prefix + input; //input.replace('/img/frames', prefix + '/img/frames');
+	// }
+	input = input.replace('+','%2B');
 	return input;
 }
 function setImageUrl(image, source) {
