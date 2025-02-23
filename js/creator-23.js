@@ -935,6 +935,8 @@ function autoFrame() {
 		loadScript('/js/frames/pack' + frame + '.js');
 		autoFramePack = frame;
 	}
+
+	textEdited();
 }
 async function autoUBFrame(colors, mana_cost, type_line, power) {
 	var frames = card.frames.filter(frame => frame.name.includes('Extension') || frame.name.includes('Gray Holo Stamp') || frame.name.includes('Gold Holo Stamp'));
