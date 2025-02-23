@@ -3600,6 +3600,7 @@ function writeText(textObject, targetContext) {
 		var widestLineWidth = 0;
 		//variables that track various... things?
 		var textSize = startingTextSize;
+		var linespacing = 0;
 		var newLineSpacing = (textObject.lineSpacing || 0) * textSize;
 		var ptShift = [0, 0];
 		var permaShift = [0, 0];
@@ -3630,10 +3631,11 @@ function writeText(textObject, targetContext) {
 		innerloop: for (word of splitText) {
 			// console.log("word: " + word);
 			var wordToWrite = word;
+			// console.log("wordToWrite: " + splitText);
 			if(wordToWrite.includes("CStext")) {
 				Chinese = true;
+				linespacing = 0.08;
 			}
-			// console.log("Chinese: " + Chinese);
 			if (wordToWrite.includes('{') && wordToWrite.includes('}') || textManaCost || savedFont) {
 				var possibleCode = wordToWrite.toLowerCase().replace('{', '').replace('}', '');
 				wordToWrite = null;
@@ -3641,6 +3643,10 @@ function writeText(textObject, targetContext) {
 					newLine = true;
 					startingCurrentX = 0;
 					newLineSpacing = textSize * 0.35;
+				} else if(possibleCode.includes("linespacing")) {
+					newLineSpacing = parseFloat(possibleCode.replace("linespacing#", "")) * textSize;
+					linespacing = newLineSpacing;
+					// console.log("newLineSpacing: " + newLineSpacing);
 				} else if (possibleCode == 'lns' || possibleCode == 'linenospace') {
 					newLine = true;
 				} else if (possibleCode == 'bar') {
@@ -3963,7 +3969,13 @@ function writeText(textObject, targetContext) {
 				//reset
 				currentX = startingCurrentX;
 				currentY += textSize + newLineSpacing;
-				newLineSpacing = (textObject.lineSpacing || 0) * textSize;
+				// console.log(newLineSpacing);
+				if(textObject.lineSpacing != null) {
+					newLineSpacing = textObject.lineSpacing * textSize;
+				} else {
+					newLineSpacing = linespacing;
+				}
+				// console.log(newLineSpacing);
 				newLine = false;
 			}
 			while(wordToWrite == "{Lins}" || wordToWrite == "{Rins}") {
@@ -3976,7 +3988,6 @@ function writeText(textObject, targetContext) {
 				continue innerloop;
 			}
 			if(Chinese) {
-				
 				if(textObject.text.includes("CStext")) {
 				//console.log("Newline:" + newLine + wordToWrite);
 				if(Last == "）" || Last == "」") {
@@ -4008,9 +4019,7 @@ function writeText(textObject, targetContext) {
 						}
 						else {
 							currentX -= textSize * 0.5;
-							// console.log("current:" + currentX + wordToWrite);
 						}
-							// console.log("currentX(: " + currentX);
 					}
 				}
 				Last = wordToWrite;
