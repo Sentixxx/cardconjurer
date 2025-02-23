@@ -5800,7 +5800,7 @@ async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
 									}
 									
 									cardDetail.lang = "cs";
-									cardDetail.oracle_text = getValidString(cardDetail.zhs_text, cardDetail.translatedText);
+									cardDetail.oracle_text = getValidString(cardDetail.translatedText, cardDetail.zhs_text);
 									cardDetail.type_line = getValidString(cardDetail.zhs_type, cardDetail.translatedType);
 									cardDetail.mana_cost = getValidString(cardDetail.manaCost);
 									cardDetail.flavor_text = getValidString(cardDetail.zhs_flavorText, cardDetail.zhs_translatedFlavorText);
@@ -5815,7 +5815,7 @@ async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
 										delete cardDetail.power;
 									}
 
-									cardDetail.flavorText = cardDetail?.flavorText?.replace(/\\n/g, '\n');
+									cardDetail.flavor_text =cardDetail?.flavor_text?.replace(/\\n/g,"\n");
 									cardDetail.oracle_text = cardDetail?.oracle_text?.replace(/\\n/g, '\n');
 									responseCards.push(cardDetail);
 
