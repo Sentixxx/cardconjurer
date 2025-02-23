@@ -4300,6 +4300,7 @@ function artFromScryfall(scryfallResponse) {
 	scryfallResponse.forEach(card => {
 		if (card.image_uris && (card.object == 'card' || card.type_line != 'Card') && card.artist) {
 			scryfallArt.push(card);
+			// console.log("card", card);
 			var option = document.createElement('option');
 			option.innerHTML = `${card.name} (${card.set.toUpperCase()} - ${card.artist})`;
 			option.value = optionIndex;
@@ -4316,6 +4317,7 @@ function artFromScryfall(scryfallResponse) {
 
 		// Find all unique arts for that card
 		var artIllustrations = scryfallArt.map(card => card.illustration_id);
+
 
 		// Find the art that matches the selected print
 		var index = artIllustrations.indexOf(illustrationID);
@@ -5002,6 +5004,7 @@ function scryfallCardFromText(text) {
 function changeCardIndex() {
 	var cardToImport = scryfallCard[document.querySelector('#import-index').value];
 	//text
+	// console.log(cardToImport);
 	var langFontCode = "";
 	if (cardToImport.lang == "ph") {langFontCode = "{fontphyrexian}"}
 	if(cardToImport.lang == "cs" || cardToImport.lang == "zhs") {langFontCode = "{fontCStitle}{fontsize+14}"}
@@ -5276,6 +5279,8 @@ function changeCardIndex() {
 	document.querySelector('#art-name').value = cardToImport.name;
 	if(document.querySelector("#datasource").value == "scryfall") {
 		fetchScryfallData(cardToImport.name, artFromScryfall, 'art');
+	} else if (document.querySelector("#datasource").value == "sbwsz") {
+		fetchScryfallData(cardToImport.en_name, artFromScryfall, 'art');
 	}
 	if (document.querySelector('#importAllPrints').checked) {
 		document.querySelector('#art-index').value = document.querySelector('#import-index').value;
@@ -5752,104 +5757,106 @@ function getValidString(...values) {
 
 
 async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
-	if(cardName == '') {
-		return;
-	}
-	var xhttp = new XMLHttpRequest();
-
-	responseCards = [];
-	var unique_map = {};
-	xhttp.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			let importedCards = JSON.parse(this.responseText).results;
-			// console.log(importedCards);
-	
-			if (!Array.isArray(importedCards) || importedCards.length === 0) {
-				notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
-				return;
+	if (!cardName) return;
+	let responseCards = [];
+	uniqueMap = {};
+	const isUnique = unique === 'prints';
+	const fetchRequest = (url) => {
+		return new Promise((resolve, reject) => {
+			const xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+			if (this.readyState !== 4) return;
+			if (this.status === 200) {
+				resolve(JSON.parse(this.responseText));
+			} else {
+				reject(new Error(`Request failed: ${url}`));
 			}
-	
-			let fetchPromises = importedCards.map(card => {
-				return new Promise((resolve, reject) => {
-					let xhttp_single = new XMLHttpRequest();
-					xhttp_single.onreadystatechange = function () {
-						if (this.readyState == 4) {
-							if (this.status == 200) {
-								let cardDetails = JSON.parse(this.responseText).data;
-								cardDetails.forEach(cardDetail => {
-									if ('zhs_faceName' in cardDetail && cardDetail.zhs_faceName != '' && cardDetail.zhs_faceName != null) {
-										cardDetail.name = getValidString(cardDetail.zhs_faceName, cardDetail.faceName);
-									} else {
-										cardDetail.name = getValidString(cardDetail.zhs_name, cardDetail.translatedName);
-									}
-									
-									cardDetail.lang = "cs";
-									cardDetail.oracle_text = getValidString(cardDetail.translatedText, cardDetail.zhs_text);
-									cardDetail.type_line = getValidString(cardDetail.zhs_type, cardDetail.translatedType);
-									cardDetail.mana_cost = getValidString(cardDetail.manaCost);
-									cardDetail.flavor_text = getValidString(cardDetail.zhs_flavorText, cardDetail.zhs_translatedFlavorText);
-									cardDetail.flavorName = getValidString(cardDetail.translatedFlavorName, cardDetail.zhs_translatedFlavorName);
-									cardDetail.set = card.setCode;
-									cardDetail.number = card.number;
+			};
+			xhttp.open('GET', url, true);
+			xhttp.send();
+		});
+	};
 
-									if(cardDetail.toughness == null) {
-										delete cardDetail.toughness;
-									}
-									if(cardDetail.power == null) {
-										delete cardDetail.power;
-									}
+	const processCardDetail = (cardDetail) => {
+		Object.assign(cardDetail, {
+			en_name: cardDetail.name,
+			name: cardDetail.zhs_faceName || cardDetail.zhs_name || cardDetail.faceName || cardDetail.translatedName || cardDetail.officialName,
+			lang: "cs",
+			oracle_text: cardDetail.translatedText || cardDetail.zhs_text || '',
+			type_line: cardDetail.zhs_type || cardDetail.translatedType || '',
+			mana_cost: cardDetail.manaCost || '',
+			flavor_text: cardDetail.zhs_flavorText || cardDetail.zhs_translatedFlavorText || '',
+			flavorName: cardDetail.translatedFlavorName || cardDetail.zhs_translatedFlavorName || '',
+			set: cardDetail.setCode,
+			collector_number: cardDetail.number,
+			illustration_id: cardDetail.scryfallId
+		});
+		if (cardDetail.oracle_text && !cardDetail.oracle_text.includes("{CARDNAME}") && cardDetail.oracle_text.includes("CARDNAME")) {
+			cardDetail.oracle_text = cardDetail.oracle_text.replaceAll("CARDNAME", "{CARDNAME}");
+		}
+		if (cardDetail.toughness == null) delete cardDetail.toughness;
+		if (cardDetail.power == null) delete cardDetail.power;
 
-									cardDetail.flavor_text =cardDetail?.flavor_text?.replace(/\\n/g,"\n");
-									cardDetail.oracle_text = cardDetail?.oracle_text?.replace(/\\n/g, '\n');
-									responseCards.push(cardDetail);
+		cardDetail.flavor_text = cardDetail.flavor_text?.replace(/\\n/g, "\n");
+		cardDetail.oracle_text = cardDetail.oracle_text?.replace(/\\n/g, '\n');
+		return cardDetail;
+	};
 
-
-								});
-								resolve();
-							} else {
-								reject(`Failed to fetch ${card.setCode}/${card.number}`);
-							}
-						}
-					};
-					if(unique_map[card.name]) {
-						resolve();
+	var promises = [];
+	const fetchCardDetails = async (card) => {
+		try {
+			const fetchOneCard = async(set, number) => {
+				let cardDetail = await fetchRequest(`https://api.sbwsz.com/card/${set}/${number}`);
+				cardDetail = processCardDetail(cardDetail.data[0]);
+				// console.log("fetchOneCard", cardDetail);
+				responseCards.push(cardDetail);
+				return cardDetail;
+			}
+			let cardDetail = await fetchOneCard(card.setCode, card.number);
+			// console.log("cardDetail", cardDetail);
+			uniqueMap[cardDetail.setCode + cardDetail.number] = true;
+			if (isUnique) {
+				cardDetail.versions.forEach(version => {
+					// console.log("version", version.setCode, version.number);
+					if (uniqueMap[version.setCode + version.number] == true) { 
+						// console.log("already exists" + version.setCode + version.number);
 						return;
 					}
-					unique_map[card.name] = true;
-					xhttp_single.open('GET', `https://api.sbwsz.com/card/${card.setCode}/${card.number}`, true);
-					xhttp_single.send();
+					uniqueMap[version.setCode + version.number] = true;
+					// console.log("fetchOneCard", version.setCode, version.number);
+					promises.push(fetchOneCard(version.setCode, version.number));
 				});
-			});
-	
-			Promise.all(fetchPromises)
-				.then(() => {
-					// console.log(responseCards);
-					callback(responseCards);
-				})
-				.catch(error => {
-					console.error(error);
-					callback(responseCards);
-				});
-		} else if (this.readyState == 4 && this.status == 404 && !unique && cardName != '') {
-			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
+			}
+		} catch (error) {
+			console.error(`Failed to fetch details for ${card.setCode}/${card.number}`, error);
 		}
 	};
-	
-	const query = {
-		type: 'basic',
-		key: 'name',
-		operator: ':',
-		value: cardName,
-	}
-	const encodeQuery = encodeURIComponent(JSON.stringify(query));
-	const url = `https://api.sbwsz.com/search?q=${encodeQuery}`;
-	xhttp.open('GET', url, true);
+
 	try {
-		xhttp.send();
-	} catch {
-		console.log('SBWSZ API search failed.')
+		const query = {
+			type: 'basic',
+			key: 'name',
+			operator: ':',
+			value: cardName,
+		};
+		const encodeQuery = encodeURIComponent(JSON.stringify(query));
+		const url = `https://api.sbwsz.com/search?q=${encodeQuery}`;
+		const result = await fetchRequest(url);
+
+		const importedCards = result.results;
+		// console.log("importedCards", importedCards);
+		if (!Array.isArray(importedCards) || importedCards.length === 0) {
+			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
+			return;
+		}
+		await Promise.all(importedCards.map(fetchCardDetails));
+		await Promise.all(promises);
+		// console.log(responseCards);
+		callback(responseCards);
+	} catch (error) {
+		console.error(error);
 	}
-}
+}  
 //SCRYFALL STUFF MAY BE CHANGED IN THE FUTURE
 function fetchScryfallData(cardName, callback = console.log, unique = '') {
 	var xhttp = new XMLHttpRequest();
@@ -5860,7 +5867,7 @@ function fetchScryfallData(cardName, callback = console.log, unique = '') {
 			importedCards.forEach(card => {
 				processScryfallCard(card, responseCards);
 			});
-			// console.log(responseCards);
+			console.log(responseCards);
 			callback(responseCards);
 		} else if (this.readyState == 4 && this.status == 404 && !unique && cardName != '') {
 			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
