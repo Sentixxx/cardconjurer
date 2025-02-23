@@ -4343,7 +4343,7 @@ function artFromScryfall(scryfallResponse) {
 		// Find all unique arts for that card
 		var artIllustrations = scryfallArt.map(card => card.illustration_id);
 
-		console.log("allillu" + artIllustrations);
+		("allillu" + artIllustrations);
 
 
 		// Find the art that matches the selected print
@@ -4636,7 +4636,7 @@ async function bottomInfoEdited() {
 	card.infoArtist = document.querySelector('#info-artist').value;
 	card.infoYear = document.querySelector('#info-year').value;
 	card.infoNote = document.querySelector('#info-note').value;
-
+	var writed = false;
 	if (document.querySelector('#enableCollectorInfo').checked) {
 		for (var textObject of Object.entries(card.bottomInfo)) {
 				if (["NOT FOR SALE"].some(v => textObject[1].text.includes(v))) {
@@ -4648,17 +4648,27 @@ async function bottomInfoEdited() {
 						await writeText(textObject[1], bottomInfoContext);
 					}
 				} 
-				else if(["Wizards of the Coast"].some(v => textObject[1].text.includes(v))) {
-					if(params.get('wizards') == null && document.querySelector('#enableCopyright').checked == false) {
+				else if(["Wizards of the Coast"].some(v => textObject[1].text.includes(v)) ||(textObject[1].name != null && textObject[1].name == 'wizards')) {
+					if(params.get('wizards') == null && document.querySelector('#enableCopyright').checked == false && document.querySelector('#enableWebsiteInfo').checked == false) {
 						continue;
 					}
 					else {
 						textObject[1].name = textObject[0];
+						if(document.querySelector('#enableCopyright').checked == false) {
+							textObject[1].text = '{ptshift0,0.0172} ' + (document.querySelector('#extra-info')?.value || 'card.sentixx.top');
+							writed = true;
+						} else {
+							textObject[1].text = '{ptshift0,0.0172}\u2122 & \u00a9 {elemidinfo-year} ' + (document.querySelector('#extra-info')?.value || 'Wizards of the Coast');
+							writed = false;
+						}
 						await writeText(textObject[1], bottomInfoContext);
 					}
 				}
 				else if(["CardConjurer.com", "card.sentixx.top"].some(v => v && textObject[1].text.includes(v)) || (textObject[1].name != null && textObject[1].name == 'bottomRight')) {
 					if(params.get('copyright') == null && document.querySelector('#enableWebsiteInfo').checked == false) {
+						continue;
+					}
+					if(writed) {
 						continue;
 					}
 					else {
@@ -5894,7 +5904,6 @@ function fetchScryfallData(cardName, callback = console.log, unique = '') {
 			importedCards.forEach(card => {
 				processScryfallCard(card, responseCards);
 			});
-			console.log(responseCards);
 			callback(responseCards);
 		} else if (this.readyState == 4 && this.status == 404 && !unique && cardName != '') {
 			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
