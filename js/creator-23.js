@@ -5501,7 +5501,7 @@ function uploadSavedCards(event) {
 function loadTutorialVideo() {
 	var video = document.querySelector('.video > iframe');
 	if (video.src == '') {
-		video.src = 'https://player.bilibili.com/player.html?isOutside=true&aid=113906324346763&bvid=BV1mZFsegE2p&cid=28127986929&p=1';
+		video.src = 'https://player.bilibili.com/player.html?isOutside=true&aid=113906324346763&bvid=BV1mZFsegE2p&cid=28127986929&p=1&autoplay=0';
 	}
 }
 // GUIDELINES
