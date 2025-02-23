@@ -4318,6 +4318,8 @@ function artFromScryfall(scryfallResponse) {
 		// Find all unique arts for that card
 		var artIllustrations = scryfallArt.map(card => card.illustration_id);
 
+		console.log("allillu" + artIllustrations);
+
 
 		// Find the art that matches the selected print
 		var index = artIllustrations.indexOf(illustrationID);
@@ -5789,7 +5791,7 @@ async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
 			flavorName: cardDetail.translatedFlavorName || cardDetail.zhs_translatedFlavorName || '',
 			set: cardDetail.setCode,
 			collector_number: cardDetail.number,
-			illustration_id: cardDetail.scryfallId
+			illustration_id: cardDetail.scryfallIllustrationId
 		});
 		if (cardDetail.oracle_text && !cardDetail.oracle_text.includes("{CARDNAME}") && cardDetail.oracle_text.includes("CARDNAME")) {
 			cardDetail.oracle_text = cardDetail.oracle_text.replaceAll("CARDNAME", "{CARDNAME}");
