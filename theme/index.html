@@ -1,28 +1,28 @@
 <!-- START OF CONTENT -->
-	<h2 class='readable-background header-extension title center'>主题编辑器</h2>
+	<h2 class='readable-background header-extension title center'>Theme Editor</h2>
 	<div class='layer center'></div>
 	<div class='layer center'>
-		<h1 class='margin-bottom'>欢迎使用主题编辑器！</h1>
-		<h5>此功能仍在开发中</h5>
+		<h1 class='margin-bottom'>Welcome to the theme editor!</h1>
+		<h5>This feature is a bit of a work-in-progress</h5>
 	</div>
 	<div class='layer'></div>
 	<div class='layer readable-background margin-bottom-large'>
-		<h3>背景</h3>
-		<h4>选择背景</h4>
+		<h3>Background</h3>
+		<h4>Choose a background</h4>
 		<select class='input' onchange='changeThemeVar(this.value, "background");'>
-			<option value='../img/lowpolyBackground.svg'>低多边形</option>
-			<option value='../img/gradientBackground.svg'>纯色</option>
+			<option value='../img/lowpolyBackground.svg'>Lowpoly</option>
+			<option value='../img/gradientBackground.svg'>Plain</option>
 		</select>
-		<h4>输入背景图片（仅限URL）</h4>
-		<input id='background-url' class='input' type='url' placeholder='输入URL' onchange='changeThemeVar(this.value, "background");'>
-		<h4>调整背景色相</h4>
+		<h4>Enter a background image (URL ONLY)</h4>
+		<input id='background-url' class='input' type='url' placeholder='Enter a URL' onchange='changeThemeVar(this.value, "background");'>
+		<h4>Shift the Background's Hue</h4>
 		<input id='hue-rotate' class='input' type='range' min='0' max='360' step='1' oninput='changeThemeVar(this.value, "huerotate");'>
-		<h4>启用/设置彩虹速度</h4>
+		<h4>Enable/Set Rainbow Speed</h4>
 		<input id='hue-rotate-auto' class='input' type='range' min='0' max='200' step='1' oninput='changeThemeVar(this.value, "rainbow");'>
-		<h3 class='margin-top'>可读区域</h3>
-		<h4>调整亮度</h4>
+		<h3 class='margin-top'>Readable Areas</h3>
+		<h4>Adjust the Brightness</h4>
 		<input id='readable-brightness' class='input' type='range' min='0' max='1' step='0.01' oninput='changeThemeVar(this.value, "readablebrightness");'>
-		<button class='input margin-top' onclick='resetTheme();'>重置为默认主题</button>
+		<button class='input margin-top' onclick='resetTheme();'>Reset Theme to Default</button>
 	</div>
 	<script defer src='../js/themeEditor.js'></script>
 <!-- END OF CONTENT -->

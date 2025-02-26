@@ -1,50 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://card.sentixx.top/</loc>
+  <loc>https://cardconjurer.com/</loc>
   <priority>1.00</priority>
   <changefreq>monthly</changefreq>
 </url>
 <url>
-  <loc>https://card.sentixx.top/creator/</loc>
+  <loc>https://cardconjurer.com/creator/</loc>
   <priority>1.00</priority>
   <changefreq>monthly</changefreq>
 </url>
-
 <url>
-  <loc>https://card.sentixx.top/legal/</loc>
+  <loc>https://cardconjurer.com/legal/</loc>
   <priority>0.80</priority>
   <changefreq>monthly</changefreq>
-
 </url>
 <url>
-  <loc>https://card.sentixx.top/theme/</loc>
+  <loc>https://cardconjurer.com/theme/</loc>
   <priority>0.40</priority>
   <changefreq>monthly</changefreq>
-
 </url>
 <url>
-  <loc>https://card.sentixx.top/about/</loc>
+  <loc>https://cardconjurer.com/about/</loc>
   <priority>0.60</priority>
   <changefreq>monthly</changefreq>
-
 </url>
 <url>
-  <loc>https://card.sentixx.top/phyrexian/</loc>
+  <loc>https://cardconjurer.com/phyrexian/</loc>
   <priority>0.60</priority>
   <changefreq>monthly</changefreq>
-
 </url>
 <url>
-  <loc>https://card.sentixx.top/askurza/</loc>
+  <loc>https://cardconjurer.com/askurza/</loc>
   <priority>0.60</priority>
   <changefreq>monthly</changefreq>
-
 </url>
 <url>
-  <loc>https://card.sentixx.top/old/</loc>
+  <loc>https://cardconjurer.com/old/</loc>
   <priority>0.20</priority>
   <changefreq>monthly</changefreq>
-
 </url>
 </urlset>
