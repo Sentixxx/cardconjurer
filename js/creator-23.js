@@ -4635,7 +4635,7 @@ async function bottomInfoEdited() {
 							textObject[1].text = '{ptshift0,0.0172} ' + (document.querySelector('#extra-info')?.value || 'card.sentixx.top');
 							writed = true;
 						} else {
-							textObject[1].text = '{ptshift0,0.0172}\u2122 & \u00a9 {elemidinfo-year} ' + (document.querySelector('#extra-info')?.value || 'Wizards of the Coast');
+							textObject[1].text = '{ptshift0,0.0172}\u2122 & \u00a9 {elemidinfo-year} ' + 'Wizards of the Coast';
 							writed = false;
 						}
 						await writeText(textObject[1], bottomInfoContext);
