@@ -23,4 +23,4 @@ jobs:
           tag_name: latest-release
           release_name: Latest Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
