@@ -1,0 +1,26 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare artifact
+        run: |
+          zip -r release.zip . -x ".git/*" ".github/*" ".gitignore" "README.md"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release.zip
+          tag_name: latest-release
+          release_name: Latest Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
