@@ -983,3 +983,9 @@ textarea.input {
 	grid-gap: 0.5rem;
 	padding: 1rem 2rem;
 }
+#addToTopHalf {
+  grid-row: 2;
+}
+#addToBottomHalf {
+  grid-row: 2;
+}
