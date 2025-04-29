@@ -936,8 +936,7 @@ function autoFrame() {
 		loadScript('/js/frames/pack' + frame + '.js');
 		autoFramePack = frame;
 	}
-
-	textEdited();
+	textEdited('autoFrame');
 }
 async function autoUBFrame(colors, mana_cost, type_line, power) {
 	var frames = card.frames.filter(frame => frame.name.includes('Extension') || frame.name.includes('Gray Holo Stamp') || frame.name.includes('Gold Holo Stamp'));
@@ -3404,10 +3403,12 @@ function textboxEditor() {
 	document.querySelector('#textbox-editor-height').value = scaleHeight(selectedTextbox.height || 1);
 	document.querySelector('#textbox-editor-height').onchange = (event) => {selectedTextbox.height = (event.target.value / card.height); textEdited();}
 }
-function textEdited() {
+function textEdited(source = '') {
 	card.text[Object.keys(card.text)[selectedTextIndex]].text = curlyQuotes(document.querySelector('#text-editor').value);
 	drawTextBuffer();
-	autoFrameBuffer();
+	if (source == '') {
+		autoFrameBuffer();
+	}
 }
 function fontSizedEdited() {
 	card.text[Object.keys(card.text)[selectedTextIndex]].fontSize = document.querySelector('#text-editor-font-size').value;
