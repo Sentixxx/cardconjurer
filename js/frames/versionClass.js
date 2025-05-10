@@ -26,28 +26,44 @@ if (!loadedVersions.includes('/js/frames/versionClass.js')) {
 			<input id='class-height-3' type='number' class='input' oninput='classEdited();' min='0'>
 		</div>
 	</div>`;
-	if (!card.class) {
-		card.class = {x:0.5014 , width:0.422, count:0}
-	}
+
 	document.querySelector('#creator-menu-sections').appendChild(newHTML);
 	var classHeader = new Image();
-	setImageUrl(classHeader, '/img/frames/class/header.png');
 	classHeader.onload = classEdited;
 	fixClassInputs(classEdited);
 } else {
 	fixClassInputs(classEdited);
 }
+	//placement for header
+function getCardClass() {
+		switch (card.version) { case
+			'class': return {x: 0.5014, width: 0.422};
+			default: return { x: 0.5014, width: 0.422};
+		}
+} 
+	//use correct header image
+function getHeaderPath() {
+	switch (card.version) { case
+		'class': return '/img/frames/class/header.png';
+		default: return '/img/frames/class/header.png';
+	}
+}
 
 function classEdited() {
+	card.class = getCardClass();
+	const headerPath = getHeaderPath();
+	if (!classHeader.src.endsWith(headerPath)) {
+		setImageUrl(classHeader, headerPath);
+    }
 	//gather data
-	card.class.count = 0;
+	let classCount = 0;
 	var lastY = card.text.level0c.y;
 	for (var i = 0; i < 4; i ++) {
 	 	var height = parseFloat((parseInt(document.querySelector('#class-height-' + i).value) / card.height).toFixed(4));
 	 	card.text['level' + i + 'c'].height = height || 1;
 	 	if (i > 0) {
 	 		if (height > 0) {
-				card.class.count ++;
+				classCount ++;
 			 	card.text['level' + i + 'a'].y = lastY - 0.0361;
 			 	card.text['level' + i + 'b'].y = lastY - 0.0361;
 		 		card.text['level' + i + 'c'].y = lastY;
@@ -63,8 +79,8 @@ function classEdited() {
 	}
 	//draw to class canvas
 	classContext.clearRect(0, 0, classCanvas.width, classCanvas.height);
-	for (var i = 1; i <= card.class.count; i ++) {
-		if (i == card.class.count) {
+	for (var i = 1; i <= classCount; i ++) {
+		if (i == classCount) {
 			finalHeight = 0.8368 - card.text['level' + i + 'c'].y;
 			if (finalHeight <= 0) {
 				finalHeight = 0.05;
