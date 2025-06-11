@@ -12,26 +12,29 @@ if (!loadedVersions.includes('/js/frames/versionSaga.js')) {
 		<h5 class='padding margin-bottom input-description'>First Ability:</h5>
 		<div class='padding input-grid margin-bottom'>
 			<input id='saga-height-0' type='number' class='input' oninput='sagaEdited();' min='0'>
-			<input id='saga-chapters-0' type='number' class='input' oninput='sagaEdited();' min='0' max='3' step='1'>
+			<input id='saga-chapters-0' type='number' class='input' oninput='sagaEdited();' min='0' max='6' step='1'>
 		</div>
 		<h5 class='padding margin-bottom input-description'>Second Ability:</h5>
 		<div class='padding input-grid margin-bottom'>
 			<input id='saga-height-1' type='number' class='input' oninput='sagaEdited();' min='0'>
-			<input id='saga-chapters-1' type='number' class='input' oninput='sagaEdited();' min='0' max='3' step='1'>
+			<input id='saga-chapters-1' type='number' class='input' oninput='sagaEdited();' min='0' max='6' step='1'>
 		</div>
 		<h5 class='padding margin-bottom input-description'>Third Ability:</h5>
 		<div class='padding input-grid margin-bottom'>
 			<input id='saga-height-2' type='number' class='input' oninput='sagaEdited();' min='0'>
-			<input id='saga-chapters-2' type='number' class='input' oninput='sagaEdited();' min='0' max='3' step='1'>
+			<input id='saga-chapters-2' type='number' class='input' oninput='sagaEdited();' min='0' max='6' step='1'>
 		</div>
 		<h5 class='padding margin-bottom input-description'>Fourth Ability:</h5>
 		<div class='padding input-grid margin-bottom'>
 			<input id='saga-height-3' type='number' class='input' oninput='sagaEdited();' min='0'>
-			<input id='saga-chapters-3' type='number' class='input' oninput='sagaEdited();' min='0' max='3' step='1'>
+			<input id='saga-chapters-3' type='number' class='input' oninput='sagaEdited();' min='0' max='6' step='1'>
 		</div>
 	</div>`;
 	if (!card.saga) {
 		card.saga = {abilities:[1, 1, 1, 0], count:3, x:(card.version === "oldSaga" ? 0.1114 : 0.1), width:(card.version === "oldSaga" ? 0.3727 : 0.3947)};
+	} else {
+		card.saga.x = (card.version === "oldSaga" ? 0.1114 : 0.1);
+		card.saga.width = (card.version === "oldSaga" ? 0.3727 : 0.3947);
 	}
 	document.querySelector('#creator-menu-sections').appendChild(newHTML);
 	var sagaChapter = new Image();
@@ -39,7 +42,15 @@ if (!loadedVersions.includes('/js/frames/versionSaga.js')) {
 	var sagaDivider = new Image();
 	setImageUrl(sagaDivider, '/img/frames/saga/sagaDivider.png');
 	sagaChapter.onload = sagaDivider.onload = sagaEdited;
-	fixSagaInputs(sagaEdited);
+	updateAbilityHeights();
+} else {
+	if (!card.saga) {
+		card.saga = {abilities:[1, 1, 1, 0], count:3, x:(card.version === "oldSaga" ? 0.1114 : 0.1), width:(card.version === "oldSaga" ? 0.3727 : 0.3947)};
+	} else {
+		card.saga.x = (card.version === "oldSaga" ? 0.1114 : 0.1);
+		card.saga.width = (card.version === "oldSaga" ? 0.3727 : 0.3947);
+	}
+	updateAbilityHeights();
 }
 
 function sagaEdited() {
@@ -80,33 +91,35 @@ function sagaEdited() {
 			var numeralY = y + (height - numeralHeight) / 2;
 			var numeralTextX = numeralX + scaleWidth(0.0394);
 			var numeralTextY = numeralY + scaleHeight(0.0429);
-			if (card.saga.abilities[i] == 1) {
-				sagaContext.drawImage(sagaChapter, numeralX, numeralY, numeralWidth, numeralHeight);
-				sagaContext.fillText(romanNumeral(sagaCount), numeralTextX, numeralTextY);
-				sagaCount ++;
-			} else if (card.saga.abilities[i] == 2) {
-				var numeralSpread = scaleHeight(0.0358);
-				var numeralTextSpread = scaleHeight(0.0358);
-				sagaContext.drawImage(sagaChapter, numeralX, numeralY - numeralSpread, numeralWidth, numeralHeight);
-				sagaContext.drawImage(sagaChapter, numeralX, numeralY + numeralSpread, numeralWidth, numeralHeight);
-				sagaContext.fillText(romanNumeral(sagaCount), numeralTextX, numeralTextY - numeralTextSpread);
-				sagaContext.fillText(romanNumeral(sagaCount + 1), numeralTextX, numeralTextY + numeralTextSpread);
-				sagaCount += 2;
-			} else if (card.saga.abilities[i] > 2) {
-				var numeralSpread = 2 * scaleHeight(0.0358);
-				var numeralTextSpread = 2 * scaleHeight(0.0358);
-				sagaContext.drawImage(sagaChapter, numeralX, numeralY - numeralSpread, numeralWidth, numeralHeight);
-				sagaContext.drawImage(sagaChapter, numeralX, numeralY, numeralWidth, numeralHeight);
-				sagaContext.drawImage(sagaChapter, numeralX, numeralY + numeralSpread, numeralWidth, numeralHeight);
-				sagaContext.fillText(romanNumeral(sagaCount), numeralTextX, numeralTextY - numeralTextSpread);
-				sagaContext.fillText(romanNumeral(sagaCount + 1), numeralTextX, numeralTextY);
-				sagaContext.fillText(romanNumeral(sagaCount + 2), numeralTextX, numeralTextY + numeralTextSpread);
-				sagaCount += 3;
+			var count = parseInt(card.saga.abilities[i]);
+			var offset = scaleHeight(0.0358);
+			var centerOffset = (count - 1) / 2;
+
+			for (let j = 0; j < count; j++) {
+					let positionOffset = (j - centerOffset) * offset * 2;
+
+					sagaContext.drawImage(sagaChapter, numeralX, numeralY + positionOffset, numeralWidth, numeralHeight);
+					sagaContext.fillText(romanNumeral(sagaCount + j), numeralTextX, numeralTextY + positionOffset);
 			}
+			sagaCount += count;
 		}
 	}
 	drawTextBuffer();
 	drawCard();
+}
+
+function updateAbilityHeights() {
+	const maxHeight = card.text.type.y - card.text.ability0.y;
+	const height = maxHeight / card.saga.count;
+	card.text.ability0.height = 0
+	card.text.ability1.height = 0
+	card.text.ability2.height = 0
+	card.text.ability2.height = 0
+	for (let i = 0; i < card.saga.count; i++) {
+		card.text[`ability${i}`].height = height;
+	}
+
+	fixSagaInputs(sagaEdited);
 }
 
 function fixSagaInputs(callback) {
@@ -124,13 +137,30 @@ function fixSagaInputs(callback) {
 }
 
 function romanNumeral(input) {
-	switch(input) {
-		case 1: return 'I';
-		case 2: return 'II';
-		case 3: return 'III';
-		case 4: return 'IV';
-		case 5: return 'V';
-		case 6: return 'VI';
-		default: return input;
+	if (input <= 0) return input;
+
+	const romanMap = [
+		{ value: 1000, numeral: 'M' },
+		{ value: 900, numeral: 'CM' },
+		{ value: 500, numeral: 'D' },
+		{ value: 400, numeral: 'CD' },
+		{ value: 100, numeral: 'C' },
+		{ value: 90, numeral: 'XC' },
+		{ value: 50, numeral: 'L' },
+		{ value: 40, numeral: 'XL' },
+		{ value: 10, numeral: 'X' },
+		{ value: 9, numeral: 'IX' },
+		{ value: 5, numeral: 'V' },
+		{ value: 4, numeral: 'IV' },
+		{ value: 1, numeral: 'I' }
+	];
+
+	let result = '';
+	for (const { value, numeral } of romanMap) {
+		while (input >= value) {
+			result += numeral;
+			input -= value;
+		}
 	}
+	return result;
 }

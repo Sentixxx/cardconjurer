@@ -55,5 +55,5 @@ document.querySelector('#loadFrameVersion').onclick = async function() {
 loadFramePack();
 //Only for the main version as the webpage loads:
 if (!card.text) {
-	document.querySelector('#loadFrameVersion').click();
+	setTimeout(() => document.querySelector('#loadFrameVersion').click());
 }

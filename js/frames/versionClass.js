@@ -36,15 +36,17 @@ if (!loadedVersions.includes('/js/frames/versionClass.js')) {
 }
 	//placement for header
 function getCardClass() {
-		switch (card.version) { case
-			'class': return {x: 0.5014, width: 0.422};
+		switch (card.version) {
+			case 'classStoneCutterDeluxe': return {x: 0.5240, width: 0.400};
+			case 'class': return {x: 0.5014, width: 0.422};
 			default: return { x: 0.5014, width: 0.422};
 		}
 } 
 	//use correct header image
 function getHeaderPath() {
-	switch (card.version) { case
-		'class': return '/img/frames/class/header.png';
+	switch (card.version) {
+		case 'classStoneCutterDeluxe': return '/img/frames/custom/stoneCutter/stoneCutterDeluxe/class/headerGold.png';
+		case 'class': return '/img/frames/class/header.png';
 		default: return '/img/frames/class/header.png';
 	}
 }
@@ -54,7 +56,7 @@ function classEdited() {
 	const headerPath = getHeaderPath();
 	if (!classHeader.src.endsWith(headerPath)) {
 		setImageUrl(classHeader, headerPath);
-    }
+	}
 	//gather data
 	let classCount = 0;
 	var lastY = card.text.level0c.y;

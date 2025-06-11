@@ -55,7 +55,7 @@ var loadMarginVersion = async () => {
 	if (card.version.includes('saga')) {
 		sagaEdited();
 	}
-	if (card.version.includes('class') && !card.version.includes('classicshifted')) {
+	if (card.version.includes('class')) {
 		classEdited();
 	}
 	drawTextBuffer();

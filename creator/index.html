@@ -355,6 +355,12 @@
 								<span class='checkmark'></span>
 							</label>
 						</div>
+						<div class='readable-background padding margin-bottom'>
+							<label class='checkbox-container input'>自动斜体提示文本
+								<input id='italicize-reminder-text' type='checkbox' onchange='textEdited();'>
+								<span class='checkmark'></span>
+							</label>
+						</div>
 
 						<div class='readable-background padding'>
 							<h5 class='padding input-description'>添加一个文本框到你的卡片</h5>
@@ -498,6 +504,13 @@
 							<button class='input margin-bottom' onclick='uploadSetSymbol(blank.src);'>清除系列图标</button>
 						</div>
 
+						<div class='readable-background padding margin-bottom'>
+							<h5 class='input-description margin-bottom'>Click and drag to move set symbol instead of art (hold shift to zoom)</h5>
+							<label class='checkbox-container input margin-bottom'>Click and drag to move set symbol instead of art
+								<input id='drag-target-setSymbol' type='checkbox'>
+								<span class='checkmark'></span>
+							</label>
+						</div>
 						<div class='readable-background padding'>
 							<h5 class='input-description margin-bottom'>锁定系列代码（在重新加载时保存）</h5>
 							<label class='checkbox-container input margin-bottom'>锁定系列代码
@@ -814,6 +827,14 @@
 
 						</div>
 						<div class='readable-background margin-bottom padding'>
+							<h5 class='padding margin-bottom input-description'>Paste full text</h5>
+							<button class='input margin-bottom' onclick='pasteCardText();'>Paste card</button>
+						</div>
+						<div class='readable-background margin-bottom padding'>
+							<h5 class='padding margin-bottom input-description'>粘贴全部文本</h5>
+							<button class='input margin-bottom' onclick='pasteCardText();'>粘贴卡牌</button>
+						</div>
+						<div class='readable-background margin-bottom padding'>
 							<h5 class='padding margin-bottom input-description'>保存当前卡牌</h5>
 							<button class='input margin-bottom' onclick='saveCard();'>保存卡牌</button>
 							<h5 class='padding margin-bottom input-description'>加载保存的卡牌</h5>
@@ -875,7 +896,8 @@
 							<option value="M15ExtendedArtShort">扩展艺术（短文本框）</option>
 							<option value="UB">Universes Beyond</option>
 							<option value="Etched">蚀刻</option>
-							<option value="Borderless">无边框（备用）</option>
+							<option value="Borderless">无边框（修改）</option>
+							<option value="BorderlessUB">无边框（修改）(无疆新宇宙)</option>
 
 							<option value="Praetors">Phyrexian</option>
 							<option value="8th">8th Edition</option>

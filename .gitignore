@@ -21,6 +21,7 @@ zhs.*
 
 # misc
 .DS_Store
+.vscode/settings.json
 .env.local
 .env.development.local
 .env.test.local
