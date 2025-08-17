@@ -24,7 +24,7 @@ jobs:
       
       - name: Restore commit timestamps
         run: |
-          pip install git-restore-mtime
+          sudo apt install git-restore-mtime
           git restore-mtime
 
       - name: Configure OSS CLI
