@@ -16,17 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v44
-        with:
-          files_ignore: |
-            .github/**
-            .git/**
-            launcher*
-            Makefile
-            Dockerfile
-
       - name: Install OSS CLI
         run: |
           curl -o ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.11/ossutil64
@@ -42,10 +31,7 @@ jobs:
 
       - name: Upload changed files to OSS
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "copy $file"
-            ossutil cp "$file" "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/$file" -u
-          done
+          ossutil cp . "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/" -r -u
 
     env:
       ALIYUN_OSS_BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
