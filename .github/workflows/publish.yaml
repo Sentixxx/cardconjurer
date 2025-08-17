@@ -43,6 +43,7 @@ jobs:
       - name: Upload changed files to OSS
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "copy $file"
             ossutil cp "$file" "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/$file" -u
           done
 
