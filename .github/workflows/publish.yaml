@@ -36,7 +36,7 @@ jobs:
 
       - name: Upload changed files to OSS
         run: |
-          ossutil cp . "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/" -r -u
+          ossutil sync . "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/" -u
 
     env:
       ALIYUN_OSS_BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
