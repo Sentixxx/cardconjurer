@@ -42,7 +42,8 @@ const frameNames = new Map ([
 	['Colorshifted (Planar Chaos)', 'Colorshifted'],
 	['Brawl Legend Crowns', 'Brawl'],
 	// Showcase
-	['Borderless Stellar Sights (EOE)', 'BorderlessStellarSights'],
+	['Borderless Stellar Sights (EOS)', 'BorderlessStellarSights'],
+	['Poster Stellar Sights (EOS)', 'PosterStellarSights'],
 	['Draconic (TDM)', 'Draconic'],
 	['Ghostfire (TDM)', 'Ghostfire'],
 	['Japan Showcase', 'JapanShowcase'],
@@ -54,6 +55,7 @@ const frameNames = new Map ([
 	['Breaking News (OTP)', 'BreakingNews'],
 	['Vault (BIG)', 'Vault'],
 	['Wanted Poster (OTJ)', 'Wanted'],
+	['Showcase Magnified (MKM)', 'ShowcaseMagnified'],
 	['Dossier (MKM)', 'Dossier'],
 	['Legends of Ixalan - Pattern 1 (LCI)', 'IxalanLegends1'],
 	['Legends of Ixalan - Pattern 2 (LCI)', 'IxalanLegends2'],
