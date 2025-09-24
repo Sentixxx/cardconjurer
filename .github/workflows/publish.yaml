@@ -1,45 +1,45 @@
-name: publish
+# name: publish
 
-on:
-  push:
-    branches:
-      - cn-release
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - cn-release
+#   workflow_dispatch:
 
-jobs:
-  upload:
-    runs-on: ubuntu-latest
+# jobs:
+#   upload:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
 
-      - name: Install OSS CLI
-        run: |
-          curl -o ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.11/ossutil64
-          chmod +x ossutil64
-          sudo mv ossutil64 /usr/local/bin/ossutil
+#       - name: Install OSS CLI
+#         run: |
+#           curl -o ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.11/ossutil64
+#           chmod +x ossutil64
+#           sudo mv ossutil64 /usr/local/bin/ossutil
       
-      - name: Restore commit timestamps
-        run: |
-          sudo apt install git-restore-mtime
-          git restore-mtime
+#       - name: Restore commit timestamps
+#         run: |
+#           sudo apt install git-restore-mtime
+#           git restore-mtime
 
-      - name: Configure OSS CLI
-        run: |
-          echo "[Credentials]" > ~/.ossutilconfig
-          echo "accessKeyID=${{ secrets.ALIYUN_OSS_ACCESS_KEY_ID }}" >> ~/.ossutilconfig
-          echo "accessKeySecret=${{ secrets.ALIYUN_OSS_ACCESS_KEY_SECRET }}" >> ~/.ossutilconfig
-          echo "endpoint=${{ secrets.ALIYUN_OSS_ENDPOINT }}" >> ~/.ossutilconfig
+#       - name: Configure OSS CLI
+#         run: |
+#           echo "[Credentials]" > ~/.ossutilconfig
+#           echo "accessKeyID=${{ secrets.ALIYUN_OSS_ACCESS_KEY_ID }}" >> ~/.ossutilconfig
+#           echo "accessKeySecret=${{ secrets.ALIYUN_OSS_ACCESS_KEY_SECRET }}" >> ~/.ossutilconfig
+#           echo "endpoint=${{ secrets.ALIYUN_OSS_ENDPOINT }}" >> ~/.ossutilconfig
 
-      - name: Upload changed files to OSS
-        run: |
-          ossutil sync . "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/" -u
+#       - name: Upload changed files to OSS
+#         run: |
+#           ossutil sync . "oss://${{ secrets.ALIYUN_OSS_BUCKET }}/" -u
 
-    env:
-      ALIYUN_OSS_BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
-      ALIYUN_OSS_ACCESS_KEY_ID: ${{ secrets.ALIYUN_OSS_ACCESS_KEY_ID }}
-      ALIYUN_OSS_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_OSS_ACCESS_KEY_SECRET }}
-      ALIYUN_OSS_ENDPOINT: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
+#     env:
+#       ALIYUN_OSS_BUCKET: ${{ secrets.ALIYUN_OSS_BUCKET }}
+#       ALIYUN_OSS_ACCESS_KEY_ID: ${{ secrets.ALIYUN_OSS_ACCESS_KEY_ID }}
+#       ALIYUN_OSS_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_OSS_ACCESS_KEY_SECRET }}
+#       ALIYUN_OSS_ENDPOINT: ${{ secrets.ALIYUN_OSS_ENDPOINT }}
