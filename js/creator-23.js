@@ -3717,6 +3717,7 @@ function writeText(textObject, targetContext) {
 	var drawingText = true;
 	//Repeatedly tries to draw the text at smaller and smaller sizes until it fits
 	outerloop: while (drawingText) {
+		manaSymbolsToRender = [];
 		//Rest of the text info loaded that may have been changed by a previous attempt at drawing the text
 		var textColor = textObject.color || 'black';
 		if (textObject.conditionalColor != undefined) {
