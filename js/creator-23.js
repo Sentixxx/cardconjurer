@@ -957,7 +957,7 @@ async function autoUBFrame(colors, mana_cost, type_line, power) {
 	var properties = cardFrameProperties(colors, mana_cost, type_line, power);
 
 	var style = false;
-	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1076,7 +1076,7 @@ async function autoM15Frame(colors, mana_cost, type_line, power) {
 	
 	if (type_line.toLowerCase().includes('snow')) {
 		style = 'snow';
-	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1137,13 +1137,13 @@ async function autoM15NewFrame(colors, mana_cost, type_line, power, style = 'reg
 
 	var properties = cardFrameProperties(colors, mana_cost, type_line, power);
 	if (style == 'ub') {
-		if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+		if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 			style = 'ubnyx';
 		}
 	} else if (style != 'fullart') {
 	 	if (type_line.toLowerCase().includes('snow')) {
 			style = 'snow';
-		} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+		} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 			style = 'Nyx';
 		}
 	}
@@ -1211,7 +1211,7 @@ async function autoM15EighthFrame(colors, mana_cost, type_line, power) {
 	var style = 'regular';
 	if (type_line.toLowerCase().includes('snow')) {
 		style = 'snow';
-	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1269,7 +1269,7 @@ async function autoM15EighthUBFrame(colors, mana_cost, type_line, power) {
 	var style = 'regular';
 	if (type_line.toLowerCase().includes('snow')) {
 		style = 'snow';
-	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1324,7 +1324,7 @@ async function autoBorderlessFrame(colors, mana_cost, type_line, power) {
 	document.querySelector('#frame-list').innerHTML = null;
 	var properties = cardFrameProperties(colors, mana_cost, type_line, power, 'Borderless');
 	var style = 'regular';
-	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1374,7 +1374,7 @@ async function autoBorderlessUBFrame(colors, mana_cost, type_line, power) {
 
 	var properties = cardFrameProperties(colors, mana_cost, type_line, power, 'Borderless');
 	var style = 'regular';
-	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1464,7 +1464,7 @@ async function autoExtendedArtFrame(colors, mana_cost, type_line, power, short) 
 	var style = 'regular';
 	if (type_line.toLowerCase().includes('snow')) {
 		style = 'snow';
-	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
@@ -1526,7 +1526,7 @@ async function autoEtchedFrame(colors, mana_cost, type_line, power) {
 	var style = 'regular';
 	if (type_line.toLowerCase().includes('snow')) {
 		style = 'snow';
-	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && type_line.toLowerCase().includes('enchantment'))) {
+	} else if (type_line.toLowerCase().includes('enchantment creature') || type_line.toLowerCase().includes('enchantment artifact') || (document.querySelector('#autoframe-always-nyx').checked && (type_line.toLowerCase().includes('enchantment') || type_line.toLowerCase().includes('结界')))) {
 		style = 'Nyx';
 	}
 
