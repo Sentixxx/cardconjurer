@@ -5759,6 +5759,34 @@ function parseVanguardLayout(card) {
     };
 }
 
+function parseRollAbilities(text) {
+    // Check if this is a roll card
+    if (!text.toLowerCase().includes('roll a d20')) {
+        return null;
+    }
+
+    let modifiedText = text;
+    const lines = text.split('\n');
+    
+    // Skip the first line ("Roll a d20.")
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        
+        // Match patterns like "1—9 | ability" or "20 | ability"
+        const rollMatch = line.match(/^(\d+(?:—\d+)?)\s*\|\s*(.+)$/);
+        if (rollMatch) {
+            const range = rollMatch[1];
+            const ability = rollMatch[2];
+            
+            // Replace the line with the roll tag format
+            const newLine = `{roll${range}} ${ability}`;
+            modifiedText = modifiedText.replace(line, newLine);
+        }
+    }
+    
+    return modifiedText;
+}
+
 function changeCardIndex() {
 	var cardToImport = scryfallCard[document.querySelector('#import-index').value];
 	// Add debug logging for card Layout detection
@@ -6036,10 +6064,38 @@ function changeCardIndex() {
 		card.text.type.text = langFontCode + cardToImport.type_line || '';}
 
 	var italicExemptions = ['Boast', 'Cycling', 'Visit', 'Prize', 'I', 'II', 'III', 'IV', 'I, II', 'II, III', 'III, IV', 'I, II, III', 'II, III, IV', 'I, II, III, IV', '• Khans', '• Dragons', '• Mirran', '• Phyrexian', 'Prototype', 'Companion', 'To solve', 'Solved'];
-	var rulesText = (cardToImport.oracle_text || '').replace(/(?:\((?:.*?)\)|[^"\n]+(?= — ))/g, function(a){
-	    if (italicExemptions.includes(a) || (cardToImport.keywords && cardToImport.keywords.indexOf('Spree') != -1 && a.startsWith('+'))) {return a;}
-	    return '{i}' + a + '{/i}';
-	});
+	var italicExemptions = ['Boast', 'Cycling', 'Visit', 'Prize', 'I', 'II', 'III', 'IV', 'I, II', 'II, III', 'III, IV', 'I, II, III', 'II, III, IV', 'I, II, III, IV', '• Khans', '• Dragons', '• Mirran', '• Phyrexian', 'Prototype', 'Companion', 'To solve', 'Solved'];
+	if (cardToImport.oracle_text) {
+		const hasRoll = cardToImport.oracle_text.toLowerCase().includes('roll a d20');		
+		const hasNumberedAbilities = /\d+(?:—\d+)?\s*\|\s*.+/.test(cardToImport.oracle_text);		
+		const rollText = parseRollAbilities(cardToImport.oracle_text);
+		if (rollText) {
+			// Use the modified text with roll tags for further processing
+			var rulesText = rollText.replace(/(?:\((?:.*?)\)|[^"\n]+(?= — ))/g, function(a){
+				if (italicExemptions.includes(a) || (cardToImport.keywords && cardToImport.keywords.indexOf('Spree') != -1 && a.startsWith('+'))) {return a;}
+				return '{i}' + a + '{/i}';
+			});
+		} else {
+			// Regular processing for non-roll cards
+			var rulesText = (cardToImport.oracle_text || '').replace(/(?:\((?:.*?)\)|[^"\n]+(?= — ))/g, function(a){
+				if (italicExemptions.includes(a) || (cardToImport.keywords && cardToImport.keywords.indexOf('Spree') != -1 && a.startsWith('+'))) {return a;}
+				return '{i}' + a + '{/i}';
+			});
+		}
+		// Handle loyalty ability brackets - separate from roll handling, applies to ALL cards
+		const isCleaveSpell = rulesText.toLowerCase().includes('cleave') || 
+							 (cardToImport.keywords && cardToImport.keywords.includes('Cleave'));
+		
+		if (!isCleaveSpell) {
+		// Replace loyalty ability brackets [+1], [-2], etc. with curly brackets
+		// Also convert em dash (−) to regular hyphen (-)
+		rulesText = rulesText.replace(/\[([+\-−]\d+)\]/g, function(match, number) {
+			return '{' + number.replace('\u2212', '-') + '}';
+		});
+	}
+	} else {
+		var rulesText = '';
+	}
 	rulesText = curlyQuotes(rulesText).replace(/{Q}/g, '{untap}').replace(/{\u221E}/g, "{inf}").replace(/• /g, '• {indent}');
 	rulesText = rulesText.replace('(If this card is your chosen companion, you may put it into your hand from outside the game for {3} any time you could cast a sorcery.)', '(If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)')
 
@@ -6167,6 +6223,12 @@ function changeCardIndex() {
 	if (card.version.includes('planeswalker') || card.version.includes('鹏洛客')) {
 		card.text.loyalty.text = cardToImport.loyalty || '';
 		var planeswalkerAbilities = cardToImport.oracle_text.split('\n');
+		// Replace loyalty ability brackets [+1], [-2], etc. with curly brackets for each ability
+		planeswalkerAbilities = planeswalkerAbilities.map(ability => {
+			return ability.replace(/\[([+\-−]\d+)\]/g, function(match, number) {
+				return '{' + number.replace('\u2212', '-') + '}';
+			});
+		});
 		while (planeswalkerAbilities.length > 4) {
 			var newAbility = planeswalkerAbilities[planeswalkerAbilities.length - 2] + '\n' + planeswalkerAbilities.pop();
 			planeswalkerAbilities[planeswalkerAbilities.length - 1] = newAbility;
