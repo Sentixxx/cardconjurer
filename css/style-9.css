@@ -80,6 +80,10 @@
 	src: url("../fonts/Acme-Regular.ttf") format('truetype');
 }
 @font-face {
+	font-family: PixelFont-Regular;
+	src: url("../fonts/PixelFont-Regular.ttf") format('truetype');
+}
+@font-face {
 	font-family: fritz-quadrata;
 	src: url("../fonts/fritz-quadrata.ttf") format('truetype');
 }

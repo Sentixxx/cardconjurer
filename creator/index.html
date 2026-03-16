@@ -64,17 +64,17 @@
 			</div>
 			<div>
 				<h5 class='input-description'>HSL 调整</h5>
-				<input id='frame-editor-hsl-hue-slider' class='input' type='range' min='-180' max='180' value='0' step='1'>
+				<input id='frame-editor-hsl-hue-slider' class='input' type='range' min='-180' max='180' value='0' step='1' aria-label='HSL Hue Slider'>
 
-				<input id='frame-editor-hsl-hue' class='input' type='number' min='-180' max='180' value='0' step='1'>
-				<input id='frame-editor-hsl-saturation-slider' class='input' type='range' min='-100' max='100' value='0' step='1'>
-				<input id='frame-editor-hsl-saturation' class='input' type='number' min='-100' max='100' value='0' step='1'>
-				<input id='frame-editor-hsl-lightness-slider' class='input' type='range' min='-100' max='100' value='0' step='1'>
-				<input id='frame-editor-hsl-lightness' class='input' type='number' min='-100' max='100' value='0' step='1'>
+				<input id='frame-editor-hsl-hue' class='input' type='number' min='-180' max='180' value='0' step='1' aria-label='HSL Hue Value'>
+				<input id='frame-editor-hsl-saturation-slider' class='input' type='range' min='-100' max='100' value='0' step='1' aria-label='HSL Saturation Slider'>
+				<input id='frame-editor-hsl-saturation' class='input' type='number' min='-100' max='100' value='0' step='1' aria-label='HSL Saturation Value'>
+				<input id='frame-editor-hsl-lightness-slider' class='input' type='range' min='-100' max='100' value='0' step='1' aria-label='HSL Lightness Slider'>
+				<input id='frame-editor-hsl-lightness' class='input' type='number' min='-100' max='100' value='0' step='1' aria-label='HSL Lightness Value'>
 			</div>
 			<div>
 				<h5 class='input-description'>选择并删除蒙版</h5>
-				<select id='frame-editor-masks' class='input margin-bottom'></select>
+				<select id='frame-editor-masks' class='input margin-bottom' aria-label='Frame editor masks'></select>
 				<button onclick='frameElementMaskRemoved();' class='input'>删除蒙版</button>
 			</div>
 
@@ -132,7 +132,7 @@
 								选择一个牌框组和一个牌框包，或者输入搜索。然后你可以加载选中的牌框版本（加载牌框版本配置文本位置、卡图大小等...）</h5>
 							<div class='input-grid margin-bottom'>
 
-								<select id='selectFrameGroup' onchange='loadScript("/js/frames/group" + this.value + ".js")' class='input'>
+								<select id='selectFrameGroup' onchange='loadScript("/js/frames/group" + this.value + ".js")' class='input' aria-label='Select Frame Group'>
 									<option disabled>标准牌框</option>
 									<option value='Standard-3'>常规</option>
 									<option value='Token-2'>衍生物</option>
@@ -157,7 +157,7 @@
 									<option value='FleshAndBlood'>Flesh and Blood</option>
 
 								</select>
-								<select id='selectFramePack' onchange='loadScript("/js/frames/pack" + this.value + ".js")' class='input'></select>
+								<select id='selectFramePack' onchange='loadScript("/js/frames/pack" + this.value + ".js")' class='input' aria-label='Select Frame Pack'></select>
 								<div class="autocomplete"><input id='frameSearch' onchange="frameSearch(this.value)" type='text' class='input' placeholder='Search Frames...'></div>
 							</div>
 							<div class='input-grid margin-bottom'>
@@ -249,7 +249,7 @@
 
 						<div class='readable-background padding margin-bottom'>
 							<h5 class='margin-bottom padding input-description'>输入卡片文本</h5>
-							<textarea id='text-editor' class='input margin-bottom' oninput='textEdited();'></textarea>
+							<textarea id='text-editor' class='input margin-bottom' oninput='textEdited();' aria-label='Card text editor'></textarea>
 							<div class='padding input-grid'>
 								<button class='input' onclick="toggleTextTag('i');">斜体</button>
 
@@ -395,10 +395,10 @@
 								<button class='input margin-bottom' onclick='pasteArt();'>Paste from clipboard</button>
 							</div>
 							<h5 class='margin-bottom padding input-description'>或输入一个卡牌名称</h5>
-							<input id='art-name' type='text' placeholder='输入卡名' class='input margin-bottom' onchange="fetchScryfallData(this.value, artFromScryfall, 'art');">
+							<input id='art-name' type='text' placeholder='输入卡名' class='input margin-bottom' onchange="fetchScryfallData(this.value, artFromScryfall, 'art');" aria-label='Enter Card Name'>
 							<h5 class='padding margin-bottom input-description'>选择一个特定的卡图</h5>
 
-							<select class='input margin-bottom' id='art-index' onchange='changeArtIndex();'></select>
+							<select class='input margin-bottom' id='art-index' onchange='changeArtIndex();' aria-label='Select specific card art'></select>
 							<h5 class='margin-bottom padding input-description'>并注明艺术家</h5>
 							<div class='input-grid'>
 								<input id='art-artist' type='text' class='input' oninput='artistEdited(this.value);' placeholder='艺术家'>
@@ -409,10 +409,10 @@
 							<h5 class='margin-bottom padding input-description'>位置/缩放你的卡图 (X, Y, 缩放, 旋转)<br>卡图现在可以视觉调整了！点击并拖动卡片上的任何位置来移动你的卡图。按住shift键进行缩放，或按住control键进行旋转。</h5>
 							<div class='input-grid margin-bottom'>
 
-								<input id='art-x' type='number' class='input' oninput='artEdited();' value=0>
-								<input id='art-y' type='number' class='input' oninput='artEdited();' value=0>
-								<input id='art-zoom' type='number' class='input' oninput='artEdited();' value=100 step=0.1 min=0>
-								<input id='art-rotate' type='number' class='input' oninput='artEdited();' value=0 step=1 min=0 max=360>
+								<input id='art-x' type='number' class='input' oninput='artEdited();' value=0 aria-label='Art X Position'>
+								<input id='art-y' type='number' class='input' oninput='artEdited();' value=0 aria-label='Art Y Position'>
+								<input id='art-zoom' type='number' class='input' oninput='artEdited();' value=100 step=0.1 min=0 aria-label='Art Scale'>
+								<input id='art-rotate' type='number' class='input' oninput='artEdited();' value=0 step=1 min=0 max=360 aria-label='Art Rotation'>
 							</div>
 							<div class='input-grid'>
 								<button class='input' onclick='autoFitArt();'>自动适应卡图</button>
@@ -466,7 +466,7 @@
 							<h5 class='margin-bottom padding input-description'>从以下位置加载系列图标：</h5>
 							<div class='input-grid margin-bottom'>
 
-								<select id='set-symbol-source' class='input' onchange='fetchSetSymbol();'>
+								<select id='set-symbol-source' class='input' onchange='fetchSetSymbol();' aria-label='Set symbol source'>
 									<option value='cardconjurer'>CardConjurer</option>
 									<option value='gatherer'>Gatherer</option>
 									<option value='hexproof'>Hexproof.io</option>
@@ -480,9 +480,9 @@
 								<h5 class='margin-top'>系列代码是代表系列的两个或三个字符组合。对于2015年之后发布的系列，可以在左下角找到三字符系列代码。</h5>
 								<h5 class='margin-top'>对于较早的系列，代码可能因使用情况而有所不同：</h5>
 
-								<p class='margin-top padding'>系列图标图像使用与<a class='underline' href='https://scryfall.com/sets' target='_blank'>Scryfall</a>相同的代码命名。</p>
+								<p class='margin-top padding'>系列图标图像使用与<a class='underline' href='https://scryfall.com/sets' target='_blank' rel='noopener'>Scryfall</a>相同的代码命名。</p>
 
-								<p class='padding'>对于水印，请参考<a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank'>Keyrune</a>。</p>
+								<p class='padding'>对于水印，请参考<a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank' rel='noopener'>Keyrune</a>。</p>
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
@@ -490,9 +490,9 @@
 							<h5 class='margin-bottom padding input-description'>位置/缩放你的系列图标 (X, Y, 缩放)</h5>
 							<div class='input-grid margin-bottom'>
 
-								<input id='setSymbol-x' type='number' class='input' oninput='setSymbolEdited();' value=0>
-								<input id='setSymbol-y' type='number' class='input' oninput='setSymbolEdited();' value=0>
-								<input id='setSymbol-zoom' type='number' class='input' oninput='setSymbolEdited();' value=100 step=0.1 min=0>
+								<input id='setSymbol-x' type='number' class='input' oninput='setSymbolEdited();' value=0 aria-label='Set Symbol X Position'>
+								<input id='setSymbol-y' type='number' class='input' oninput='setSymbolEdited();' value=0 aria-label='Set Symbol Y Position'>
+								<input id='setSymbol-zoom' type='number' class='input' oninput='setSymbolEdited();' value=100 step=0.1 min=0 aria-label='Set Symbol Scale'>
 							</div>
 							<div class='input-grid'>
 								<button class='input' onclick='resetSetSymbol();'>重置系列图标</button>
@@ -542,7 +542,7 @@
 								</div>
 							</div>
 							<h5 class='margin-bottom padding input-description'>选择基于lore的水印</h5>
-							<select class='input padding margin-bottom' onchange='getSetSymbolWatermark(fixUri(this.value));'>
+							<select class='input padding margin-bottom' onchange='getSetSymbolWatermark(fixUri(this.value));' aria-label='Select lore-based watermarks'>
 								<option disabled selected='selected'>None</option>
 								<option disabled>General</option>
 								<option value="/img/watermarks/planeswalker.svg">Planeswalker</option>
@@ -622,16 +622,16 @@
 								<h5 class='margin-top'>系列代码是代表系列的两个或三个字符组合。对于2015年之后发布的系列，可以在左下角找到三字符系列代码。</h5>
 								<h5 class='margin-top'>对于较早的系列，代码可能因使用情况而有所不同：</h5>
 
-								<p class='margin-top padding'>系列图标图像使用与<a class='underline' href='https://scryfall.com/sets' target='_blank'>Scryfall</a>相同的代码命名。</p>
+								<p class='margin-top padding'>系列图标图像使用与<a class='underline' href='https://scryfall.com/sets' target='_blank' rel='noopener'>Scryfall</a>相同的代码命名。</p>
 
-								<p class='padding'>对于水印，请参考<a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank'>Keyrune</a>。</p>
+								<p class='padding'>对于水印，请参考<a class='underline' href='https://keyrune.andrewgioia.com/icons.html' target='_blank' rel='noopener'>Keyrune</a>。</p>
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
 
 							<h5 class='margin-bottom padding input-description'>选择水印颜色（左，右）</h5>
 							<div class='input-grid margin-bottom'>
-								<select class='input' id='watermark-left' onchange='watermarkLeftColor(this.value);'>
+								<select class='input' id='watermark-left' onchange='watermarkLeftColor(this.value);' aria-label='Watermark left color'>
 
 									<option value="none">None</option>
 					                <option value="default">Actual Image</option>
@@ -646,7 +646,7 @@
 					                <option value="#ffffff">True White</option>
 					                <option value="#000000">True Black</option>
 								</select>
-								<select class='input' id='watermark-right' onchange='watermarkRightColor(this.value);'>
+								<select class='input' id='watermark-right' onchange='watermarkRightColor(this.value);' aria-label='Watermark right color'>
 									<option value="none" selected="selected">None</option>
 					                <option value="default">Actual Image</option>
 					                <option value="#b79d58">White</option>
@@ -670,16 +670,16 @@
 							<h5 class='margin-bottom padding input-description'>并输入一个不透明度</h5>
 							<div class='input-grid margin-bottom'>
 
-								<input id='watermark-opacity' type='number' class='input' oninput='watermarkEdited();' value=40 step=1 min=0 max=100>
+								<input id='watermark-opacity' type='number' class='input' oninput='watermarkEdited();' value=40 step=1 min=0 max=100 aria-label='Watermark opacity'>
 							</div>
 						</div>
 						<div class='readable-background padding margin-bottom'>
 							<h5 class='margin-bottom padding input-description'>位置/缩放你的水印 (X, Y, 缩放)</h5>
 							<div class='input-grid margin-bottom'>
-								<input id='watermark-x' type='number' class='input' oninput='watermarkEdited();' value=0>
+								<input id='watermark-x' type='number' class='input' oninput='watermarkEdited();' value=0 aria-label='Watermark X Position'>
 
-								<input id='watermark-y' type='number' class='input' oninput='watermarkEdited();' value=0>
-								<input id='watermark-zoom' type='number' class='input' oninput='watermarkEdited();' value=100 step=0.1 min=0>
+								<input id='watermark-y' type='number' class='input' oninput='watermarkEdited();' value=0 aria-label='Watermark Y Position'>
+								<input id='watermark-zoom' type='number' class='input' oninput='watermarkEdited();' value=100 step=0.1 min=0 aria-label='Watermark Scale'>
 							</div>
 							<div class='input-grid'>
 								<button class='input' onclick='resetWatermark();'>重置水印</button>
@@ -761,10 +761,10 @@
 
 							<h5 class='padding input-description'>位置（X, Y, 缩放）</h5>
 							<div class='padding input-grid'>
-								<input id='serial-x' type='number' class='input' oninput='serialInfoEdited();' min='0' value='172'>
+								<input id='serial-x' type='number' class='input' oninput='serialInfoEdited();' min='0' value='172' aria-label='Serial Number X Position'>
 
-								<input id='serial-y' type='number' class='input' oninput='serialInfoEdited();' min='0' value='1383'>
-								<input id='serial-scale' type='number' class='input' oninput='serialInfoEdited();' min='0' step='0.01' value='1'>
+								<input id='serial-y' type='number' class='input' oninput='serialInfoEdited();' min='0' value='1383' aria-label='Serial Number Y Position'>
+								<input id='serial-scale' type='number' class='input' oninput='serialInfoEdited();' min='0' step='0.01' value='1' aria-label='Serial Number Scale'>
 							</div>
 							<div class='padding input-grid'>
 								<button class='input' onclick='resetSerial();'>重置编号位置</button>
@@ -809,10 +809,10 @@
 								<option value="local">Local</option>
 							</select>
 							<h5 class='padding margin-bottom input-description'>选择一张特定的卡牌导入</h5>
-							<select class='input margin-bottom' id='import-index' onchange='changeCardIndex();'></select>
+							<select class='input margin-bottom' id='import-index' onchange='changeCardIndex();' aria-label='Select specific card to import'></select>
 							<h5 class='padding input-description'>选择一张卡牌导入的语言（并非所有语言都始终可用）</h5>
 
-							<select class='input' id='import-language' onchange='importChanged();'>
+							<select class='input' id='import-language' onchange='importChanged();' aria-label='Select language for card imports'>
 								<option value="en">英语</option>
 								<option value="es">西班牙语</option>
 								<option value="fr">法语</option>
@@ -844,7 +844,7 @@
 							<button class='input margin-bottom' onclick='saveCard();'>保存卡牌</button>
 							<h5 class='padding margin-bottom input-description'>加载保存的卡牌</h5>
 
-							<select id='load-card-options' class='input margin-bottom' type='text' onchange='loadCard(this.value);'></select>
+							<select id='load-card-options' class='input margin-bottom' type='text' onchange='loadCard(this.value);' aria-label='Load a saved card'></select>
 							<h5 class='padding margin-bottom input-description'>删除选中的卡牌</h5>
 							<button class='input' onclick='deleteCard();'>删除卡牌</button>
 						</div>
@@ -892,7 +892,7 @@
 				<div class='readable-background padding margin-bottom'>
 					<h5 class='padding input-description'>自动更新牌框</h5>
 					<div class='padding input-grid'>
-						<select id="autoFrame" class="input" onchange="setAutoFrame()">
+						<select id="autoFrame" class="input" onchange="setAutoFrame()" aria-label="Automatically update frame">
 							<option value="false">禁用</option>
 
 
@@ -930,9 +930,9 @@
 				</div>
 				<div class='readable-background padding'>
 					<h3 class='download padding' onclick='downloadCard();'>下载您的卡片</h3>
-					<h5 onclick='downloadCard(false, true);' id='downloadJpg' href='' target='_blank' class='padding download input-description' style='text-align: left;'>点击这里下载为JPEG</h5>
+					<h5 onclick='downloadCard(false, true);' id='downloadJpg' href='' target='_blank' class='padding download input-description'>点击这里下载为JPEG</h5>
 
-					<h5 onclick='downloadCard(true);' id='downloadAlt' href='' target='_blank' class='padding download input-description' style='text-align: left;'>点击这里获取备用下载</h5>
+					<h5 onclick='downloadCard(true);' id='downloadAlt' href='' target='_blank' class='padding download input-description'>点击这里获取备用下载</h5>
 
 					<!-- <label class='checkbox-container input margin-bottom'>800 DPI
 						<input id='high-res' type='checkbox' onchange='toggleHighRes();'>

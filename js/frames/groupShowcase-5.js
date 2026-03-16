@@ -1,5 +1,9 @@
 loadFramePacks([
 	{name:'Set Showcase Frames (Chronological)', value:'disabled'},
+	{name:'Pixel (TMT)', value:'PixelTMT'},
+	{name:'Mystical Archive (SOA)', value:'MysticalArchiveSOA'},
+	{name:'Fable (ECL)', value:'FableECL'},
+	{name:'Neon Ink (TLA)', value:'NeonInk'},
 	{name:'Avatar Elemental (TLA)', value:'Elemental'},
 	{name:'Borderless Stellar Sights (EOS)', value:'BorderlessStellarSights'},
 	{name:'Poster Stellar Sights (EOS)', value:'PosterStellarSights'},
@@ -76,14 +80,14 @@ loadFramePacks([
 	{name:'Etched (Snow)', value:'EtchedSnow'},
 	{name:'Legend Crowns (Etched)', value:'LegendCrownsEtched'},
 	{name:'Inner Crowns (Etched)', value:'InnerCrownsEtched'},
-	
+
 	{name:'Universes Beyond', value:'disabled'},
 	{name:'Universes Beyond', value:'UB'},
 	{name:'Universes Beyond (Full art)', value:'UBFull'},
 	{name:'Universes Beyond (Extended art)', value:'UBExtendedArt'},
 	{name:'Legend Crowns (Universes Beyond)', value:'UBLegendCrowns'},
 	{name:'Floating Legend Crowns (Universes Beyond)', value:'UBLegendCrownsFloating'},
-	
+
 	{name:'Masterpieces/Other', value:'disabled'},
 	{name:'Phyrexian', value:'Praetors'},
 	{name:'ZNR Expeditions (2020)', value:'ExpeditionZNR-1'},

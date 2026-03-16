@@ -2,6 +2,7 @@
 var masks = [{src:'/img/frames/textless/eoe/masks/maskPinlines.png', name:'Pinlines'}, {src:'/img/frames/textless/eoe/masks/maskSymbol.png', name:'Mana Symbol'}, {src:'/img/frames/textless/eoe/masks/maskTitle.png', name:'Title'}, {src:'/img/frames/textless/eoe/masks/maskNoBorder.png', name:'No Border'}, {src:'/img/frames/textless/eoe/masks/maskBorder.png', name:'Border'}];
 var masks2 = [{src:'/img/frames/textless/eoe/symbols/masks/maskLeft.png', name:'Left Half'},{src:'/img/frames/textless/eoe/symbols/masks/maskRight.png', name:'Right Half'}];
 var bounds = {x:62/1500, y:1752/2100, width:168/1500, height:168/2100};
+var bounds2 = {x:46/2010, y:55/2814, width:1916/2010, height:2151/2814};
 //defines available frames
 availableFrames = [
 	{name:'White Frame', src:'/img/frames/textless/eoe/w.png', masks:masks},
@@ -13,6 +14,8 @@ availableFrames = [
 	{name:'Colorless Frame', src:'/img/frames/textless/eoe/a.png', masks:masks},
     {name:'Waste Frame', src:'/img/frames/textless/eoe/L.png', masks:masks},
 	{name:'Black (Alt) Frame', src:'/img/frames/textless/eoe/bAlt.png', masks:masks},
+
+	{name:'Dragon Overlay', src:'/img/frames/textless/eoe/dragonOverlay.svg', bounds:bounds2},
 
 	{name:'Plains Symbol', src:'/img/frames/textless/eoe/symbols/plains.png', masks:masks2},
 	{name:'Island Symbol', src:'/img/frames/textless/eoe/symbols/island.png', masks:masks2},

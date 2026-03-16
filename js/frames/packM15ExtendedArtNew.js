@@ -11,8 +11,16 @@ availableFrames = [
 	{name:'Multicolored Frame', src:'/img/frames/m15/new/extended/m.png', masks:masks},
 	{name:'Artifact Frame', src:'/img/frames/m15/new/extended/a.png', masks:masks},
 	{name:'Land Frame', src:'/img/frames/m15/new/extended/l.png', masks:masks},
-	{name:'Eldrazi Frame', src:'/img/frames/m15/new/extended/c.png', masks:masks},
+	{name:'Colorless Frame', src:'/img/frames/m15/new/extended/c.png', masks:masks},
 	{name:'Vehicle Frame', src:'/img/frames/m15/new/extended/v.png', masks:masks},
+
+	{name:'White Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/w.png', masks:masks},
+	{name:'Blue Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/u.png', masks:masks},
+	{name:'Black Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/b.png', masks:masks},
+	{name:'Red Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/r.png', masks:masks},
+	{name:'Green Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/g.png', masks:masks},
+	{name:'Multicolored Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/m.png', masks:masks},
+	{name:'Artifact Enchantment Frame', src:'/img/frames/m15/new/extended/nyx/a.png', masks:masks},
 
 	{name:'White Power/Toughness', src:'/img/frames/m15/regular/m15PTW.png', bounds:bounds},
 	{name:'Blue Power/Toughness', src:'/img/frames/m15/regular/m15PTU.png', bounds:bounds},
@@ -44,7 +52,7 @@ document.querySelector('#loadFrameVersion').onclick = async function() {
 	card.artBounds = {x:0, y:236/2814, width:1, height:1530/2814};
 	autoFitArt();
 	//set symbol bounds
-	card.setSymbolBounds = {x:1862/2010, y:0.5910, width:0.12, height:0.0410, vertical:'center', horizontal: 'right'};
+	card.setSymbolBounds = {x:1862/2010, y:1673/2814, width:0.12, height:0.0410, vertical:'center', horizontal: 'right'};
 	resetSetSymbol();
 	//watermark bounds
 	card.watermarkBounds = {x:0.5, y:0.7762, width:0.75, height:0.2305};
@@ -53,7 +61,7 @@ document.querySelector('#loadFrameVersion').onclick = async function() {
 	loadTextOptions({
 		mana: {name:'Mana Cost', text:'', y:176/2814, width:1864/2010, height:71/2100, oneLine:true, size:70.5/1638, align:'right', shadowX:-0.001, shadowY:0.0029, manaCost:true, manaSpacing:0},
 		title: {name:'Title', text:'', x:168/2010, y:145/2814, width:0.8292, height:0.0543, oneLine:true, font:'belerenb', size:0.0381},
-		type: {name:'Type', text:'', x:168/2010, y:1588/2814, width:0.8292, height:0.0543, oneLine:true, font:'belerenb', size:0.0324, color:'white'},
+		type: {name:'Type', text:'', x:168/2010, y:1603/2814, width:0.8292, height:0.0543, oneLine:true, font:'belerenb', size:0.0324, color:'white'},
 		rules: {name:'Rules Text', text:'', x:0.086, y:1780/2814, width:0.828, height:0.2875, size:0.0362},
 		pt: {name:'Power/Toughness', text:'', x:0.7928, y:0.902, width:0.1367, height:0.0372, size:0.0372, font:'belerenbsc', oneLine:true, align:'center'}
 	});
