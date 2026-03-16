@@ -5768,6 +5768,9 @@ function importCard(cardObject) {
 		}
 		optionIndex ++;
 	});
+	if (importIndex.options.length > 0 && (importIndex.value === '' || importIndex.value == null)) {
+		importIndex.selectedIndex = 0;
+	}
 	changeCardIndex();
 }
 
@@ -6196,11 +6199,41 @@ function parseStationCard(oracleText) {
     };
 }
 
-function changeCardIndex() {
+function changeCardIndex(retryCount = 0) {
 	let cardToImport = scryfallCard[document.querySelector('#import-index').value];
 	// Add debug logging for card Layout detection
 	console.log('Card layout:', cardToImport.layout);
 	console.log('Card version:', card.version);
+	if (!card || !card.text) {
+		if ((!card?.version || card.version === '') && retryCount === 0) {
+			const firstFrameOption = document.querySelector('#frame-picker')?.children?.[0];
+			if (firstFrameOption) {
+				console.warn('[mtgch-import] changeCardIndex selecting default frame option');
+				firstFrameOption.click();
+			}
+			const loadFrameVersionButton = document.querySelector('#loadFrameVersion');
+			if (loadFrameVersionButton) {
+				console.warn('[mtgch-import] changeCardIndex forcing frame version initialization');
+				loadFrameVersionButton.click();
+			}
+		}
+		if (retryCount < 30) {
+			console.warn('[mtgch-import] changeCardIndex waiting for template initialization', {
+				retryCount,
+				cardVersion: card?.version,
+				cardState: card,
+				cardToImport,
+			});
+			setTimeout(() => changeCardIndex(retryCount + 1), 100);
+			return;
+		}
+		console.error('[mtgch-import] changeCardIndex aborted: card.text is missing after retries', {
+			cardVersion: card?.version,
+			cardState: card,
+			cardToImport,
+		});
+		return;
+	}
 
 	if (cardToImport.set == "plst") {
 		var components = cardToImport.collector_number.split('-');
@@ -6931,12 +6964,21 @@ else if (cardToImport.oracle_text && cardToImport.oracle_text.includes('Station'
         } catch {
             console.log("Scryfall API search failed.");
         }
-    }
+	}
 	//art
 	document.querySelector('#art-name').value = cardToImport.name;
+	if (cardToImport.image_uris?.art_crop) {
+		console.log('[mtgch-import] upload primary art from imported card', {
+			name: cardToImport.name,
+			set: cardToImport.set,
+			collector_number: cardToImport.collector_number,
+			art_crop: cardToImport.image_uris.art_crop,
+		});
+		uploadArt(cardToImport.image_uris.art_crop, 'autoFit');
+	}
 	if(document.querySelector("#datasource").value == "scryfall") {
 		fetchScryfallData(cardToImport.name, artFromScryfall, 'art');
-	} else if (document.querySelector("#datasource").value == "sbwsz") {
+	} else if (document.querySelector("#datasource").value == "mtgch") {
 		fetchScryfallData(cardToImport.en_name, artFromScryfall, 'art');
 	}
 	if (document.querySelector('#importAllPrints').checked) {
@@ -6970,8 +7012,8 @@ function importChanged() {
 	var datasource = document.querySelector("#datasource").value;
 	if(datasource === "local"){
 		fetchLocalData(document.querySelector("#import-name").value, importCard, true);
-	} else if(datasource === "sbwsz"){
-		fetchSBWSZData(document.querySelector("#import-name").value, importCard, unique); 
+	} else if(datasource === "mtgch"){
+		fetchMtgchData(document.querySelector("#import-name").value, importCard, unique); 
 	} else {
 		fetchScryfallData(document.querySelector("#import-name").value, importCard, unique);
 	}
@@ -7421,12 +7463,37 @@ function getValidString(...values) {
 	return values.find(value => value?.trim?.() !== "" && value !== null) ?? "";
 }
 
+function containsCJKText(text = '') {
+	return /[\u3400-\u9fff\uf900-\ufaff]/.test(text);
+}
 
-async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
+function decodeHtmlEntities(text = '') {
+	const textarea = document.createElement('textarea');
+	textarea.innerHTML = text;
+	return textarea.value;
+}
+
+function htmlToCardText(html = '') {
+	if (!html) return '';
+	let text = decodeHtmlEntities(html);
+	text = text.replace(/<i class=["']sr-only["']>(.*?)<\/i>/gi, '$1');
+	text = text.replace(/<i\b[^>]*>/gi, '');
+	text = text.replace(/<\/i>/gi, '');
+	text = text.replace(/<\/p>\s*<p>/gi, '\n');
+	text = text.replace(/<br\s*\/?>/gi, '\n');
+	text = text.replace(/<\/p>/gi, '');
+	text = text.replace(/<p>/gi, '');
+	text = text.replace(/<[^>]+>/g, '');
+	return text.trim();
+}
+
+
+async function fetchMtgchData(cardName, callback = console.log, unique = '') {
 	if (!cardName) return;
-	let responseCards = [];
-	uniqueMap = {};
 	const isUnique = unique === 'prints';
+	cardLanguageSelect = document.querySelector('#import-language');
+	const selectedLanguage = cardLanguageSelect?.value || 'en';
+	const preferChinese = selectedLanguage === 'cs' || selectedLanguage === 'zhs';
 	const fetchRequest = (url) => {
 		return new Promise((resolve, reject) => {
 			const xhttp = new XMLHttpRequest();
@@ -7442,89 +7509,312 @@ async function fetchSBWSZData(cardName, callback = console.log, unique = '') {
 			xhttp.send();
 		});
 	};
-
-	const processCardDetail = (cardDetail) => {
-		Object.assign(cardDetail, {
-			en_name: cardDetail.name,
-			name: cardDetail.zhs_faceName || cardDetail.zhs_name || cardDetail.faceName || cardDetail.translatedName || cardDetail.officialName,
-			lang: "cs",
-			oracle_text: cardDetail.translatedText || cardDetail.zhs_text || '',
-			type_line: cardDetail.zhs_type || cardDetail.translatedType || '',
-			mana_cost: cardDetail.manaCost || '',
-			flavor_text: cardDetail.zhs_flavorText || cardDetail.zhs_translatedFlavorText || '',
-			flavorName: cardDetail.translatedFlavorName || cardDetail.zhs_translatedFlavorName || '',
-			set: cardDetail.setCode,
-			collector_number: cardDetail.number,
-			illustration_id: cardDetail.scryfallIllustrationId
-		});
-		if (cardDetail.oracle_text && !cardDetail.oracle_text.includes("{CARDNAME}") && cardDetail.oracle_text.includes("CARDNAME")) {
-			cardDetail.oracle_text = cardDetail.oracle_text.replaceAll("CARDNAME", "{CARDNAME}");
+	const getBestImageUris = (imageUris) => {
+		if (!imageUris) return null;
+		const artCrop = getValidString(
+			imageUris.art_crop,
+			imageUris.large,
+			imageUris.normal,
+			imageUris.small
+		);
+		if (!artCrop) return null;
+		return Object.assign({}, imageUris, { art_crop: artCrop });
+	};
+	const fetchScryfallCard = async (setCode, collectorNumber) => {
+		if (!setCode || !collectorNumber) return null;
+		const safeSetCode = encodeURIComponent(setCode.toLowerCase());
+		const safeCollectorNumber = encodeURIComponent(collectorNumber);
+		const url = `https://api.scryfall.com/cards/${safeSetCode}/${safeCollectorNumber}`;
+		console.log('[mtgch-import] fetch Scryfall card', { setCode, collectorNumber, url });
+		return fetchRequest(url);
+	};
+	const fetchMtgchCardById = async (cardId) => {
+		if (!cardId) return null;
+		const safeCardId = encodeURIComponent(cardId);
+		const url = `https://mtgch.com/api/v1/card/${safeCardId}/`;
+		console.log('[mtgch-import] fetch mtgch card detail', { cardId, url });
+		return fetchRequest(url);
+	};
+	const fetchMtgchVersions = async (cardId) => {
+		if (!cardId) return [];
+		const safeCardId = encodeURIComponent(cardId);
+		const url = `https://mtgch.com/api/v1/versions/${safeCardId}/`;
+		console.log('[mtgch-import] fetch mtgch versions', { cardId, url });
+		return fetchRequest(url);
+	};
+	const getScryfallFaceImageUris = (scryfallCard, faceIndex = 0) => {
+		if (!scryfallCard) return null;
+		if (Array.isArray(scryfallCard.card_faces) && scryfallCard.card_faces[faceIndex]?.image_uris) {
+			const imageUris = getBestImageUris(scryfallCard.card_faces[faceIndex].image_uris);
+			console.log('[mtgch-import] Scryfall face image match', { faceIndex, imageUris });
+			return imageUris;
 		}
-		if (cardDetail.toughness == null) delete cardDetail.toughness;
-		if (cardDetail.power == null) delete cardDetail.power;
-
-		cardDetail.flavor_text = cardDetail.flavor_text?.replace(/\\n/g, "\n");
-		cardDetail.oracle_text = cardDetail.oracle_text?.replace(/\\n/g, '\n');
-		return cardDetail;
+		if (scryfallCard.image_uris) {
+			const imageUris = getBestImageUris(scryfallCard.image_uris);
+			console.log('[mtgch-import] Scryfall card image match', { faceIndex, imageUris });
+			return imageUris;
+		}
+		console.log('[mtgch-import] Scryfall image missing', { faceIndex, layout: scryfallCard.layout, set: scryfallCard.set, collector_number: scryfallCard.collector_number });
+		return null;
 	};
 
-	var promises = [];
-	const fetchCardDetails = async (card) => {
+	const normalizeMtgchCard = (cardDetail) => {
+		const primaryFace = Array.isArray(cardDetail.faces) ? cardDetail.faces[0] : null;
+		const normalizedSource = primaryFace ? Object.assign({}, cardDetail, {
+			name: primaryFace.name || cardDetail.name,
+			face_name: primaryFace.name || cardDetail.face_name,
+			mana_cost: cardDetail.mana_cost || primaryFace.mana_cost || primaryFace.mana_cost_html,
+			artist: cardDetail.artist || primaryFace.artist,
+			image_uris: cardDetail.image_uris || primaryFace.image_uris,
+			zhs_image_uris: cardDetail.zhs_image_uris || primaryFace.zhs_image_uris,
+			type_line: cardDetail.type_line || primaryFace.type_line_en,
+			printed_type_line: cardDetail.printed_type_line || primaryFace.type_line_zhs || primaryFace.type_line_atomic,
+			oracle_text: cardDetail.oracle_text || htmlToCardText(primaryFace.oracle_text_en_html),
+			printed_text: cardDetail.printed_text || htmlToCardText(primaryFace.oracle_text_zhs_html || primaryFace.oracle_text_atomic_html),
+			flavor_text: cardDetail.flavor_text || htmlToCardText(primaryFace.flavor_text_en_html),
+			printed_flavor_text: cardDetail.printed_flavor_text || htmlToCardText(primaryFace.flavor_text_zhs_html || primaryFace.flavor_text_atomic_html),
+			flavor_name: cardDetail.flavor_name || primaryFace.flavor_name,
+			zhs_name: cardDetail.zhs_name || primaryFace.name_zhs,
+			atomic_official_name: cardDetail.atomic_official_name || primaryFace.name_atomic,
+			atomic_translated_type: cardDetail.atomic_translated_type || primaryFace.type_line_atomic,
+			atomic_translated_text: cardDetail.atomic_translated_text || primaryFace.oracle_text_atomic_html,
+			atomic_translated_flavor_text: cardDetail.atomic_translated_flavor_text || primaryFace.flavor_text_atomic_html,
+			atomic_translated_flavor_name: cardDetail.atomic_translated_flavor_name || primaryFace.flavor_name_zhs,
+			object: cardDetail.object || 'card',
+			layout: cardDetail.layout || (cardDetail.is_dfc ? 'transform' : 'normal'),
+			lang: cardDetail.lang || 'en',
+			other_faces: Array.isArray(cardDetail.faces) && cardDetail.faces.length > 1
+				? cardDetail.faces.slice(1).map((face, index) => ({
+					object: 'card_face',
+					name: face.name,
+					face_name: face.name,
+					mana_cost: face.mana_cost || face.mana_cost_html,
+					artist: face.artist,
+					image_uris: face.image_uris,
+					zhs_image_uris: face.zhs_image_uris,
+					type_line: face.type_line_en,
+					printed_type_line: face.type_line_zhs || face.type_line_atomic,
+					oracle_text: htmlToCardText(face.oracle_text_en_html),
+					printed_text: htmlToCardText(face.oracle_text_zhs_html || face.oracle_text_atomic_html),
+					flavor_text: htmlToCardText(face.flavor_text_en_html),
+					printed_flavor_text: htmlToCardText(face.flavor_text_zhs_html || face.flavor_text_atomic_html),
+					flavor_name: face.flavor_name,
+					zhs_name: face.name_zhs,
+					atomic_official_name: face.name_atomic,
+					atomic_translated_type: face.type_line_atomic,
+					atomic_translated_text: face.oracle_text_atomic_html,
+					atomic_translated_flavor_text: face.flavor_text_atomic_html,
+					atomic_translated_flavor_name: face.flavor_name_zhs,
+					face_index: index + 1,
+					layout: cardDetail.layout || (cardDetail.is_dfc ? 'transform' : 'normal'),
+					lang: 'en',
+				}))
+				: cardDetail.other_faces,
+		}) : cardDetail;
+		const translatedName = getValidString(
+			normalizedSource.zhs_name,
+			normalizedSource.atomic_official_name,
+			normalizedSource.atomic_translated_name,
+			normalizedSource.full_translated_name,
+			normalizedSource.full_official_name,
+			normalizedSource.display_name,
+			normalizedSource.primary_name
+		);
+		const translatedText = getValidString(
+			normalizedSource.zhs_text,
+			normalizedSource.atomic_translated_text,
+			normalizedSource.printed_text,
+			normalizedSource.oracle_text
+		);
+		const translatedType = getValidString(
+			normalizedSource.zhs_type_line,
+			normalizedSource.atomic_translated_type,
+			normalizedSource.printed_type_line,
+			normalizedSource.type_line
+		);
+		const translatedFlavorText = getValidString(
+			normalizedSource.zhs_flavor_text,
+			normalizedSource.atomic_translated_flavor_text,
+			normalizedSource.printed_flavor_text,
+			normalizedSource.flavor_text
+		);
+		const translatedFlavorName = getValidString(
+			normalizedSource.zhs_flavor_name,
+			normalizedSource.atomic_translated_flavor_name,
+			normalizedSource.flavor_name
+		);
+		const normalized = Object.assign({}, normalizedSource, {
+			object: normalizedSource.object || 'card',
+			en_name: getValidString(normalizedSource.en_name, normalizedSource.name, normalizedSource.officialName),
+			name: preferChinese ? getValidString(translatedName, normalizedSource.name) : getValidString(normalizedSource.name, translatedName),
+			printed_name: getValidString(translatedName, normalizedSource.printed_name),
+			lang: preferChinese ? 'cs' : (normalizedSource.lang === 'zhs' ? 'cs' : (normalizedSource.lang || 'en')),
+			oracle_text: preferChinese ? getValidString(translatedText, normalizedSource.oracle_text) : getValidString(normalizedSource.oracle_text, translatedText),
+			printed_text: getValidString(translatedText, normalizedSource.printed_text),
+			type_line: preferChinese ? getValidString(translatedType, normalizedSource.type_line) : getValidString(normalizedSource.type_line, translatedType),
+			printed_type_line: getValidString(translatedType, normalizedSource.printed_type_line),
+			mana_cost: getValidString(normalizedSource.manaCost, normalizedSource.mana_cost),
+			flavor_text: preferChinese ? getValidString(translatedFlavorText, normalizedSource.flavor_text) : getValidString(normalizedSource.flavor_text, translatedFlavorText),
+			flavor_name: getValidString(translatedFlavorName, normalizedSource.flavor_name),
+			set: getValidString(normalizedSource.set, normalizedSource.setCode, normalizedSource.set_code).toLowerCase(),
+			setCode: getValidString(normalizedSource.setCode, normalizedSource.set, normalizedSource.set_code).toLowerCase(),
+			collector_number: getValidString(normalizedSource.collector_number, normalizedSource.number),
+			number: getValidString(normalizedSource.number, normalizedSource.collector_number),
+			illustration_id: getValidString(normalizedSource.illustration_id, normalizedSource.scryfallIllustrationId),
+			image_uris: null,
+			printed_image_uris: null,
+		});
+		if (Array.isArray(normalizedSource.other_faces) && normalizedSource.other_faces.length > 0) {
+			normalized.card_faces = normalizedSource.other_faces.map(face => normalizeMtgchCard(Object.assign({}, normalizedSource, face, {
+				image_uris: null,
+				zhs_image_uris: face.zhs_image_uris || normalizedSource.zhs_image_uris,
+				other_faces: [],
+			})));
+		}
+		if (normalized.oracle_text && !normalized.oracle_text.includes("{CARDNAME}") && normalized.oracle_text.includes("CARDNAME")) {
+			normalized.oracle_text = normalized.oracle_text.replaceAll("CARDNAME", "{CARDNAME}");
+		}
+		if (normalized.flavor_text) {
+			normalized.flavor_text = normalized.flavor_text.replace(/\\n/g, "\n");
+		}
+		if (normalized.oracle_text) {
+			normalized.oracle_text = normalized.oracle_text.replace(/\\n/g, "\n");
+		}
+		if (normalized.printed_text) {
+			normalized.printed_text = normalized.printed_text.replace(/\\n/g, "\n");
+		}
+		if (normalized.toughness == null) delete normalized.toughness;
+		if (normalized.power == null) delete normalized.power;
+		return normalized;
+	};
+	const populateFallbackImageUris = async (card) => {
 		try {
-			const fetchOneCard = async(set, number) => {
-				let cardDetail = await fetchRequest(`https://api.sbwsz.com/card/${set}/${number}`);
-				cardDetail = processCardDetail(cardDetail.data[0]);
-				// console.log("fetchOneCard", cardDetail);
-				responseCards.push(cardDetail);
-				return cardDetail;
-			}
-			let cardDetail = await fetchOneCard(card.setCode, card.number);
-			// console.log("cardDetail", cardDetail);
-			uniqueMap[cardDetail.setCode + cardDetail.number] = true;
-			if (isUnique) {
-				cardDetail.versions.forEach(version => {
-					// console.log("version", version.setCode, version.number);
-					if (uniqueMap[version.setCode + version.number] == true) { 
-						// console.log("already exists" + version.setCode + version.number);
-						return;
-					}
-					uniqueMap[version.setCode + version.number] = true;
-					// console.log("fetchOneCard", version.setCode, version.number);
-					promises.push(fetchOneCard(version.setCode, version.number));
+			console.log('[mtgch-import] populateFallbackImageUris start', {
+				name: card.name,
+				set: card.set,
+				collector_number: card.collector_number,
+				layout: card.layout,
+				face_index: card.face_index,
+				has_card_faces: Array.isArray(card.card_faces),
+			});
+			const scryfallCard = await fetchScryfallCard(card.set, card.collector_number);
+			const fallbackImageUris = getScryfallFaceImageUris(scryfallCard, card.face_index > -1 ? card.face_index : 0);
+			if (fallbackImageUris) {
+				card.image_uris = fallbackImageUris;
+				console.log('[mtgch-import] assigned primary image', {
+					name: card.name,
+					set: card.set,
+					collector_number: card.collector_number,
+					art_crop: fallbackImageUris.art_crop,
+				});
+			} else {
+				console.log('[mtgch-import] primary image missing after Scryfall lookup', {
+					name: card.name,
+					set: card.set,
+					collector_number: card.collector_number,
 				});
 			}
+			if (Array.isArray(card.card_faces) && Array.isArray(scryfallCard?.card_faces)) {
+				card.card_faces = card.card_faces.map((face, index) => {
+					if (getBestImageUris(face.image_uris)) {
+						console.log('[mtgch-import] face already had image', { index, name: face.name });
+						return face;
+					}
+					const fallbackFaceImageUris = getScryfallFaceImageUris(scryfallCard, index);
+					if (!fallbackFaceImageUris) {
+						console.log('[mtgch-import] face image missing after Scryfall lookup', { index, name: face.name });
+						return face;
+					}
+					console.log('[mtgch-import] assigned face image', {
+						index,
+						name: face.name,
+						art_crop: fallbackFaceImageUris.art_crop,
+					});
+					return Object.assign({}, face, {
+						image_uris: fallbackFaceImageUris,
+					});
+				});
+			}
+			console.log('[mtgch-import] populateFallbackImageUris done', {
+				name: card.name,
+				has_primary_image: !!card.image_uris?.art_crop,
+				card_faces: Array.isArray(card.card_faces) ? card.card_faces.map((face, index) => ({
+					index,
+					name: face.name,
+					has_image: !!face.image_uris?.art_crop,
+				})) : null,
+			});
 		} catch (error) {
-			console.error(`Failed to fetch details for ${card.setCode}/${card.number}`, error);
+			console.error(`[mtgch-import] Failed to fetch Scryfall image for ${card.set}/${card.collector_number}`, error);
 		}
+		return card;
 	};
 
 	try {
-		const query = {
-			type: 'basic',
-			key: 'name',
-			operator: ':',
-			value: cardName,
-		};
-		const encodeQuery = encodeURIComponent(JSON.stringify(query));
-		const url = `https://api.sbwsz.com/search?q=${encodeQuery}`;
+		const params = new URLSearchParams({
+			q: cardName,
+			page: '1',
+			order: '-released_at',
+			priority_chinese: 'true',
+			view: '0',
+		});
+		if (!isUnique) {
+			params.set('unique', 'oracle_id');
+		}
+		params.set('unique', 'oracle_id');
+		const url = `https://mtgch.com/api/v1/result?${params.toString()}`;
 		const result = await fetchRequest(url);
-
-		const importedCards = result.results;
-		// console.log("importedCards", importedCards);
+		let importedCards = result.items || result.results || result.data || result.cards || [];
+		console.log('[mtgch-import] mtgch search result', {
+			cardName,
+			count: Array.isArray(importedCards) ? importedCards.length : 0,
+			selectedLanguage,
+			isUnique,
+		});
 		if (!Array.isArray(importedCards) || importedCards.length === 0) {
 			notify(`No cards found for "${cardName}" in ${cardLanguageSelect.options[cardLanguageSelect.selectedIndex].text}.`, 5);
 			return;
 		}
-		await Promise.all(importedCards.map(fetchCardDetails));
-		await Promise.all(promises);
-		// console.log(responseCards);
+		if (isUnique) {
+			const representativeCards = importedCards.filter(card => card?.id);
+			console.log('[mtgch-import] resolving mtgch all versions', {
+				cardName,
+				representativeCount: representativeCards.length,
+				representatives: representativeCards.map(card => ({
+					id: card.id,
+					name: card.display_name || card.name || card.primary_name,
+					set: card.set,
+					collector_number: card.collector_number,
+				})),
+			});
+			const versionGroups = await Promise.all(representativeCards.map(card => fetchMtgchVersions(card.id)));
+			const versionIds = [...new Set(
+				versionGroups
+					.flat()
+					.map(version => version?.id)
+					.filter(Boolean)
+			)];
+			console.log('[mtgch-import] mtgch versions resolved', {
+				cardName,
+				count: versionIds.length,
+				versionIds,
+			});
+			importedCards = (await Promise.all(versionIds.map(fetchMtgchCardById))).filter(Boolean);
+		}
+		const responseCards = await Promise.all(
+			importedCards
+				.map(normalizeMtgchCard)
+				.filter(card => card.type_line)
+				.map(populateFallbackImageUris)
+		);
 		callback(responseCards);
 	} catch (error) {
 		console.error(error);
 	}
-}  
+}
 //SCRYFALL STUFF MAY BE CHANGED IN THE FUTURE
 function fetchScryfallData(cardName, callback = console.log, unique = '') {
+	if (!cardName) return;
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -7539,12 +7829,21 @@ function fetchScryfallData(cardName, callback = console.log, unique = '') {
 		}
 	}
 	cardLanguageSelect = document.querySelector('#import-language');
-	var cardLanguage = `lang%3D${cardLanguageSelect.value}`;
+	var selectedLanguage = cardLanguageSelect.value;
+	var isNonLatinName = containsCJKText(cardName);
+	if (selectedLanguage === 'en' && isNonLatinName) {
+		if (!unique) {
+			notify(`Scryfall requires an English name for "${cardName}" when import language is English.`, 5);
+		}
+		return;
+	}
 	var uniqueArt = '';
 	if (unique) {
 		uniqueArt = '&unique=' + unique;
 	}
-	var url = `https://api.scryfall.com/cards/search?order=released&include_extras=true${uniqueArt}&q=name%3D${cardName.replace(/ /g, '_')}%20${cardLanguage}`;
+	console.log("cardName:" + cardName);
+	var searchQuery = encodeURIComponent(`name="${cardName}" lang:${selectedLanguage}`);
+	var url = `https://api.scryfall.com/cards/search?order=released&include_extras=true${uniqueArt}&q=${searchQuery}`;
 	xhttp.open('GET', url, true);
 	try {
 		xhttp.send();
