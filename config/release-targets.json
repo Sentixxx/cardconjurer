@@ -1,0 +1,47 @@
+{
+  "sourceRoot": "dist",
+  "manifestPath": "manifests/release-manifest.json",
+  "targets": {
+    "site": {
+      "root": "release/site",
+      "description": "OSS main site set. Keeps app shell, JS/CSS, fonts, symbols, frame thumbnails, gallery assets, and legacy-compatible public paths that are not split into other release sets."
+    },
+    "assets-hires": {
+      "root": "release/assets-hires",
+      "description": "Cold high-resolution frame assets. Mount this set at the same public path or a CORS-enabled asset CDN before pointing Creator high-res loads away from the main site."
+    },
+    "platform": {
+      "root": "release/platform",
+      "description": "Docker, launcher, OSS upload, and local deployment helpers. This target is not part of the default OSS main-site publish."
+    }
+  },
+  "platform": {
+    "paths": [
+      ".dockerignore",
+      ".gitignore",
+      ".htaccess",
+      "app.conf",
+      "docker-compose.override.example.yml",
+      "docker-compose.yml",
+      "Dockerfile",
+      "launcher-linux",
+      "launcher-macos",
+      "launcher.exe",
+      "launcher.py",
+      "launcher.spec",
+      "Makefile",
+      "README.md",
+      "upload.bat"
+    ],
+    "prefixes": [
+      "docker/"
+    ]
+  },
+  "assetsHires": {
+    "framePrefix": "img/frames/",
+    "extensions": [
+      ".png"
+    ],
+    "thumbnailSuffix": "Thumb.png"
+  }
+}

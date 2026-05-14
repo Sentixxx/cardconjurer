@@ -1,0 +1,592 @@
+/*fonts*/
+
+@font-face {
+	font-family: CStext;
+	src: url("/data/fonts/DFHeiGB-W3_FTO.otf") format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: CSflavor;
+	src: url("/data/fonts/DFKaiGB-W5_FTO.otf") format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: CStitle;
+	src: url("/data/fonts/DFWeiBeiGB-W7_FTO.otf") format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: gothammedium;
+	src: url("/data/fonts/gotham-medium.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: belerenb;
+	src: url("/data/fonts/beleren-b.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: belerenbsc;
+	src: url("/data/fonts/beleren-bsc.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: matrix;
+	src: url("/data/fonts/matrix.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: matrixb;
+	src: url("/data/fonts/matrix-b.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: matrixbsc;
+	src: url("/data/fonts/matrix-bsc.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: mplantin;
+	src: url("/data/fonts/mplantin.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: mplantini;
+	src: url("/data/fonts/mplantin-i.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: plantinsemibold;
+	src: url("/data/fonts/plantin-semibold.otf");
+	font-display: swap;
+}
+@font-face {
+	font-family: goudymedieval;
+	src: url("/data/fonts/goudy-medieval.ttf");
+	font-display: swap;
+}
+@font-face {
+	font-family: phyrexian;
+	src: url("/data/fonts/phyrexian.ttf");
+	font-display: swap;
+}
+
+:root {
+	--site-background: #3a3838 url("/data/images/site/backgrounds/lowpolyDarkGreen.svg") left/cover no-repeat fixed;
+	--site-background-filter: none;
+	--layer-background: none;
+	--layer-background-filter: grayscale(100) brightness(0.5);
+	--layer-background-selected: #1d1d1d;
+	--option-background: #888888;
+	--interactable-unselected: #666666;
+	--interactable-selected: #99ee99;
+	--font-color: #efefef;
+	--body-background: none;
+}
+
+html {
+	font: 12pt georgia;
+	color: var(--font-color);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+}
+html::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--site-background);
+	filter: var(--site-background-filter);
+	/*transition: 2s;*/
+	z-index: -1;
+}
+html, body {
+	margin: 0;
+    border: 0;
+    padding: 0;
+	overflow-x: hidden;
+}
+body {
+	/*background: var(--body-background);*/
+}
+a {
+	font: inherit;
+	color: inherit;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+.adGrid {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+	grid-auto-rows: min-content;
+	justify-items: center;
+	align-items: center;
+	margin: 1rem 0;
+}
+.adGrid > div {
+	width: 100%;
+}
+
+.interactable {
+	background: var(--layer-background);
+	backdrop-filter: var(--layer-background-filter);
+	-webkit-backdrop-filter: var(--layer-background-filter);
+	border-top: 0.2rem solid var(--interactable-unselected);
+	cursor: pointer;
+	border-radius: 0.2rem;
+	transition: 0.25s;
+	position: relative;
+	top: 0;
+}
+.interactable.selected {
+	border-top-color: var(--interactable-selected);
+	background: var(--layer-background-selected);
+}
+.interactable:hover {
+	top: -0.25rem;
+	box-shadow: 0 0.25rem 0.5rem black;
+}
+
+.cardMaster {
+	margin: 0.9rem 0px;
+}
+.cardMasterElement {
+	font: 1rem belerenbsc;
+	margin-top: 0.25rem;
+    display: grid;
+    grid-template-columns: 2rem 4rem auto 2rem;
+    align-items: center;
+}
+.cardMasterElement > .handle {
+    cursor: move;
+    padding: 0.5rem;
+    text-align: center;
+}
+.cardMasterElement > div > img {
+	height: 2rem;
+	width: 2rem;
+	object-fit: contain;
+}
+.cardMasterElementMoving {
+	background: var(--layer-background-selected);
+}
+.cardMasterElement > .delete {
+    text-align: center;
+}
+
+.splitGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 0.25rem;
+}
+.autoGrid {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+	grid-auto-rows: min-content;
+	grid-gap: 0.25rem;
+}
+.frameGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(3rem, 1fr));
+	grid-auto-rows: min-content;
+	grid-gap: 0.25rem;
+}
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+#framePicker, #maskPicker {
+	margin-top: 0.25rem;
+	padding-top: 0.25rem;
+	margin-bottom: 0.25rem;
+	max-height: 260pt;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+#framePicker > div {
+	height: 3rem;
+	text-align: center;
+	width: 100%;
+}
+#framePicker img {
+	width: 3rem;
+	height: 3rem;
+	object-fit: contain;
+}
+#maskPicker img {
+	max-width: 1.5rem;
+	max-height: 1.5rem;
+}
+#maskPicker > div {
+	padding: 0.5rem;
+	margin-bottom: 0.25rem;
+}
+
+#textPicker {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	grid-auto-rows: min-content;
+	grid-gap: 0.25rem;
+	margin: 0.25rem 0px;
+}
+#textPicker > div {
+	font: 1rem belerenbsc;
+	padding: 0.5rem;
+}
+
+
+
+/*Hides anything*/
+.hidden {
+	display: none;
+}
+/*Overrides hiding custom uploaded frame images*/
+.hidden.frameClassCustom {
+	display: inline-block;
+}
+
+
+
+
+
+.tabPicker {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(8.2rem, 1fr));
+	grid-auto-rows: min-content;
+	grid-gap: 0.25rem;
+	margin-bottom: 0.25rem;
+}
+.tabPicker > div {
+	font: 1.2rem belerenbsc;
+	text-align: center;
+	padding: 0.5rem 0;
+}
+
+/*Gives non-text inputs the pointer cursor*/
+input:not([type='text']):not([type='number']), select, option, button {
+    cursor: pointer;
+}
+/*Styles most of the inputs, except checkboxes*/
+input:not([type='checkbox']), textarea, button, select {
+	font: inherit;
+	color: inherit;
+	width: 100%;
+	outline: none;
+	border-style: solid none none none;
+	padding: 0.25rem;
+	margin-top: 0.25rem;
+	background: var(--layer-background);
+	backdrop-filter: var(--layer-background-filter);
+	-webkit-backdrop-filter: var(--layer-background-filter);
+	border-top: 0.1rem solid var(--interactable-unselected);
+	border-radius: 0.1rem;
+	transition: 0.25s;
+	position: relative;
+	top: 0;
+}
+option { 
+    /* Whatever color  you want */
+    background: var(--option-background);
+}
+/*Slightly lifts inputs upon hovering over them*/
+input:not([type='checkbox']):hover, textarea:hover, button:hover, select:hover, select:focus {
+	top: -0.1rem;
+	box-shadow: 0 0.125rem 0.25rem black;
+}
+/*Shows that inputs that aren't checkboxes are in use*/
+input:not([type='checkbox']):active, button:active, input:not([type='checkbox']):not([type='input']):focus, textarea:focus, select:active {
+	border-top-color: var(--interactable-selected);
+}
+/*Styles checboxes*/
+input[type='checkbox'] {
+	position: relative;
+	top: 0.25rem;
+	width: 1rem;
+	height: 1rem;
+}
+/*Allows resizing of the textarea*/
+textarea {
+	resize: vertical;
+	min-height: 6rem;
+	max-height: 12rem;
+}
+
+@keyframes fade-in {
+	from {opacity: 0;}
+	to {opacity: 1;}
+}
+@keyframes slide-from-left {
+	0% {transform: translate(-100vw, 0);}
+	100% {transform: translate(0, 0);}
+}
+@keyframes slide-from-right {
+	0% {transform: translate(100vw, 0);}
+	100% {transform: translate(0, 0);}
+}
+
+.title {
+	text-align: center;
+	font: 2.5rem 'belerenbsc';
+	padding: 1rem !important;
+}
+.layer {
+	background: var(--layer-background);
+	backdrop-filter: var(--layer-background-filter);
+	-webkit-backdrop-filter: var(--layer-background-filter);
+}
+.layer.clearLayer {
+	background: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+.animated > div {
+	opacity: 0;
+}
+.animated.revealedAnimation > div {
+	opacity: 1;
+}
+.animated.revealedAnimation.fadeIn > div {
+	animation: fade-in 2s;
+}
+.animated.revealedAnimation.slideFromLeft > div {
+	animation: slide-from-left 0.8s;
+}
+.animated.revealedAnimation.slideFromRight > div {
+	animation: slide-from-right 0.8s;
+}
+
+
+
+.fiveSampleCards {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+}
+.fiveSampleCards > div > img {
+    position: relative;
+    width: 100%;
+}
+.fiveSampleCards > div {
+    transition: transform 0.5s;
+}
+/*.fiveSampleCards > div:hover {
+    z-index: 100;
+    transform: translate(0, -1em);
+}*/
+.animated.revealedAnimation > div > div > div > .sample1 {
+	animation: sample-one 2s;
+	transform: rotate(-10deg) translate(16%, 15%);
+}
+.animated.revealedAnimation > div > div > div > .sample2 {
+	animation: sample-two 2s;
+	transform: rotate(-5deg) translate(10%, 4%);
+}
+.animated.revealedAnimation > div > div > div > .sample4 {
+	animation: sample-four 2s;
+	transform: rotate(5deg) translate(-10%, 4%);
+}
+.animated.revealedAnimation > div > div > div > .sample5 {
+	animation: sample-five 2s;
+	transform: rotate(10deg) translate(-16%, 15%);
+}
+@keyframes sample-one {
+	0% {transform: rotate(0deg) translate(0, 0); position: relative; left: 200%;}
+	10% {transform: rotate(0deg) translate(0, 0); position: relative; left: 200%;}
+	100% {transform: rotate(-10deg) translate(16%, 15%); position: relative; left: 0;}
+}
+@keyframes sample-two {
+	0% {transform: rotate(0deg) translate(0, 0); position: relative; left: 100%;}
+	10% {transform: rotate(0deg) translate(0, 0); position: relative; left: 100%;}
+	100% {transform: rotate(-5deg) translate(10%, 4%); position: relative; left: 0;}
+}
+@keyframes sample-four {
+	0% {transform: rotate(0deg) translate(0, 0); position: relative; left: -100%;}
+	10% {transform: rotate(0deg) translate(0, 0); position: relative; left: -100%;}
+	100% {transform: rotate(5deg) translate(-10%, 4%); position: relative; left: 0;}
+}
+@keyframes sample-five {
+	0% {transform: rotate(0deg) translate(0, 0); position: relative; left: -200%;}
+	10% {transform: rotate(0deg) translate(0, 0); position: relative; left: -200%;}
+	100% {transform: rotate(10deg) translate(-16%, 15%); position: relative; left: 0;}
+}
+
+#inputColorPalette {
+	font: inherit;
+	width: 10rem;
+	textAlign: left;
+}
+
+.downloadCardImage {
+	margin-top: 0.5rem;
+	text-align: center;
+	font: 2rem belerenbsc;
+}
+
+::placeholder {
+	color: inherit;
+	opacity: 0.5;
+}
+
+.indent {
+	text-indent: 2rem;
+}
+
+.truncate {
+    word-break: break-word;
+}
+
+.cornered {
+    border-radius: 0.5rem;
+}
+
+.justify {
+	text-align: justify;
+}
+
+#textCodeReference {
+	background: var(--interactable-unselected);
+	display: grid;
+	grid-template-columns: 7rem auto;
+	margin-top: 1rem;
+	grid-gap: 0.25rem;
+	border: 0.2rem solid var(--interactable-unselected);
+	border-radius: 0.2rem;
+}
+#textCodeReference > div {
+	background: var(--layer-background);
+	backdrop-filter: var(--layer-background-filter);
+	-webkit-backdrop-filter: var(--layer-background-filter);
+	padding: 0.25rem;
+}
+#textCodeReference > div:nth-child(2n + 1):not(:nth-child(1)) {
+	user-select: all;
+}
+
+
+.notificationContainer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.notification {
+	display: grid;
+	grid-template-columns: auto 1rem;
+	grid-gap: 1rem;
+	margin: 0.5rem;
+	padding: 0.5rem;
+	background: var(--layer-background-selected);
+}
+.notification > .deleteNotification {
+	text-align: center;
+}
+
+
+/*ANYTHING THAT CHANGES BASED ON SCREEN WIDTH GOES HERE*/
+.mainGrid {
+	display: grid;
+	grid-template-columns: auto;
+	justify-items: center;
+	grid-gap: 1rem;
+	padding: 1rem;
+}
+.layer {
+	padding: 2rem;
+}
+.cardLayerGrid {
+	display: grid;
+	grid-template-columns: auto;
+	grid-gap: 1rem;
+	justify-items: center;
+	align-items: center;
+}
+.cardLayerGrid > img {
+	width: 100%;
+	height: auto;
+}
+canvas {
+	width: 100%;
+}
+footer {
+    background: var(--layer-background);
+    backdrop-filter: var(--layer-background-filter);
+	-webkit-backdrop-filter: var(--layer-background-filter);
+    font: 1rem arial;
+}
+.footer {
+    width: 10rem;
+    padding: 1rem 0;
+    margin: 0 auto;
+	display: grid;
+	grid-template-columns: auto;
+	grid-gap: 2rem;
+}
+.footer > div > div:first-child {
+	margin-bottom: 0.2rem;
+}
+.footer > div > div:not(:first-child) {
+/*    font-weight: bold;*/
+}
+.footer > div > div > select {
+	width: auto !important;
+	border: 0.2rem solid var(--interactable-unselected);
+	border-radius: 0.2rem;
+}
+@media screen and (min-width: 909pt) { /*Screen is wide enough to show the card next to the editor menu*/
+    .mainGrid {
+		grid-template-columns: 750px auto;
+		justify-items: stretch;
+	}
+}
+@media screen and (min-width: 800pt) { /*Screen is wide enough for cardLayerGrids to display side by side, and for more padding*/
+    .cardLayerGrid {
+		grid-template-columns: auto auto;
+    }
+    .layer {
+    	padding: 4rem;
+    }
+}
+@media screen and (min-width: 618pt) { /*Screen is wide enough for padding*/
+    .mainGrid {
+		/*padding: 1rem 1rem;*/
+	}
+}
+@media screen and (min-width: 768px) { /*Screen is wide enough for the card image to be 750px wide. Scrollbar is 18 pixels?*/
+    canvas {
+		width: 750px;
+	}
+}
+@media screen and (min-width: 50rem) { /*Screen is wide enough for the footer to display horizontally*/
+    .footer {
+        width: 30rem;
+        padding: 2rem 0;
+		grid-template-columns: repeat(4, 6rem);
+	}
+}
+@media screen and (min-width: 392pt) { /*Screen is wide enough for the samples to be a constant size*/
+	.cardLayerGrid > img {
+		width: 300pt;
+	}
+}
+@media screen and (min-width: 300pt) { /*Screen is wide enough for larger text*/
+	html {
+		font: 20pt georgia;
+	}
+	footer {
+	    font: 0.6rem arial;
+	}
+}

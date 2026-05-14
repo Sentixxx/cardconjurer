@@ -1,0 +1,86 @@
+<!-- START OF CONTENT -->
+    <h2 class='readable-background header-extension title center margin-bottom-large'>询问乌尔札 2.0</h2>
+    <style>
+        .askUrzaGrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto 90pt auto;
+            align-items: center;
+            justify-items: center;
+            grid-gap: 2rem;
+        }
+        .urzaCard {
+            width: 90vw;
+            text-align: center;
+            grid-column: 1 / span 3;
+        }
+        .urzaCard > img {
+            width: 100%;
+            height: auto;
+        }
+        .askUrzaButton {
+            height: auto;
+            width: 22vw;
+            transition: 0.25s;
+            cursor: pointer;
+        }
+        #askUrzaResult {
+            grid-column: 1 / span 3;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 1rem;
+            font: 1.5rem belerenb;
+        }
+        @media screen and (min-width: 864pt) {
+            .askUrzaGrid {
+                grid-template-columns: calc(360pt) 1fr 1fr 1fr !important;
+                grid-template-rows: 92pt auto !important;
+            }
+            .urzaCard {
+                grid-column: 1;
+                grid-row: 1 / span 2 !important;
+            }
+            #askUrzaResult {
+                grid-column: 2 / span 3 !important;
+            }
+        }
+        @media screen and (min-width: 380pt) {
+            .urzaCard {
+                width: 360pt;
+            }
+            .askUrzaButton {
+                height: auto;
+                width: 100pt;
+                transition: 0.25s;
+            }
+            .askUrzaButton:hover {
+                width: 110pt;
+            }
+            .askUrzaButton:active {
+                width: 120pt !important;
+            }
+        }
+    </style>
+    <div class="askUrzaGrid layer margin-bottom-large">
+        <div class="urzaCard">
+            <img src="/askurza/urzaBlank.png">
+        </div>
+        <div>
+            <img class="askUrzaButton" src="/askurza/plus.png" onclick="randomAbility(0)">
+        </div>
+        <div>
+            <img class="askUrzaButton" src="/askurza/minus.png" onclick="randomAbility(1)">
+        </div>
+        <div>
+            <img class="askUrzaButton" src="/askurza/ultimate.png" onclick="randomAbility(2)">
+        </div>
+        <h3 id="askUrzaResult" class='readable-background'></h3>
+    </div>
+    <div class="readable-background layer margin-bottom-large">
+        <h5>
+            询问克撒 2.0 是 AskUrza.com 的替代品，它定期收集所有鹏洛客的异能并将它们分为三类，供克撒使用。这带来了更多的不可预测性，在我看来也更有趣。要使用询问克撒，只需点击 +1、-1 或 -6，让混沌之神决定你的命运！
+        </h5>
+    </div>
+
+    <script defer src="/askurza/askUrza.js"></script>
+<!-- END OF CONTENT -->

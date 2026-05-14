@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Generated build output
+dist/
+release/
+.next/
+out/
+manifests/release-manifest.json
+
+# Local resource bundle
+resources/
+
+# Local gallery screenshots
+src/app/gallery/img/
+
+# Local platform launcher binaries
+platform/launcher-linux
+platform/launcher.exe
+platform/launcher-macos
+
+# Local server/runtime output
+server.log
+server.err.log
+*.log
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+  <title>Ask Scryfall - Ability List Generator</title>
+</head>
+<body>
+
+</body>
+<script>
+    var plusAbilities = new Array()
+    var minusAbilities = new Array()
+    var ultimateAbilities = new Array()
+    function importPlaneswalkers(request) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var planeswalkerList = this.responseText.split('oracle_text":"')
+                var planeswalkerNameList = this.responseText.replace(/","name":"/g, "").split('"name":"')
+                //console.log(planeswalkerNameList)
+                var iAdjust = 0
+                for (var i = 1; i < planeswalkerList.length; i++) {
+                    var planeswalkerAbilityList = planeswalkerList[i].split('",')[0].split(/\\n/g)
+                    var planeswalkerName = planeswalkerNameList[i - iAdjust].split(/",/g)[0]
+                    if (planeswalkerName.includes(" // ")) {
+                        planeswalkerName = planeswalkerName.split(" // ")[1]
+                    }
+                    for (var n = 0; n < planeswalkerAbilityList.length; n++) {
+                        if (planeswalkerAbilityList[n].includes(":")) {
+                            var abilityText = planeswalkerAbilityList[n].substr(planeswalkerAbilityList[n].indexOf(": ") + 2)
+                            if (abilityText != undefined) {
+                                //console.log(abilityText, planeswalkerName, iAdjust)
+                                abilityText = abilityText.replace(planeswalkerName, "Urza, Academy Headmaster")
+                                var abilityType = planeswalkerAbilityList[n].split(":")[0]
+                                if (!abilityType.includes("X")) {
+                                    if (abilityType.includes("+")) {
+                                        //plus
+                                        plusAbilities[plusAbilities.length] = abilityText
+                                    } else if (abilityType.includes("\u2212") && parseInt(abilityType.replace("\u2212", "")) > 4) {
+                                        //ult
+                                        ultimateAbilities[ultimateAbilities.length] = abilityText
+                                    } else if (abilityType.includes("\u2212") || abilityType == "0") {
+                                        //minus
+                                        minusAbilities[minusAbilities.length] = abilityText
+                                    } else {
+                                    //do nothing
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (i < planeswalkerList.length - 1 && planeswalkerList[i - 1].includes('"card_faces"')) {
+                        iAdjust += 1
+                    }
+                }
+                if (this.responseText.includes('"has_more":true')) {
+                    importPlaneswalkers(this.responseText.split('"next_page":"')[1].split('","data"')[0].replace(/\\u0026/g, "&"))
+                } else {
+                    var allAbilities = [plusAbilities, minusAbilities, ultimateAbilities]
+                    let csvContent = "data:text/csv;charset=utf-8,";
+                    
+                    allAbilities.forEach(function(rowArray) {
+                        csvContent += rowArray.join(";") + "$$$";
+                    })
+                    var encodedUri = encodeURI(csvContent)
+                    var download = document.createElement('a')
+                    download.href = encodedUri
+                    download.download = 'planeswalkerAbilities.txt'
+                    document.body.appendChild(download)
+                    download.click()
+                }
+            } else if (this.readyState == 4 && this.status == 404) {
+                alert("An error occurred. Please try again.");
+            }
+        }
+        xhttp.open("GET", request, true);
+        xhttp.send();
+    }
+    importPlaneswalkers("https://api.scryfall.com/cards/search?order=released&q=type%3Dplaneswalker")
+</script>
+</html>
+
+

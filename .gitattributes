@@ -1,0 +1,10 @@
+# Keep baseline-sensitive SVG assets byte-identical to the legacy source.
+resources/img/setSymbols/official/mom-m.svg -text -diff
+resources/img/setSymbols/official/mom-r.svg -text -diff
+resources/img/setSymbols/official/mom-s.svg -text -diff
+resources/img/setSymbols/official/mom-u.svg -text -diff
+resources/img/setSymbols/official/one-c.svg -text -diff
+resources/img/setSymbols/official/one-m.svg -text -diff
+resources/img/setSymbols/official/one-r.svg -text -diff
+resources/img/setSymbols/official/one-s.svg -text -diff
+resources/img/setSymbols/official/one-u.svg -text -diff

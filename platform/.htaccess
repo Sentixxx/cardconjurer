@@ -1,0 +1,29 @@
+ErrorDocument 404 core/404.html
+
+<IfModule mod_headers.c>
+	#Header set Access-Control-Allow-Origin "*"
+	#YEAR
+	<filesMatch "\.(png|svg|ttf|ico)$">
+	    Header set Cache-Control "max-age=31536000, public"
+	</filesMatch>
+	#MONTH
+	<filesMatch "\.(css)$">
+	    Header set Cache-Control "max-age=2678400, public"
+	</filesMatch>
+	#WEEK
+	<filesMatch "\.(js|php)$">
+	    Header set Cache-Control "max-age=604800, public"
+	</filesMatch>
+	#DAY
+	<files header.php>
+	    Header set Cache-Control "max-age=86400, public"
+	</files>
+	#DAY
+	<filesMatch "\.(js)$">
+	    Header set Cache-Control "max-age=86400, public"
+	</filesMatch>
+	#HOUR
+	#<files creator.js>
+	#    Header set Cache-Control "max-age=3600, public"
+	#</files>
+</IfModule>

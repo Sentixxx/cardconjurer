@@ -1,0 +1,5 @@
+services:
+  cardconjurer:
+    container_name: cardconjurer
+    volumes:
+      - /srv/storage:/srv/storage:ro

@@ -1,0 +1,36 @@
+{
+  "allowedModifiedFiles": [
+    {
+      "path": "index.html",
+      "reason": "Defer startup scripts, remove sql.js from initial page load, and lazy-decode below-fold samples."
+    },
+    {
+      "path": "creator/index.html",
+      "reason": "Remove heavy font preloads from the HTMX creator fragment; fonts are loaded on demand before canvas text is drawn."
+    },
+    {
+      "path": "css/style-9.css",
+      "reason": "Fix a broken Gill Sans font URL and make font-face rendering non-blocking."
+    },
+    {
+      "path": "data/styles/main.css",
+      "reason": "Make legacy data font-face rendering non-blocking."
+    },
+    {
+      "path": "js/creator-23.js",
+      "reason": "Lazy-load and cache sql.js/local database initialization until local import is used."
+    },
+    {
+      "path": "js/frames/versionStation.js",
+      "reason": "Replace dynamic eval-based station input assignment with explicit target dispatch."
+    },
+    {
+      "path": "print/print.js",
+      "reason": "Reduce print sheet redraw debounce from 500ms to 120ms and align drawing to animation frames."
+    },
+    {
+      "path": "upload.bat",
+      "reason": "Make the legacy OSS upload helper publish the generated dist output instead of the repository root."
+    }
+  ]
+}

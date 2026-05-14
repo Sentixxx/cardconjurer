@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "targets": {
+    "site": {
+      "source": "release/site",
+      "role": "main-site",
+      "publishByDefault": true,
+      "corsRequired": false,
+      "cacheRules": [
+        {
+          "match": [
+            "**/*.html",
+            "**/*.json",
+            "**/*.xml",
+            "**/*.webmanifest"
+          ],
+          "cacheControl": "no-cache"
+        },
+        {
+          "match": [
+            "css/**",
+            "js/**"
+          ],
+          "cacheControl": "public, max-age=604800"
+        },
+        {
+          "match": [
+            "fonts/**",
+            "img/manaSymbols/**",
+            "img/setSymbols/**",
+            "img/frames/**/*Thumb.png"
+          ],
+          "cacheControl": "public, max-age=31536000, immutable"
+        }
+      ],
+      "mustNotContain": [
+        "Dockerfile",
+        "docker/**",
+        "docker-compose*.yml",
+        "launcher*",
+        "upload.bat",
+        "img/frames/**/*.png except img/frames/**/*Thumb.png"
+      ]
+    },
+    "assets-hires": {
+      "source": "release/assets-hires",
+      "role": "cold-frame-assets",
+      "publishByDefault": false,
+      "corsRequired": true,
+      "cors": {
+        "allowedOrigins": [
+          "https://<main-site-domain>"
+        ],
+        "allowedMethods": [
+          "GET",
+          "HEAD"
+        ],
+        "allowedHeaders": [
+          "*"
+        ],
+        "maxAgeSeconds": 86400
+      },
+      "cacheRules": [
+        {
+          "match": [
+            "img/frames/**/*.png"
+          ],
+          "cacheControl": "public, max-age=31536000, immutable"
+        }
+      ],
+      "pathContract": "Keep objects under img/frames/... so CARD_FORGER_ASSETS.frameHiresBase can prepend only the origin/base path."
+    },
+    "platform": {
+      "source": "release/platform",
+      "role": "platform-helpers",
+      "publishByDefault": false,
+      "corsRequired": false,
+      "cacheRules": [],
+      "notes": [
+        "Do not sync this target as the OSS main-site root.",
+        "Use only for Docker, launcher, upload, and local deployment helper distribution."
+      ]
+    }
+  }
+}

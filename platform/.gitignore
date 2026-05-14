@@ -1,0 +1,38 @@
+debug.log
+CORS.json
+*.bat
+*.bak
+dev/*
+*.sqlite
+zhs.*
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+/dist
+/.idea
+
+# misc
+.DS_Store
+.vscode/settings.json
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+docker-compose.override.yml
+
+npm-debug.log*
+yarn-debug.log*
+
+cardconjurer.iml
+access.log
+error.log
+
+fly.toml
