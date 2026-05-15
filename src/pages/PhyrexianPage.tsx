@@ -10,7 +10,7 @@ export function PhyrexianPage(): JSX.Element {
     <>
       <Placeholder
         routeKey="phyrexian"
-        description="Phyrexian transliterator — generates Phyrexian-font-compatible glyphs from input text."
+        description="把输入文字转换为可用于非瑞克西亚字体的字符。"
       />
       <section>
         <h2>输入</h2>
@@ -18,7 +18,7 @@ export function PhyrexianPage(): JSX.Element {
           value={input}
           rows={8}
           cols={60}
-          placeholder="Type or paste English text…"
+          placeholder="输入或粘贴英文文本…"
           onChange={(e) => setInput(e.target.value)}
         />
       </section>

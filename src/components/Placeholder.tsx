@@ -9,14 +9,9 @@ export interface PlaceholderProps {
 export function Placeholder({ routeKey, description }: PlaceholderProps): JSX.Element {
   const route = ROUTES[routeKey];
   return (
-    <header>
-      <h2>{route.label}</h2>
-      {description && <p>{description}</p>}
-      <p>
-        <small>
-          Path: <code>{route.path}</code>
-        </small>
-      </p>
-    </header>
+    <section className="page-heading readable-background">
+      <h1>{route.label}</h1>
+      {description && <p className="input-description">{description}</p>}
+    </section>
   );
 }

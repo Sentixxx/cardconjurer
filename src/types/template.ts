@@ -12,12 +12,21 @@ export interface FrameVersion {
 }
 
 export type FrameVersionGroup =
-  | 'Standard'
+  | 'Regular'
   | 'Promo'
   | 'Showcase'
-  | 'Special'
+  | 'Textless'
   | 'Token'
-  | 'Legacy';
+  | 'Saga'
+  | 'Planeswalker'
+  | 'DFC'
+  | 'Transform'
+  | 'UniversesBeyond'
+  | 'Custom'
+  | 'Misc'
+  | 'Accurate'
+  | 'Margin'
+  | 'FleshAndBlood';
 
 export interface FrameVersionCatalog {
   readonly versions: readonly FrameVersion[];

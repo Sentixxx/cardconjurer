@@ -2,14 +2,14 @@
 
 ## Objective
 
-Migrate `D:\万智牌\cardconjurer` into `D:\万智牌\cardforger` with a clearer
+Migrate the local CardConjurer source tree into this repository with a clearer
 source/resource split, lower coupling, and a buildable static output that keeps
 current behavior intact.
 
 ## Constraints
 
-- Only files under `D:\万智牌\cardforger` are written.
-- `D:\万智牌\cardconjurer` is read-only input.
+- Only files under this repository are written.
+- The CardConjurer source tree is read-only input.
 - Baseline tests must exist before refactoring and must prove migrated behavior
   remains equivalent.
 

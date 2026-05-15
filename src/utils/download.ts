@@ -17,3 +17,20 @@ export function downloadTextFile(filename: string, text: string, mime = 'applica
 export function readTextFile(file: File): Promise<string> {
   return file.text();
 }
+
+export function readFileAsDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+        return;
+      }
+      reject(new Error('Failed to read file as a data URL.'));
+    });
+    reader.addEventListener('error', () => {
+      reject(reader.error ?? new Error('Failed to read file.'));
+    });
+    reader.readAsDataURL(file);
+  });
+}

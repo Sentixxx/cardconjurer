@@ -39,12 +39,12 @@ export function ConverterPage(): JSX.Element {
     <>
       <Placeholder
         routeKey="converter"
-        description="Card-image converter — crops + masks an uploaded card image and overlays the Wizards copyright line, matching the legacy /converter tool."
+        description="上传卡牌图像，自动裁切、圆角遮罩并补上版权行。"
       />
       <section>
-        <h2>Upload a card image</h2>
+        <h2>上传卡牌图像</h2>
         <button type="button" onClick={() => fileInputRef.current?.click()} disabled={status === 'working'}>
-          Choose image…
+          选择图片…
         </button>
         <input
           ref={fileInputRef}
@@ -54,15 +54,9 @@ export function ConverterPage(): JSX.Element {
           onChange={onFileChange}
         />
         <p>
-          <small>Status: <code>{status}</code></small>
+          <small>状态：<code>{status}</code></small>
         </p>
         {message && <p>{message}</p>}
-        <p>
-          <small>
-            Output is a 1500 × 2100 PNG with corners masked off and the Wizards copyright line auto-placed
-            via pixel-based type detection (1:1 with the legacy <code>converter.js</code> algorithm).
-          </small>
-        </p>
       </section>
     </>
   );

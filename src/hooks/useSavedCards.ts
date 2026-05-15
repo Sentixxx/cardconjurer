@@ -8,7 +8,7 @@ export interface UseSavedCardsResult {
   readonly registry: CardRegistrySnapshot;
   readonly refresh: () => void;
   readonly remove: (key: CardKey) => void;
-  readonly save: (key: CardKey, payload: unknown) => CardKey;
+  readonly save: (key: CardKey, payload: unknown, options?: { readonly overwrite?: boolean }) => CardKey;
   readonly exportJson: () => string;
   readonly importJson: (text: string) => ImportReport;
 }
@@ -24,15 +24,6 @@ export function useSavedCards(): UseSavedCardsResult {
     (key: CardKey) => {
       deleteCardEntry(key);
       refresh();
-    },
-    [refresh],
-  );
-
-  const save = useCallback(
-    (key: CardKey, payload: unknown): CardKey => {
-      const resolvedKey = writeCardEntry(key, payload);
-      refresh();
-      return resolvedKey;
     },
     [refresh],
   );
@@ -64,5 +55,14 @@ export function useSavedCards(): UseSavedCardsResult {
     return () => window.removeEventListener('storage', onStorage);
   }, [refresh]);
 
-  return { registry, refresh, remove, save, exportJson, importJson };
+  const saveWithOptions = useCallback(
+    (key: CardKey, payload: unknown, options: { readonly overwrite?: boolean } = {}): CardKey => {
+      const resolvedKey = writeCardEntry(key, payload, options);
+      refresh();
+      return resolvedKey;
+    },
+    [refresh],
+  );
+
+  return { registry, refresh, remove, save: saveWithOptions, exportJson, importJson };
 }

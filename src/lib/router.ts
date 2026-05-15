@@ -9,17 +9,17 @@ export interface RouteDescriptor {
 }
 
 export const ROUTES = {
-  home: { key: 'home', path: '/', label: 'Home' },
-  about: { key: 'about', path: '/about', label: 'About' },
-  legal: { key: 'legal', path: '/legal', label: 'Legal' },
-  tutorial: { key: 'tutorial', path: '/tutorial', label: 'Tutorial' },
-  theme: { key: 'theme', path: '/theme', label: 'Theme' },
-  phyrexian: { key: 'phyrexian', path: '/phyrexian', label: 'Phyrexian' },
-  converter: { key: 'converter', path: '/converter', label: 'Converter' },
-  gallery: { key: 'gallery', path: '/gallery', label: 'Gallery' },
-  print: { key: 'print', path: '/print', label: 'Print' },
-  creator: { key: 'creator', path: '/creator', label: 'Creator' },
-  askUrza: { key: 'askUrza', path: '/askurza', label: 'Ask Urza' },
+  home: { key: 'home', path: '/', label: '主页' },
+  about: { key: 'about', path: '/about', label: '关于' },
+  legal: { key: 'legal', path: '/legal', label: '条款和条件' },
+  tutorial: { key: 'tutorial', path: '/tutorial', label: '教程' },
+  theme: { key: 'theme', path: '/theme', label: '主题编辑器' },
+  phyrexian: { key: 'phyrexian', path: '/phyrexian', label: '非瑞克西亚文生成器' },
+  converter: { key: 'converter', path: '/converter', label: '转换器' },
+  gallery: { key: 'gallery', path: '/gallery', label: '画廊' },
+  print: { key: 'print', path: '/print', label: '打印工具' },
+  creator: { key: 'creator', path: '/creator', label: '制卡' },
+  askUrza: { key: 'askUrza', path: '/askurza', label: '询问克撒 2.0' },
   askUrzaAbilityList: {
     key: 'askUrzaAbilityList',
     path: '/askurza/askUrzaAbilityListGenerator.html',
@@ -37,14 +37,11 @@ export type RouteKey = keyof typeof ROUTES;
 export const NAV_ROUTE_KEYS: readonly RouteKey[] = [
   'home',
   'creator',
-  'gallery',
   'print',
-  'converter',
-  'theme',
-  'phyrexian',
   'askUrza',
-  'tutorial',
-  'about',
+  'phyrexian',
+  'gallery',
+  'theme',
   'legal',
 ];
 

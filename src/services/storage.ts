@@ -67,12 +67,16 @@ function nextAvailableKey(desired: CardKey, existing: readonly CardKey[]): CardK
   return candidate;
 }
 
-export function writeCardEntry(key: CardKey, payload: unknown): CardKey {
+export function writeCardEntry(
+  key: CardKey,
+  payload: unknown,
+  options: { readonly overwrite?: boolean } = {},
+): CardKey {
   const w = safeWindow();
   if (!w) return key;
   try {
     const keys = readCardKeyList();
-    const resolvedKey = nextAvailableKey(key, keys);
+    const resolvedKey = options.overwrite ? key : nextAvailableKey(key, keys);
     w.localStorage.setItem(resolvedKey, JSON.stringify(payload));
     if (!keys.includes(resolvedKey)) {
       const nextKeys = [...keys, resolvedKey].sort();

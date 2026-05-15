@@ -18,10 +18,10 @@ export function AskUrzaPage(): JSX.Element {
     <>
       <Placeholder
         routeKey="askUrza"
-        description="询问乌尔札 2.0 — generates a random planeswalker ability for one of the three loyalty kinds."
+        description="随机生成一个鹏洛客异能。"
       />
       <section>
-        <h2>Roll an ability</h2>
+        <h2>生成异能</h2>
         <button type="button" onClick={() => onRoll('plus')} disabled={disabled}>
           +
         </button>{' '}
@@ -29,15 +29,14 @@ export function AskUrzaPage(): JSX.Element {
           −
         </button>{' '}
         <button type="button" onClick={() => onRoll('ultimate')} disabled={disabled}>
-          Ultimate
+          终极
         </button>
         <p>
-          <small>Status: <code>{status}</code>{error ? ` — ${error.message}` : ''}</small>
+          <small>状态：<code>{status}</code>{error ? ` — ${error.message}` : ''}</small>
         </p>
         <p>
           <small>
-            Loaded {groups.plus.length} plus / {groups.minus.length} minus / {groups.ultimate.length} ultimate
-            entries.
+            已加载 {groups.plus.length} 条加号 / {groups.minus.length} 条减号 / {groups.ultimate.length} 条终极异能。
           </small>
         </p>
         {result && (

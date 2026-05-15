@@ -1,0 +1,739 @@
+{
+  "aliases": {
+    "m15SmoothNicknameLegendCrowns": "m15LegendCrowns",
+    "m15Miracle": "m15HoloStamps",
+    "m15ColorIdentityPips": "m15",
+    "m15TheListStamp": "m15HoloStamps",
+    "m15Lands": "m15",
+    "m15Stations": "m15",
+    "m15BorderlessStations": "bleedEdge",
+    "m15Omens": "m15",
+    "m15Rooms": "m15",
+    "m15Spree": "m15",
+    "m15Cases": "m15",
+    "m15Battle": "m15",
+    "m15Prototype": "m15",
+    "m15PrototypeExtended": "short",
+    "m15Attractions": "m15",
+    "m15Class": "m15",
+    "m15Mutate": "m15",
+    "m15Adventures": "storybook",
+    "m15Devoid": "m15",
+    "m15Aftermath": "m15",
+    "m15Flip": "m15",
+    "m15Levelers": "m15",
+    "m15Split": "m15",
+    "m15Fuse": "m15",
+    "m15Conspiracies": "m15",
+    "m15Colorshifted": "m15",
+    "m15BrawlLegendCrowns": "m15LegendCrowns",
+    "customAddons": "m15",
+    "accurateM15": "m15",
+    "marginM15": "m15",
+    "fleshAndBlood": "m15"
+  },
+  "masks": {
+    "m15Regular": [
+      { "label": "Pinline (m15)", "url": "/img/frames/m15/regular/m15MaskPinline.png" },
+      { "label": "Title (m15)", "url": "/img/frames/m15/regular/m15MaskTitle.png" },
+      { "label": "Type (m15)", "url": "/img/frames/m15/regular/m15MaskType.png" },
+      { "label": "Rules (m15)", "url": "/img/frames/m15/regular/m15MaskRules.png" },
+      { "label": "Frame (m15)", "url": "/img/frames/m15/regular/m15MaskFrame.png" },
+      { "label": "Border (m15)", "url": "/img/frames/m15/regular/m15MaskBorder.png" }
+    ],
+    "m15LegendCrown": [
+      { "label": "Pinline (m15)", "url": "/img/frames/m15/regular/m15MaskPinline.png" },
+      { "label": "Title (m15)", "url": "/img/frames/m15/regular/m15MaskTitle.png" },
+      { "label": "Type (m15)", "url": "/img/frames/m15/regular/m15MaskType.png" },
+      { "label": "Rules (m15)", "url": "/img/frames/m15/regular/m15MaskRules.png" },
+      { "label": "Frame (m15)", "url": "/img/frames/m15/regular/m15MaskFrame.png" },
+      { "label": "Border (m15)", "url": "/img/frames/m15/regular/m15MaskBorder.png" },
+      { "label": "Pinline Super (m15)", "url": "/img/frames/m15/regular/m15MaskPinlineSuper.png" },
+      { "label": "Legend Crown (m15)", "url": "/img/frames/m15/crowns/m15MaskLegendCrown.png" },
+      { "label": "Legend Crown W/ Pinline (m15)", "url": "/img/frames/m15/crowns/m15MaskLegendCrownPinline.png" }
+    ],
+    "m15Nickname": [
+      { "label": "Pinline (m15)", "url": "/img/frames/m15/regular/m15MaskPinline.png" },
+      { "label": "Title (m15)", "url": "/img/frames/m15/regular/m15MaskTitle.png" },
+      { "label": "Type (m15)", "url": "/img/frames/m15/regular/m15MaskType.png" },
+      { "label": "Rules (m15)", "url": "/img/frames/m15/regular/m15MaskRules.png" },
+      { "label": "Frame (m15)", "url": "/img/frames/m15/regular/m15MaskFrame.png" },
+      { "label": "Border (m15)", "url": "/img/frames/m15/regular/m15MaskBorder.png" },
+      { "label": "Pinline Super (m15)", "url": "/img/frames/m15/regular/m15MaskPinlineSuper.png" },
+      { "label": "Nickname Legend Crown (m15)", "url": "/img/frames/m15/nickname/m15MaskNicknameLegendCrownStrokeless.png" },
+      { "label": "Nickname Title (m15)", "url": "/img/frames/m15/nickname/m15MaskNicknameTitleStrokeless.png" },
+      { "label": "Nickname True Name (m15)", "url": "/img/frames/m15/nickname/m15NicknameMaskTrueName.png" }
+    ],
+    "m15Nyx": [
+      { "label": "Pinline (m15)", "url": "/img/frames/m15/regular/m15MaskPinline.png" },
+      { "label": "Title (m15)", "url": "/img/frames/m15/regular/m15MaskTitle.png" },
+      { "label": "Type (m15)", "url": "/img/frames/m15/regular/m15MaskType.png" },
+      { "label": "Rules (m15)", "url": "/img/frames/m15/regular/m15MaskRules.png" },
+      { "label": "Frame (m15)", "url": "/img/frames/m15/regular/m15MaskFrame.png" },
+      { "label": "Frame Top 2/3 (nyx)", "url": "/img/frames/m15/nyx/verticalMask.svg" },
+      { "label": "Border (m15)", "url": "/img/frames/m15/regular/m15MaskBorder.png" }
+    ],
+    "m15UbLegendCrown": [
+      { "label": "Crown Without Pinlines", "url": "/img/frames/m15/crowns/m15MaskLegendCrown.png" },
+      { "label": "Crown With Pinlines", "url": "/img/frames/m15/ub/crowns/m15MaskLegendCrownPinline.png" }
+    ]
+  },
+  "sets": {
+    "m15FrameColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "v", "label": "Vehicle", "code": "V" },
+      { "key": "l", "label": "Land", "code": "L" }
+    ],
+    "m15PtColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "c", "label": "Colorless", "code": "C" },
+      { "key": "v", "label": "Vehicle", "code": "V" }
+    ],
+    "m15DarkPtColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "c", "label": "Colorless", "code": "C" }
+    ],
+    "m15LegendCrownColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "l", "label": "Land", "code": "L" }
+    ],
+    "m15HoloStampColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "l", "label": "Land", "code": "L" },
+      { "key": "c", "label": "Colorless", "code": "C" },
+      { "key": "a2", "label": "Artifact (2)", "code": "A2" },
+      { "key": "a3", "label": "Artifact (3)", "code": "A3" }
+    ],
+    "m15InnerCrownColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" }
+    ],
+    "m15NicknameColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "l", "label": "Land", "code": "L" }
+    ],
+    "m15SnowFrameColors": [
+      { "key": "w", "label": "White" },
+      { "key": "u", "label": "Blue" },
+      { "key": "b", "label": "Black" },
+      { "key": "r", "label": "Red" },
+      { "key": "g", "label": "Green" },
+      { "key": "m", "label": "Multicolored" },
+      { "key": "a", "label": "Artifact" },
+      { "key": "l", "label": "Land" }
+    ],
+    "m15SnowLandFrameColors": [
+      { "key": "wl", "label": "White Land" },
+      { "key": "ul", "label": "Blue Land" },
+      { "key": "bl", "label": "Black Land" },
+      { "key": "rl", "label": "Red Land" },
+      { "key": "gl", "label": "Green Land" }
+    ],
+    "m15SnowWatermarkColors": [
+      { "key": "w", "label": "White" },
+      { "key": "u", "label": "Blue" },
+      { "key": "b", "label": "Black" },
+      { "key": "r", "label": "Red" },
+      { "key": "g", "label": "Green" },
+      { "key": "c", "label": "Colorless" }
+    ],
+    "m15TransformBaseColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "v", "label": "Vehicle", "code": "V" },
+      { "key": "l", "label": "Land", "code": "L" }
+    ],
+    "m15TransformPowerToughnessColors": [
+      { "key": "w", "label": "White", "code": "W" },
+      { "key": "u", "label": "Blue", "code": "U" },
+      { "key": "b", "label": "Black", "code": "B" },
+      { "key": "r", "label": "Red", "code": "R" },
+      { "key": "g", "label": "Green", "code": "G" },
+      { "key": "m", "label": "Multicolored", "code": "M" },
+      { "key": "a", "label": "Artifact", "code": "A" },
+      { "key": "v", "label": "Vehicle", "code": "V" }
+    ],
+    "m15TransformLandColors": [
+      { "key": "wl", "label": "White Land", "code": "WL" },
+      { "key": "ul", "label": "Blue Land", "code": "UL" },
+      { "key": "bl", "label": "Black Land", "code": "BL" },
+      { "key": "rl", "label": "Red Land", "code": "RL" },
+      { "key": "gl", "label": "Green Land", "code": "GL" },
+      { "key": "ml", "label": "Multicolored Land", "code": "ML" }
+    ],
+    "m15TransformIcons": [
+      { "key": "up-arrow", "label": "Up Arrow", "filename": "up-arrow.png" },
+      { "key": "down-arrow", "label": "Down Arrow", "filename": "down-arrow.png" },
+      { "key": "sun", "label": "Sun", "filename": "sun.svg" },
+      { "key": "crescent-moon", "label": "Crescent Moon", "filename": "crescent-moon.svg" },
+      { "key": "full-moon", "label": "Full Moon", "filename": "full-moon.svg" },
+      { "key": "emrakul", "label": "Emrakul", "filename": "emrakul.svg" },
+      { "key": "compass", "label": "Compass", "filename": "compass.svg" },
+      { "key": "land", "label": "Land", "filename": "land.svg" },
+      { "key": "planeswalker-ember", "label": "Planeswalker Ember", "filename": "planeswalker-ember.svg" },
+      { "key": "planeswalker-spark", "label": "Planeswalker Spark", "filename": "planeswalker-spark.svg" },
+      { "key": "lesson", "label": "Lesson", "filename": "lesson.svg" },
+      { "key": "closed-fan", "label": "Closed Fan", "filename": "closed-fan.svg" },
+      { "key": "open-fan", "label": "Open Fan", "filename": "open-fan.svg" },
+      { "key": "meld", "label": "Meld", "filename": "meld.png" }
+    ],
+    "m15UbFrameColors": [
+      { "key": "w", "label": "White" },
+      { "key": "u", "label": "Blue" },
+      { "key": "b", "label": "Black" },
+      { "key": "r", "label": "Red" },
+      { "key": "g", "label": "Green" },
+      { "key": "m", "label": "Multicolored" },
+      { "key": "a", "label": "Artifact" },
+      { "key": "l", "label": "Land" },
+      { "key": "v", "label": "Vehicle" }
+    ],
+    "m15UbRegularExtraFrameColors": [
+      { "key": "c", "label": "Colorless" },
+      { "key": "we", "label": "White Enchantment" },
+      { "key": "ue", "label": "Blue Enchantment" },
+      { "key": "be", "label": "Black Enchantment" },
+      { "key": "re", "label": "Red Enchantment" },
+      { "key": "ge", "label": "Green Enchantment" },
+      { "key": "me", "label": "Multicolored Enchantment" },
+      { "key": "ae", "label": "Artifact Enchantment" }
+    ],
+    "m15UbLandFrameColors": [
+      { "key": "wl", "label": "White Land" },
+      { "key": "ul", "label": "Blue Land" },
+      { "key": "bl", "label": "Black Land" },
+      { "key": "rl", "label": "Red Land" },
+      { "key": "gl", "label": "Green Land" },
+      { "key": "ml", "label": "Multicolored Land" }
+    ],
+    "m15UbPtColors": [
+      { "key": "w", "label": "White" },
+      { "key": "u", "label": "Blue" },
+      { "key": "b", "label": "Black" },
+      { "key": "r", "label": "Red" },
+      { "key": "g", "label": "Green" },
+      { "key": "m", "label": "Multicolored" },
+      { "key": "a", "label": "Artifact" },
+      { "key": "c", "label": "Colorless" },
+      { "key": "v", "label": "Vehicle" }
+    ],
+    "m15UbStampColors": [
+      { "key": "w", "label": "White" },
+      { "key": "u", "label": "Blue" },
+      { "key": "b", "label": "Black" },
+      { "key": "r", "label": "Red" },
+      { "key": "g", "label": "Green" },
+      { "key": "m", "label": "Multicolored" },
+      { "key": "a", "label": "Artifact" },
+      { "key": "l", "label": "Land" },
+      { "key": "gray", "label": "Gray" }
+    ],
+    "m15UbFloatingCrownColors": [
+      { "key": "w", "label": "White" },
+      { "key": "u", "label": "Blue" },
+      { "key": "b", "label": "Black" },
+      { "key": "r", "label": "Red" },
+      { "key": "g", "label": "Green" },
+      { "key": "m", "label": "Multicolored" },
+      { "key": "a", "label": "Artifact" },
+      { "key": "l", "label": "Land" },
+      { "key": "c", "label": "Colorless" }
+    ]
+  },
+  "packs": {
+    "m15": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/regular",
+          "filenamePattern": "m15Frame{code}.png",
+          "items": "m15FrameColors"
+        },
+        {
+          "idPrefix": "m15-pt",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/regular",
+          "filenamePattern": "m15PT{code}.png",
+          "bounds": "m15Pt",
+          "items": "m15PtColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-midnight", "label": "Midnight Frame", "url": "/img/frames/m15/custom/m15Midnight.png" }
+      ]
+    },
+    "m15Nyx": {
+      "layout": "m15Regular",
+      "masks": "m15Nyx",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-nyx",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/nyx",
+          "filenamePattern": "m15Frame{code}Nyx.png",
+          "items": "m15InnerCrownColors"
+        },
+        {
+          "idPrefix": "m15-nyx-crown",
+          "labelSuffix": "Inner Crown (Nyx)",
+          "pathPrefix": "/img/frames/m15/innerCrowns",
+          "filenamePattern": "m15InnerCrown{code}Nyx.png",
+          "bounds": "m15NyxInnerCrown",
+          "items": "m15InnerCrownColors"
+        }
+      ]
+    },
+    "m15Snow": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-snow",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/snow",
+          "filenamePattern": "{key}.png",
+          "items": "m15SnowFrameColors"
+        },
+        {
+          "idPrefix": "m15-snow",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/snow",
+          "filenamePattern": "{key}.png",
+          "items": "m15SnowLandFrameColors"
+        },
+        {
+          "idPrefix": "m15-snow-watermark",
+          "labelSuffix": "Watermark",
+          "pathPrefix": "/img/frames/snow/watermarks",
+          "filenamePattern": "{key}.png",
+          "bounds": "snowWatermark",
+          "items": "m15SnowWatermarkColors"
+        }
+      ]
+    },
+    "m15LegendCrowns": {
+      "layout": "m15Regular",
+      "masks": "m15LegendCrown",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-crown",
+          "labelSuffix": "Legend Crown",
+          "pathPrefix": "/img/frames/m15/crowns",
+          "filenamePattern": "m15Crown{code}.png",
+          "bounds": "m15LegendCrown",
+          "items": "m15LegendCrownColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-crown-cover", "label": "Legend Crown Border Cover", "url": "/img/frames/black.png", "bounds": "m15LegendCrownBorderCover" }
+      ]
+    },
+    "m15FloatingCrowns": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presets": [
+        { "id": "m15-floating-crown-cutout", "label": "Lower Crown Cutout", "url": "/img/frames/black.png", "bounds": "m15FloatingCrownCutout" }
+      ],
+      "presetGroups": [
+        {
+          "idPrefix": "m15-floating-crown",
+          "labelSuffix": "Floating Legend Crown",
+          "pathPrefix": "/img/frames/m15/crowns",
+          "filenamePattern": "m15Crown{code}Floating.png",
+          "bounds": "m15FloatingCrown",
+          "items": "m15LegendCrownColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-floating-crown-cover", "label": "Upper Crown Border Cover", "url": "/img/frames/black.png", "bounds": "m15FloatingCrownBorderCover" },
+        { "id": "m15-floating-crown-outline", "label": "Floating Crown Outline", "url": "/img/frames/m15/crowns/m15CrownFloatingOutline.png", "bounds": "m15FloatingCrownOutline" }
+      ]
+    },
+    "m15InnerCrowns": {
+      "layout": "m15Regular",
+      "masks": "m15Nyx",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-inner-crown",
+          "labelSuffix": "Inner Crown",
+          "pathPrefix": "/img/frames/m15/innerCrowns",
+          "filenamePattern": "m15InnerCrown{code}Nyx.png",
+          "bounds": "m15NyxInnerCrown",
+          "items": "m15InnerCrownColors"
+        }
+      ]
+    },
+    "m15HoloStamps": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-holo",
+          "labelSuffix": "Holo Stamp",
+          "pathPrefix": "/img/frames/m15/holoStamps",
+          "filenamePattern": "m15HoloStamp{code}.png",
+          "bounds": "m15HoloStamp",
+          "items": "m15HoloStampColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-holo-plain", "label": "Plain Holo Stamp", "url": "/img/frames/m15/holoStamps/stamp.png", "bounds": "m15SmallHoloStamp" },
+        { "id": "m15-holo-gray", "label": "Gray Holo Stamp", "url": "/img/frames/m15/holoStamps/gray.png", "bounds": "m15SmallHoloStamp" },
+        { "id": "m15-holo-acorn", "label": "Acorn Holo Stamp", "url": "/img/frames/m15/holoStamps/acorn.png", "bounds": "m15AcornHoloStamp" },
+        { "id": "m15-holo-alchemy", "label": "Alchemy Holo Stamp", "url": "/img/frames/m15/holoStamps/alchemy.png", "bounds": "m15SmallHoloStamp" }
+      ]
+    },
+    "m15DarkPT": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-dark-pt",
+          "labelPrefix": "Darkened",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/nickname",
+          "filenamePattern": "m15NicknamePT{code}.png",
+          "bounds": "m15Pt",
+          "items": "m15DarkPtColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-dark-pt-fill", "label": "Power/Toughness Black Inner Fill", "url": "/img/frames/m15/custom/m15CustomPTInnerFill.png", "bounds": "m15CustomPtInnerFill" }
+      ]
+    },
+    "m15ColoredBorders": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presets": [
+        { "id": "m15-border-white", "label": "White Border", "url": "/img/frames/white.png", "bounds": "fullCard" },
+        { "id": "m15-border-silver", "label": "Silver Border", "url": "/img/frames/silver.png", "bounds": "fullCard" },
+        { "id": "m15-border-gold", "label": "Gold Border", "url": "/img/frames/gold.png", "bounds": "fullCard" }
+      ]
+    },
+    "m15Nickname": {
+      "layout": "m15Nickname",
+      "masks": "m15Nickname",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-nickname-frame",
+          "labelSuffix": "Nickname Frame",
+          "pathPrefix": "/img/frames/m15/nickname",
+          "filenamePattern": "m15NicknameFrame{code}.png",
+          "items": "m15NicknameColors"
+        },
+        {
+          "idPrefix": "m15-nickname-title",
+          "labelSuffix": "Nickname Title",
+          "pathPrefix": "/img/frames/m15/nickname",
+          "filenamePattern": "m15NicknameTitle{code}.png",
+          "bounds": "m15NicknameTitle",
+          "items": "m15NicknameColors"
+        },
+        {
+          "idPrefix": "m15-nickname-crown",
+          "labelSuffix": "Nickname Legend Crown",
+          "pathPrefix": "/img/frames/m15/nickname",
+          "filenamePattern": "m15NicknameCrown{code}.png",
+          "bounds": "m15NicknameCrown",
+          "items": "m15NicknameColors"
+        },
+        {
+          "idPrefix": "m15-dark-pt",
+          "labelPrefix": "Darkened",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/nickname",
+          "filenamePattern": "m15NicknamePT{code}.png",
+          "bounds": "m15Pt",
+          "items": "m15DarkPtColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-dark-pt-fill", "label": "Power/Toughness Black Inner Fill", "url": "/img/frames/m15/custom/m15CustomPTInnerFill.png", "bounds": "m15CustomPtInnerFill" },
+        { "id": "m15-nickname-textboxes", "label": "Nickname Frame Textboxes", "url": "/img/frames/m15/nickname/m15NicknameTextboxes.png" }
+      ]
+    },
+    "m15UB": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-ub",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/regular",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/regular",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbRegularExtraFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/regular",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbLandFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub-pt",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/ub/pt",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15Pt",
+          "items": "m15UbPtColors"
+        },
+        {
+          "idPrefix": "m15-ub-stamp",
+          "labelSuffix": "Holo Stamp",
+          "pathPrefix": "/img/frames/m15/ub/regular/stamp",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15UbHoloStamp",
+          "items": "m15UbStampColors"
+        }
+      ]
+    },
+    "m15UBFull": {
+      "layout": "m15UbFull",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-ub-full",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/full",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub-full",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/full",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbLandFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub-pt",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/ub/pt",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15Pt",
+          "items": "m15UbPtColors"
+        },
+        {
+          "idPrefix": "m15-ub-stamp",
+          "labelSuffix": "Holo Stamp",
+          "pathPrefix": "/img/frames/m15/ub/regular/stamp",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15UbHoloStamp",
+          "items": "m15UbStampColors"
+        }
+      ]
+    },
+    "m15UBExtended": {
+      "layout": "m15UbExtended",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-ub-extended",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/extended",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub-extended",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/ub/extended",
+          "filenamePattern": "{key}.png",
+          "items": "m15UbLandFrameColors"
+        },
+        {
+          "idPrefix": "m15-ub-pt",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/ub/pt",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15Pt",
+          "items": "m15UbPtColors"
+        },
+        {
+          "idPrefix": "m15-ub-stamp",
+          "labelSuffix": "Holo Stamp",
+          "pathPrefix": "/img/frames/m15/ub/regular/stamp",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15UbHoloStamp",
+          "items": "m15UbStampColors"
+        }
+      ]
+    },
+    "m15UBLegendCrowns": {
+      "layout": "m15Regular",
+      "masks": "m15UbLegendCrown",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-ub-crown",
+          "labelSuffix": "Legend Crown",
+          "pathPrefix": "/img/frames/m15/ub/crowns",
+          "filenamePattern": "m15Crown{code}.png",
+          "bounds": "m15UbLegendCrown",
+          "items": "m15LegendCrownColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-ub-crown-c", "label": "Colorless Legend Crown", "url": "/img/frames/m15/crowns/m15CrownC.png", "bounds": "m15UbLegendCrown" },
+        { "id": "m15-ub-crown-cover", "label": "Legend Crown Border Cover", "url": "/img/frames/black.png", "bounds": "m15UbLegendCrownBorderCover" }
+      ]
+    },
+    "m15UBFloatingCrowns": {
+      "layout": "m15Regular",
+      "masks": "m15Regular",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-ub-floating-crown",
+          "labelSuffix": "Floating Legend Crown",
+          "pathPrefix": "/img/frames/m15/ub/crowns/floating",
+          "filenamePattern": "{key}.png",
+          "bounds": "m15UbFloatingCrown",
+          "items": "m15UbFloatingCrownColors"
+        }
+      ],
+      "presetsAfter": [
+        { "id": "m15-ub-floating-crown-cover", "label": "Legend Crown Border Cover", "url": "/img/frames/black.png", "bounds": "m15UbLegendCrownBorderCover" },
+        { "id": "m15-ub-floating-crown-cutout", "label": "Legend Crown Lower Cutout", "url": "/img/frames/black.png", "bounds": "m15UbFloatingCrownCutout", "erase": true },
+        { "id": "m15-ub-floating-crown-outline", "label": "Floating Crown Outline", "url": "/img/frames/m15/crowns/m15CrownFloatingOutline.png", "bounds": "m15UbFloatingCrownOutline" }
+      ]
+    },
+    "m15TransformFront": {
+      "layout": "m15TransformFront",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-transform-front",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/transform/regular",
+          "filenamePattern": "front{code}.png",
+          "items": "m15TransformBaseColors"
+        },
+        {
+          "idPrefix": "m15-transform-front-pt",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/regular",
+          "filenamePattern": "m15PT{code}.png",
+          "bounds": "shortPt",
+          "items": "m15TransformPowerToughnessColors"
+        },
+        {
+          "idPrefix": "m15-transform-front",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/transform/regular",
+          "filenamePattern": "front{code}.png",
+          "items": "m15TransformLandColors"
+        }
+      ],
+      "masks": [
+        { "label": "Pinline (transform front)", "url": "/img/frames/m15/transform/regular/maskPinlineFront.png" },
+        { "label": "Title (transform front)", "url": "/img/frames/m15/transform/regular/maskTitle.png" },
+        { "label": "Type (m15)", "url": "/img/frames/m15/regular/m15MaskType.png" },
+        { "label": "Rules (transform front)", "url": "/img/frames/m15/transform/regular/maskRulesFront.png" },
+        { "label": "Frame (transform front)", "url": "/img/frames/m15/transform/regular/maskFrameFront.png" },
+        { "label": "Border (transform front)", "url": "/img/frames/m15/transform/regular/maskBorderFront.png" }
+      ]
+    },
+    "m15TransformBack": {
+      "layout": "m15TransformBack",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-transform-back",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/transform/regular/new",
+          "filenamePattern": "back{code}.png",
+          "items": "m15TransformBaseColors"
+        },
+        {
+          "idPrefix": "m15-transform-back-pt",
+          "labelSuffix": "Power/Toughness",
+          "pathPrefix": "/img/frames/m15/transform/regular",
+          "filenamePattern": "pt{code}.png",
+          "bounds": "shortPt",
+          "items": "m15TransformPowerToughnessColors"
+        },
+        {
+          "idPrefix": "m15-transform-back",
+          "labelSuffix": "Frame",
+          "pathPrefix": "/img/frames/m15/transform/regular/new",
+          "filenamePattern": "back{code}.png",
+          "items": "m15TransformLandColors"
+        }
+      ],
+      "masks": [
+        { "label": "Pinline (transform back)", "url": "/img/frames/m15/transform/regular/new/maskPinlineBack.png" },
+        { "label": "Title (transform back)", "url": "/img/frames/m15/transform/regular/new/maskTitle.png" },
+        { "label": "Type (m15)", "url": "/img/frames/m15/regular/m15MaskType.png" },
+        { "label": "Rules (m15)", "url": "/img/frames/m15/regular/m15MaskRules.png" },
+        { "label": "Frame (transform back)", "url": "/img/frames/m15/transform/regular/new/maskFrameBack.png" },
+        { "label": "Border (m15)", "url": "/img/frames/m15/regular/m15MaskBorder.png" }
+      ]
+    },
+    "m15TransformIcons": {
+      "layout": "m15TransformFront",
+      "presetGroups": [
+        {
+          "idPrefix": "m15-transform-icon",
+          "pathPrefix": "/img/frames/m15/transform/icons",
+          "bounds": "m15TransformTypeIcon",
+          "items": "m15TransformIcons"
+        }
+      ],
+      "masks": []
+    }
+  }
+}

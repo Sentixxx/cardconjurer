@@ -1,4 +1,4 @@
-import type { JSX, ReactNode } from 'react';
+import { useState, type JSX, type ReactNode } from 'react';
 import { Link, NAV_ROUTE_KEYS, ROUTES, useCurrentRouteKey } from '@/lib/router';
 
 export interface AppShellProps {
@@ -7,38 +7,60 @@ export interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps): JSX.Element {
   const currentKey = useCurrentRouteKey();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <div>
-      <header style={{ padding: '1rem', borderBottom: '1px solid var(--interactable-unselected)' }}>
-        <h1 style={{ margin: 0 }}>
-          <Link href={ROUTES.home.path}>Card Forger</Link>
+    <div className="app-root">
+      <div className="background" aria-hidden="true" />
+      <header className="site-header readable-background">
+        <h1 className="title center">
+          <Link href={ROUTES.home.path}>CARD CONJURER</Link>
         </h1>
-        <nav>
-          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', listStyle: 'none', padding: 0, margin: '0.5rem 0 0' }}>
-            {NAV_ROUTE_KEYS.map((key) => {
-              const isActive = key === currentKey;
-              return (
-                <li key={key}>
-                  {isActive ? (
-                    <strong>{ROUTES[key].label}</strong>
-                  ) : (
-                    <Link href={ROUTES[key].path}>{ROUTES[key].label}</Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
       </header>
-      <main style={{ padding: '1rem' }}>{children}</main>
-      <footer style={{ padding: '1rem', borderTop: '1px solid var(--interactable-unselected)', fontSize: '0.9rem' }}>
+
+      <button
+        type="button"
+        className={`hamburger ${menuOpen ? 'opened' : ''}`}
+        aria-label={menuOpen ? '关闭导航' : '打开导航'}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <button
+        type="button"
+        className={`menu-backdrop ${menuOpen ? 'menu-visible' : ''}`}
+        aria-label="关闭导航"
+        tabIndex={menuOpen ? 0 : -1}
+        onClick={() => setMenuOpen(false)}
+      />
+      <nav className={`menu ${menuOpen ? 'menu-visible' : 'menu-hidden'}`} aria-label="主导航">
+        <div className="main-menu readable-background">
+          <h2>导航</h2>
+          {NAV_ROUTE_KEYS.map((key) => {
+            const isActive = key === currentKey;
+            return (
+              <h3 key={key} className={isActive ? 'selected-nav-item' : undefined}>
+                <Link href={ROUTES[key].path} onClick={() => setMenuOpen(false)}>
+                  {ROUTES[key].label}
+                </Link>
+              </h3>
+            );
+          })}
+        </div>
+      </nav>
+
+      <main id="content" className="main-content">
+        {children}
+      </main>
+      <footer className="site-footer readable-background">
         <p>
-          Card Forger is a TypeScript/React/Vite port of Card Conjurer. Not affiliated with Wizards of the Coast,
-          Legend Story Studios, or Scryfall. Fonts, mana symbols, card images, and related artwork are
-          trademarks and copyrights of their respective owners.
+          本项目不隶属于 Wizards of the Coast、Legend Story Studios 或 Scryfall。字体、法术力符号、卡牌图像和相关素材归各自权利人所有。
         </p>
         <p>
-          <Link href={ROUTES.legal.path}>Terms &amp; Conditions</Link> · <Link href={ROUTES.about.path}>About</Link>
+          <Link href={ROUTES.legal.path}>条款和条件</Link> · <Link href={ROUTES.about.path}>关于</Link>
         </p>
       </footer>
     </div>

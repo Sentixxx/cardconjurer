@@ -1,0 +1,8 @@
+{
+  "local": {
+    "databasePath": "/data/zhs.sqlite"
+  },
+  "sqlJs": {
+    "baseUrl": "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2"
+  }
+}

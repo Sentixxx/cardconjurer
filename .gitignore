@@ -11,6 +11,14 @@ manifests/release-manifest.json
 # Local resource bundle
 resources/
 
+# Public runtime assets managed outside this source repository
+/public/data/images/
+/public/data/site/
+/public/favicon.ico
+/public/fonts/
+/public/gallery/
+/public/img/
+
 # Local gallery screenshots
 src/app/gallery/img/
 

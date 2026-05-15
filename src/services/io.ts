@@ -25,12 +25,25 @@ function isSavedCardEntry(value: unknown): value is SavedCardEntry {
   return typeof record.key === 'string' && 'raw' in record;
 }
 
+function isLegacySavedCardEntry(value: unknown): value is { readonly key: string; readonly data: unknown } {
+  if (value === null || typeof value !== 'object') return false;
+  const record = value as Record<string, unknown>;
+  return typeof record.key === 'string' && 'data' in record;
+}
+
 export function parseImportedBundle(text: string): readonly SavedCardEntry[] {
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
   } catch {
     return [];
+  }
+  if (Array.isArray(parsed)) {
+    return parsed.flatMap((entry): SavedCardEntry[] => {
+      if (isSavedCardEntry(entry)) return [entry];
+      if (isLegacySavedCardEntry(entry)) return [{ key: entry.key, raw: entry.data }];
+      return [];
+    });
   }
   if (parsed === null || typeof parsed !== 'object') return [];
   const candidate = (parsed as Record<string, unknown>).cards;

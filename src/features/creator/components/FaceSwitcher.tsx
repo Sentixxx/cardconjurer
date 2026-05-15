@@ -18,23 +18,23 @@ export function FaceSwitcher({
   onRemoveFaceB,
 }: FaceSwitcherProps): JSX.Element {
   return (
-    <section>
-      <h2>Faces</h2>
+    <section className="compact-section">
+      <h2>卡面</h2>
       <button type="button" onClick={() => onSelect('A')} disabled={activeFace === 'A'}>
-        Face A
+        正面
       </button>{' '}
       {hasFaceB ? (
         <>
           <button type="button" onClick={() => onSelect('B')} disabled={activeFace === 'B'}>
-            Face B
+            背面
           </button>{' '}
           <button type="button" onClick={onRemoveFaceB}>
-            Remove face B
+            移除背面
           </button>
         </>
       ) : (
         <button type="button" onClick={onAddFaceB}>
-          + Add face B
+          + 添加背面
         </button>
       )}
     </section>

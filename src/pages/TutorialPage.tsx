@@ -4,7 +4,7 @@ import { Placeholder } from '@/components/Placeholder';
 export function TutorialPage(): JSX.Element {
   return (
     <>
-      <Placeholder routeKey="tutorial" description="Brief guide to the Card Conjurer workflow (full editor port is in progress)." />
+      <Placeholder routeKey="tutorial" description="了解制卡器里的牌框、文本、卡图和导出流程。" />
       <article>
         <section>
           <h2>牌框标签 (Frame tab)</h2>
@@ -35,14 +35,6 @@ export function TutorialPage(): JSX.Element {
           </p>
           <h3>编辑边界</h3>
           <p>"输入卡牌文本"下方的"编辑边界"按钮可打开文本框编辑器，调整当前文本框的大小与位置。</p>
-        </section>
-        <section>
-          <h2>当前迁移状态</h2>
-          <p>
-            Card Forger 的 React 版本目前提供：可视化预览、JSON 导入/导出、PNG 导出、Art URL 加载、Frame 版本目录、
-            主题切换、本地存储与 Gallery 列表。完整的帧图叠加、文本代码、多面牌等高级功能仍在迁移中 —
-            详见 <code>REFRACTOR_STATE.md</code>。
-          </p>
         </section>
       </article>
     </>

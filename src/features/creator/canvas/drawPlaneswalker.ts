@@ -17,6 +17,9 @@ export interface DrawPlaneswalkerOptions {
   readonly width: number;
   readonly height: number;
   readonly textColor: string;
+  readonly rowHeights?: readonly number[];
+  readonly costAdjustments?: readonly number[];
+  readonly invertTextBoxes?: boolean;
 }
 
 export function drawPlaneswalkerAbilities(
@@ -25,17 +28,25 @@ export function drawPlaneswalkerAbilities(
   options: DrawPlaneswalkerOptions,
 ): void {
   if (abilities.length === 0) return;
-  const rowHeight = Math.floor(options.height / abilities.length);
-  const iconSize = Math.min(110, Math.floor(rowHeight * 0.7));
+  const rowHeights = resolveRowHeights(abilities.length, options.height, options.rowHeights);
+  const maxRowHeight = Math.max(...rowHeights);
+  const iconSize = Math.min(110, Math.floor(maxRowHeight * 0.7));
   const iconColumnWidth = iconSize + 24;
   const textPadX = 16;
+  const lightFill = options.invertTextBoxes ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.38)';
+  const darkFill = options.invertTextBoxes ? 'rgba(91, 91, 91, 0.5)' : 'rgba(164, 164, 164, 0.38)';
 
   ctx.save();
+  let rowY = options.y;
   for (let i = 0; i < abilities.length; i += 1) {
     const ability = abilities[i];
     if (!ability) continue;
-    const rowY = options.y + i * rowHeight;
-    drawLoyaltyIcon(ctx, ability.cost, options.x + 12, rowY + (rowHeight - iconSize) / 2, iconSize);
+    const rowHeight = rowHeights[i] ?? 0;
+    if (rowHeight <= 0) continue;
+    ctx.fillStyle = i % 2 === 0 ? lightFill : darkFill;
+    ctx.fillRect(options.x, rowY, options.width, rowHeight);
+    const iconY = rowY + (rowHeight - iconSize) / 2 + (options.costAdjustments?.[i] ?? 0);
+    drawLoyaltyIcon(ctx, ability.cost, options.x + 12, iconY, iconSize);
     drawRichText(
       ctx,
       ability.text,
@@ -43,7 +54,7 @@ export function drawPlaneswalkerAbilities(
       rowY + 18,
       options.width - iconColumnWidth - textPadX * 2,
       {
-        font: '40px system-ui, sans-serif',
+        font: '40px mplantin, Georgia, serif',
         color: options.textColor,
         lineHeight: 48,
         symbolDiameter: 32,
@@ -57,8 +68,15 @@ export function drawPlaneswalkerAbilities(
       ctx.lineTo(options.x + options.width - 12, rowY + rowHeight);
       ctx.stroke();
     }
+    rowY += rowHeight;
   }
   ctx.restore();
+}
+
+function resolveRowHeights(rowCount: number, totalHeight: number, configured: readonly number[] | undefined): readonly number[] {
+  const rowHeights = Array.from({ length: rowCount }, (_, index) => Math.max(0, Math.round(configured?.[index] ?? 0)));
+  if (rowHeights.some((height) => height > 0)) return rowHeights;
+  return Array.from({ length: rowCount }, () => Math.floor(totalHeight / rowCount));
 }
 
 function drawLoyaltyIcon(
@@ -77,7 +95,7 @@ function drawLoyaltyIcon(
   else drawDiamond(ctx, x, y, size, fill);
 
   ctx.fillStyle = ICON_TEXT_COLOR;
-  ctx.font = `bold ${Math.round(size * 0.42)}px system-ui, sans-serif`;
+  ctx.font = `bold ${Math.round(size * 0.42)}px belerenbsc, system-ui, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(cost || '·', x + size / 2, y + size / 2 + (kind === 'plus' ? size * 0.06 : kind === 'minus' ? -size * 0.06 : 0));
@@ -170,7 +188,7 @@ export function drawLoyaltyShield(
   ctx.lineWidth = 8;
   ctx.stroke();
   ctx.fillStyle = '#efefef';
-  ctx.font = `bold ${Math.round(height * 0.55)}px system-ui, sans-serif`;
+  ctx.font = `bold ${Math.round(height * 0.55)}px belerenbsc, system-ui, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(loyalty, x + width / 2, y + height / 2);

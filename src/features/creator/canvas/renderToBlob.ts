@@ -1,11 +1,16 @@
 import { drawCard, type DrawCardLayers } from '@/features/creator/canvas/drawCard';
 import type { CardData } from '@/types/cardData';
 
+export interface RenderCardToBlobOptions {
+  readonly roundedCorners?: boolean;
+}
+
 export function renderCardToBlob(
   card: CardData,
   layers: DrawCardLayers = {},
   mime = 'image/png',
   quality?: number,
+  options: RenderCardToBlobOptions = {},
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
     if (typeof document === 'undefined') {
@@ -21,6 +26,9 @@ export function renderCardToBlob(
       return;
     }
     drawCard(ctx, card, layers);
+    if (options.roundedCorners) {
+      cutRoundedCardCorners(ctx, card.width, card.height);
+    }
     canvas.toBlob(
       (blob) => {
         if (blob) {
@@ -33,4 +41,23 @@ export function renderCardToBlob(
       quality,
     );
   });
+}
+
+function cutRoundedCardCorners(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+  const radius = Math.max(1, Math.round(width * (59 / 1500)));
+  ctx.save();
+  ctx.globalCompositeOperation = 'destination-in';
+  ctx.beginPath();
+  ctx.moveTo(radius, 0);
+  ctx.lineTo(width - radius, 0);
+  ctx.quadraticCurveTo(width, 0, width, radius);
+  ctx.lineTo(width, height - radius);
+  ctx.quadraticCurveTo(width, height, width - radius, height);
+  ctx.lineTo(radius, height);
+  ctx.quadraticCurveTo(0, height, 0, height - radius);
+  ctx.lineTo(0, radius);
+  ctx.quadraticCurveTo(0, 0, radius, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
 }
