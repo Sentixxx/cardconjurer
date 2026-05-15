@@ -4,33 +4,25 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "import:source": "node scripts/import-source.mjs",
-    "build": "node scripts/build.mjs",
-    "build:release": "node scripts/build-release.mjs",
-    "next:build": "next build",
-    "next:dev": "next dev",
-    "verify": "node scripts/verify-baseline.mjs",
-    "verify:release": "node scripts/verify-release.mjs",
-    "migration:status": "node scripts/migration-status.mjs",
-    "migration:status:strict": "node scripts/migration-status.mjs --strict",
-    "test": "npm run build --silent && node --test",
-    "serve": "node scripts/serve.mjs",
-    "serve:release": "node scripts/serve.mjs --root release/site"
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "wouter": "^3.6.0"
   },
   "devDependencies": {
-    "htm": "^3.1.1",
-    "jsdom": "^29.1.1",
-    "next": "^16.2.6",
-    "parse5": "^8.0.1",
-    "preact": "^10.29.1",
-    "preact-render-to-string": "^6.6.7",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
-  },
-  "overrides": {
-    "postcss": "8.5.10"
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.5"
   }
 }

@@ -29,3 +29,10 @@ server.err.log
 Thumbs.db
 .vscode/
 .idea/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# AI
+.claude
+.codex
