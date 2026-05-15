@@ -1,5 +1,4 @@
 import { useMemo, useState, type JSX } from 'react';
-import { Placeholder } from '@/components/Placeholder';
 import { transliterateToPhyrexian } from '@/services/phyrexian';
 
 export function PhyrexianPage(): JSX.Element {
@@ -8,30 +7,44 @@ export function PhyrexianPage(): JSX.Element {
 
   return (
     <>
-      <Placeholder
-        routeKey="phyrexian"
-        description="把输入文字转换为可用于非瑞克西亚字体的字符。"
-      />
-      <section>
-        <h2>输入</h2>
-        <textarea
-          value={input}
-          rows={8}
-          cols={60}
-          placeholder="输入或粘贴英文文本…"
-          onChange={(e) => setInput(e.target.value)}
-        />
-      </section>
-      <section>
-        <h2>输出</h2>
-        <textarea value={output} rows={8} cols={60} readOnly style={{ fontFamily: 'phyrexian, monospace' }} />
-        <p>
-          <small>
-            这不是真正的翻译。生成器只是将输入文字按字符数转换成与 Phyrexian 字体兼容的随机字符。
-            在 Creator 中使用时，请在文本前添加 <code>{'{fontphyrexian}'}</code>。
-          </small>
-        </p>
-      </section>
+      <h2 className="readable-background header-extension title center margin-bottom-large">
+        非瑞克西亚文字生成器
+      </h2>
+      <div className="layer margin-bottom-large">
+        <div className="input-grid padding margin-bottom readable-background">
+          <div>
+            <h5 className="margin-bottom padding input-description">
+              输入您想要“翻译”的文字
+            </h5>
+            <textarea
+              className="input phyrexian-textarea"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+          </div>
+          <div>
+            <h5 className="margin-bottom padding input-description">
+              然后从这里复制“翻译”后的文字
+            </h5>
+            <textarea
+              className="input phyrexian-textarea"
+              style={{ fontFamily: 'phyrexian' }}
+              value={output}
+              disabled
+              readOnly
+            />
+          </div>
+        </div>
+      </div>
+      <div className="readable-background layer margin-bottom-large">
+        <h3 className="padding margin-bottom center">这不是一个翻译器</h3>
+        <h4 className="padding margin-bottom">
+          非瑞克西亚文字生成器只是将您输入的字符数量转换成与非瑞克西亚字体兼容的随机字符。
+        </h4>
+        <h4 className="padding margin-bottom">
+          要在Card Conjurer中使用生成的文字，只需复制并粘贴输出文字，但请记住在文字前添加{'{fontphyrexian}'}以使用正确的字体！
+        </h4>
+      </div>
     </>
   );
 }

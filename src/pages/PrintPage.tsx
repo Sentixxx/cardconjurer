@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type JSX } from 'react';
-import { Placeholder } from '@/components/Placeholder';
 import { loadImage } from '@/services/assets';
 import { renderPrintSheet } from '@/services/print';
 import { DEFAULT_PRINT_CONFIG, type PrintConfig } from '@/types/print';
@@ -91,9 +90,11 @@ export function PrintPage(): JSX.Element {
 
   return (
     <>
-      <Placeholder routeKey="print" />
-      <section className="input-stack readable-background padding margin-bottom">
-        <h5>配置页面设置</h5>
+      <h2 className="readable-background header-extension title center margin-bottom-large">
+        打印工具
+      </h2>
+      <section className="input-stack readable-background padding layer margin-bottom-large">
+        <h4 className="center padding margin-bottom">配置页面设置</h4>
         <h5>选择纸张大小</h5>
         <div className="input-grid">
           <select
@@ -192,45 +193,61 @@ export function PrintPage(): JSX.Element {
           保存配置
         </button>
       </section>
-      <section className="input-stack readable-background padding margin-bottom">
-        <h5>上传您想打印的图片，或直接拖放文件</h5>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={(event) => void onFileChange(event)}
-        />
-        <button type="button" onClick={onClearImages} disabled={images.length === 0}>
-          清空
-        </button>
-        <small>已选择 {images.length} / {MAX_PRINT_IMAGES} 张图片。</small>
-        {status && (
-          <p>
-            <small>{status}</small>
-          </p>
-        )}
+      <section className="layer margin-bottom-large">
+        <div className="drop-area" style={{ padding: '1rem' }}>
+          <div className="padding margin-bottom-large readable-background">
+            <h5 className="margin-bottom padding input-description">
+              上传您想打印的图片，或直接拖放文件
+            </h5>
+            <input
+              type="file"
+              accept=".png, .svg, .jpg, .jpeg, .bmp, .webp"
+              multiple
+              className="input"
+              onChange={(event) => void onFileChange(event)}
+            />
+            <button
+              type="button"
+              className="input"
+              onClick={onClearImages}
+              disabled={images.length === 0}
+            >
+              清空
+            </button>
+            <small>
+              已选择 {images.length} / {MAX_PRINT_IMAGES} 张图片。
+            </small>
+            {status && (
+              <p>
+                <small>{status}</small>
+              </p>
+            )}
+          </div>
+          <div className="center">
+            <canvas
+              ref={canvasRef}
+              style={{ maxWidth: '850px', width: '100%', height: 'auto', background: '#fff' }}
+            />
+          </div>
+        </div>
       </section>
-      <section className="input-stack readable-background padding margin-bottom">
-        <h5>下载打印页面 (PNG)</h5>
-        <h5>（可能需要几秒钟）</h5>
-        <button type="button" onClick={onDownloadPng}>
+      <section className="readable-background padding layer margin-bottom-large">
+        <button type="button" className="download padding input" onClick={onDownloadPng}>
           下载打印页面 (PNG)
         </button>
+        <h4 className="padding center">（可能需要几秒钟）</h4>
       </section>
-      <section className="input-stack readable-background padding margin-bottom">
-        <h5>下载打印页面 (PDF)</h5>
-        <h5>（警告：这可能需要约15秒...）</h5>
-        <button type="button" onClick={onDownloadPdf}>
+      <section className="readable-background padding layer margin-bottom-large">
+        <button type="button" className="download padding input" onClick={onDownloadPdf}>
           下载打印页面 (PDF)
         </button>
+        <h4 className="padding center">（警告：这可能需要约15秒...）</h4>
       </section>
-      <section className="input-stack readable-background padding margin-bottom">
-        <h5>想在餐桌上看到您的自制卡牌吗？</h5>
-        <h5>上传最多九张图片，它们将自动排列在8.5&quot; x 11&quot;的打印页面上，这样您就可以在家用最高600PPI的分辨率打印它们。</h5>
-      </section>
-      <section className="input-stack readable-background padding">
-        <h5>预览</h5>
-        <canvas ref={canvasRef} style={{ maxWidth: '850px', width: '100%', height: 'auto', background: '#fff' }} />
+      <section className="readable-background layer margin-bottom-large">
+        <h3 className="padding margin-bottom center">想在餐桌上看到您的自制卡牌吗？</h3>
+        <h4 className="padding">
+          上传最多九张图片，它们将自动排列在8.5&quot; x 11&quot;的打印页面上，这样您就可以在家用最高600PPI的分辨率打印它们。
+        </h4>
       </section>
     </>
   );

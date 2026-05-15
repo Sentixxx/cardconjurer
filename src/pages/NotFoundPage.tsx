@@ -4,12 +4,16 @@ import { Link, ROUTES } from '@/lib/router';
 export function NotFoundPage(): JSX.Element {
   return (
     <main>
-      <h1 style={{ fontSize: '6rem', margin: '1rem 0' }}>404</h1>
-      <h2>页面未找到</h2>
-      <p>您寻找的页面就像 Fblthp 一样丢失了。</p>
-      <p>
-        <Link href={ROUTES.home.path}>Back to home</Link>
-      </p>
+      <div style={{ padding: '0.5rem', textAlign: 'center' }}>
+        <h2 style={{ padding: '0.5rem', marginBottom: '0.5rem', fontSize: '10rem' }}>404</h2>
+        <h4 style={{ padding: '0.5rem' }}>页面未找到</h4>
+      </div>
+      <div style={{ padding: '0.5rem', textAlign: 'center' }}>
+        <h4 style={{ padding: '0.5rem' }}>您寻找的页面就像Fblthp一样丢失了。</h4>
+        <p style={{ padding: '0.5rem' }}>
+          <Link href={ROUTES.home.path}>返回主页</Link>
+        </p>
+      </div>
     </main>
   );
 }

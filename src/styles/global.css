@@ -18,6 +18,26 @@
   src: url("/fonts/mplantin-i.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: phyrexian;
+  src: url("/fonts/phy.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: goudymedieval;
+  src: url("/fonts/goudy-medieval.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: gothammedium;
+  src: url("/fonts/gotham-medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: gothambold;
+  src: url("/fonts/gothambold.otf") format("opentype");
+}
+
 :root {
   --site-background: #2a5633 url("/img/lowpolyBackground.svg") center / cover no-repeat fixed;
   --site-background-filter: none;
@@ -188,6 +208,18 @@ p {
   margin-bottom: 0.5rem;
 }
 
+.margin-top {
+  margin-top: 0.5rem;
+}
+
+.margin-bottom-large {
+  margin-bottom: 2rem;
+}
+
+.margin-bottom-larger {
+  margin-bottom: 3rem;
+}
+
 .box-shadow {
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.55);
 }
@@ -320,6 +352,105 @@ p {
   padding: 0.75rem;
 }
 
+.askUrzaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 90pt auto;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 2rem;
+}
+
+.urzaCard {
+  width: 90vw;
+  text-align: center;
+  grid-column: 1 / span 3;
+}
+
+.urzaCard > img {
+  width: 100%;
+  height: auto;
+}
+
+.askUrzaButton {
+  height: auto;
+  width: 22vw;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+#askUrzaResult {
+  grid-column: 1 / span 3;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 1rem;
+  font: 1.5rem belerenb;
+}
+
+@media screen and (min-width: 380pt) {
+  .urzaCard {
+    width: 360pt;
+  }
+  .askUrzaButton {
+    height: auto;
+    width: 100pt;
+    transition: 0.25s;
+  }
+  .askUrzaButton:hover {
+    width: 110pt;
+  }
+  .askUrzaButton:active {
+    width: 120pt !important;
+  }
+}
+
+@media screen and (min-width: 864pt) {
+  .askUrzaGrid {
+    grid-template-columns: calc(360pt) 1fr 1fr 1fr !important;
+    grid-template-rows: 92pt auto !important;
+  }
+  .urzaCard {
+    grid-column: 1;
+    grid-row: 1 / span 2 !important;
+  }
+  #askUrzaResult {
+    grid-column: 2 / span 3 !important;
+  }
+}
+
+textarea.input.phyrexian-textarea {
+  resize: none;
+  max-height: 66vh;
+  height: 30rem;
+}
+
+textarea.input.phyrexian-textarea:disabled {
+  opacity: 1;
+}
+
+.tutorial-grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.tutorial-grid > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 1rem auto;
+}
+
+.readable-background > .tutorial-grid > img {
+  border: 0.1rem solid gray;
+}
+
+@media only screen and (min-width: 750px) {
+  .tutorial-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .landing-hero {
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -346,9 +477,29 @@ p {
 }
 
 .animated-scene {
-  min-height: 16rem;
-  display: grid;
-  place-items: center;
+  perspective: 100rem;
+}
+
+.animated-card-1 {
+  animation: animatedcardone 3s ease-in-out 0s alternate infinite;
+  transform-style: preserve-3d;
+}
+
+.animation-delay-2 {
+  animation-delay: 1s !important;
+}
+
+.animation-delay-4 {
+  animation-delay: 2s !important;
+}
+
+@keyframes animatedcardone {
+  0% {
+    transform: rotateY(15deg);
+  }
+  100% {
+    transform: rotateY(-15deg);
+  }
 }
 
 .start-link {

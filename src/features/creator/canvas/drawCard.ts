@@ -779,21 +779,47 @@ function drawCollectorInfo(ctx: CanvasRenderingContext2D, card: CardData, inset:
   }
 
   ctx.save();
-  ctx.font = '32px mplantin, Georgia, serif';
-  ctx.fillStyle = '#9a9486';
   ctx.textBaseline = 'alphabetic';
-  ctx.textAlign = 'start';
   const year = new Date().getFullYear();
-  const left = compactJoin([card.setCode, card.cardNumber], ' · ');
-  if (left) ctx.fillText(left, inset + 40, card.height - inset - 32);
-  const right = compactJoin([
-    card.artist ? `Illus. ${card.artist}` : null,
-    `© ${year} Card Forger`,
-  ], ' — ');
-  if (right) {
-    ctx.textAlign = 'end';
-    ctx.fillText(right, card.width - inset - 40, card.height - inset - 32);
+  const fillColor = '#f4f4f0';
+
+  const infoFontSize = Math.round(card.height * (24 / 2100));
+  const infoY = card.height - inset - infoFontSize * 2.6;
+  const artistY = card.height - inset - infoFontSize * 1.35;
+  const copyrightY = card.height - inset - infoFontSize * 0.2;
+
+  ctx.fillStyle = fillColor;
+  ctx.font = `${infoFontSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
+  ctx.textAlign = 'start';
+
+  const rarityCode = card.rarity ?? '';
+  const cardNumber = card.cardNumber ?? '';
+  const leftLine = compactJoin(
+    [
+      cardNumber,
+      rarityCode,
+      card.setCode ? card.setCode.toUpperCase() : null,
+      'EN',
+    ],
+    ' • ',
+  );
+  if (leftLine) ctx.fillText(leftLine, inset + 40, infoY);
+
+  if (card.artist) {
+    ctx.font = `${infoFontSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
+    ctx.fillText('✧ Illus. ', inset + 40, artistY);
+    const prefixWidth = ctx.measureText('✧ Illus. ').width;
+    ctx.font = `${infoFontSize}px belerenbsc, system-ui, sans-serif`;
+    ctx.fillText(card.artist, inset + 40 + prefixWidth, artistY);
   }
+
+  const copyrightSize = Math.round(infoFontSize * 0.78);
+  ctx.font = `${copyrightSize}px mplantin, Georgia, serif`;
+  ctx.fillStyle = fillColor;
+  ctx.textAlign = 'start';
+  const copyright = `™ & © ${year} Wizards of the Coast`;
+  ctx.fillText(copyright, inset + 40, copyrightY);
+
   ctx.restore();
 }
 

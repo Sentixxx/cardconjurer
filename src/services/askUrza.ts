@@ -1,6 +1,6 @@
 import { EMPTY_ABILITY_GROUPS, type AbilityGroups, type AbilityKind } from '@/types/askUrza';
 
-export const ABILITY_DATA_URL = '/data/askurza/abilities.txt';
+export const ABILITY_DATA_URL = '/askurza/planeswalkerAbilities.txt';
 
 function splitAndClean(group: string): readonly string[] {
   return group

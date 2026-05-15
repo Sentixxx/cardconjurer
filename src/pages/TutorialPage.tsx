@@ -1,42 +1,59 @@
 import type { JSX } from 'react';
-import { Placeholder } from '@/components/Placeholder';
 
 export function TutorialPage(): JSX.Element {
   return (
     <>
-      <Placeholder routeKey="tutorial" description="了解制卡器里的牌框、文本、卡图和导出流程。" />
-      <article>
-        <section>
-          <h2>牌框标签 (Frame tab)</h2>
-          <h3>牌框组和牌框包</h3>
-          <p>
-            下拉菜单用于浏览边框包：左侧的"边框组"将边框包整理成大致分类，右侧的"边框包"包含用于制作卡牌的实际
-            图像与设置。
-          </p>
-          <h3>加载牌框版本</h3>
-          <p>
-            点击"加载牌框版本"或勾选"自动加载"时，会设置与当前边框包相关的布局（文本框位置、艺术位置等）。
-            若需要混合不同边框包的图像，建议取消勾选自动加载，手动按需切换。
-          </p>
-          <h3>添加图像</h3>
-          <p>
-            选定一个边框图像（左侧）和一个图像蒙版（右侧）后，点击"添加边框到卡牌"。图像蒙版决定显示图像的
-            哪个部分，适合制作多色或彩色神器等卡。
-          </p>
-        </section>
-        <section>
-          <h2>文本标签 (Text tab)</h2>
-          <h3>选择文本框</h3>
-          <p>根据当前加载的牌框版本，可点击任一文本框输入卡牌文本。</p>
-          <h3>文本代码</h3>
-          <p>
-            使用大括号包围的文本代码（例如 <code>{'{w}'}</code>、<code>{'{flavor}'}</code>）可显示法术力符号、
-            切换字体等。完整列表见编辑器底部的"文本代码参考"。
-          </p>
-          <h3>编辑边界</h3>
-          <p>"输入卡牌文本"下方的"编辑边界"按钮可打开文本框编辑器，调整当前文本框的大小与位置。</p>
-        </section>
-      </article>
+      <div className="layer center">
+        <h2>Written Guides</h2>
+      </div>
+      <div className="readable-background layer margin-bottom-large">
+        <div className="tutorial-grid">
+          <img src="/img/tutorial/frame-tab.jpg" alt="Frame tab" />
+          <div>
+            <h3 className="padding center margin-bottom-large">牌框标签</h3>
+            <h5 className="padding">牌框组和牌框包</h5>
+            <p className="padding margin-bottom">
+              下拉菜单用于浏览边框包。边框组（左侧，当前为“Regular”）将边框包整理成大致的分类，而边框包（右侧，当前为“Regular Frames”）则包含了用于制作卡牌的实际图像和设置。
+            </p>
+            <h5 className="padding">加载牌框版本</h5>
+            <p className="padding margin-bottom">
+              点击“加载牌框版本”或选中“自动加载”时，将设置与当前边框包相关的布局。这些布局包括文本框放置、艺术放置等...如果您希望使用来自不同边框包的图像组合，我建议取消选中“自动加载”，并使用“加载牌框版本”按钮。
+            </p>
+            <h5 className="padding">添加图像</h5>
+            <p className="padding margin-bottom">
+              一旦您选择了一个边框图像（左侧）和一个图像蒙版（右侧），您可以点击“添加边框到卡牌”或“添加边框到卡牌（右半部分）”来添加选定的图像。图像蒙版控制显示图像的哪个部分，对于创建彩色神器、多色卡牌等非常有用。要了解更多图像添加选项，请点击位于“添加边框到卡牌”按钮下方的下拉菜单“更多选项”。您也可以双击图像添加它们，并通过按住某些键（shift、ctrl或alt）将它们添加到右侧/中间/左侧部分。
+            </p>
+            <h5 className="padding">删除/重新排序图像</h5>
+            <p className="padding margin-bottom">
+              当您添加图像时，它们会显示在边框/蒙版选择区域下方。您可以点击X删除图像，或点击并拖动它们以更改它们的绘制顺序。您还可以点击图像以调用“边框图像编辑器”进行更多自定义调整。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="readable-background layer margin-bottom-large">
+        <div className="tutorial-grid">
+          <img src="/img/tutorial/text-tab.jpg" alt="Text tab" />
+          <div>
+            <h3 className="padding center margin-bottom">Text Tab</h3>
+            <h5 className="padding">选择文本框</h5>
+            <p className="padding margin-bottom">
+              根据当前加载的牌框版本，您将有许多文本框可供选择。只需点击它们，然后输入卡牌文本。
+            </p>
+            <h5 className="padding">文本代码</h5>
+            <p className="padding margin-bottom">
+              文本代码用于显示法术力符号、更改字体大小等...在文本标签底部，点击“文本代码/法术力符号代码参考”以查看所有可用的文本代码及其描述。确保始终用大括号包围您的文本代码，如示例所示（见图像）。
+            </p>
+            <h5 className="padding">添加文本框</h5>
+            <p className="padding margin-bottom">
+              如果您希望添加更多文本框，可以点击文本标签底部的按钮。
+            </p>
+            <h5 className="padding">自定义调整</h5>
+            <p className="padding margin-bottom">
+              在“输入卡牌文本”区域下方，有一个“编辑边界”按钮。点击此按钮将显示“文本框编辑器”，您可以在其中调整当前选中的文本框的大小和位置。
+            </p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

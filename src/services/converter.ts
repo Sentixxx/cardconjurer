@@ -1,7 +1,7 @@
 import { loadImage } from '@/services/assets';
 
-export const CONVERTER_MASK_URL = '/data/converter/card-mask.png';
-export const CONVERTER_WIZARDS_URL = '/data/converter/wizards.png';
+export const CONVERTER_MASK_URL = '/converter/card.png';
+export const CONVERTER_WIZARDS_URL = '/converter/wizards.png';
 
 const TARGET_WIDTH = 1500;
 const TARGET_HEIGHT = 2100;

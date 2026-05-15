@@ -14,6 +14,7 @@ resources/
 # Public runtime assets managed outside this source repository
 /public/data/images/
 /public/data/site/
+/public/data/fonts/
 /public/favicon.ico
 /public/fonts/
 /public/gallery/

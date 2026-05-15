@@ -1,65 +1,93 @@
 import type { JSX } from 'react';
-import { Placeholder } from '@/components/Placeholder';
 
 export function LegalPage(): JSX.Element {
   return (
     <>
-      <Placeholder routeKey="legal" />
-      <article>
-        <section>
-          <h2>简介</h2>
-          <p>
-            欢迎使用Card Conjurer。使用本网站即表示您确认已阅读、理解并同意受这些条款约束。
-          </p>
-        </section>
-        <section>
-          <h2>免责声明</h2>
-          <p>
-            本项目与Wizards of the Coast、Legend Story Studios或Scryfall LLC没有任何关联，也未受其赞助或认可。
-            字体、法术力符号、图标、卡牌图像和相关素材归各自权利人所有。
-          </p>
-          <p>
-            所有用户上传的材料均归原作者所有，用户需要自行确认使用权并提供适当署名。
-            部分牌框素材或其中使用的元素来自社区创作者，其他内容归Card Conjurer项目所有。
-          </p>
-        </section>
-        <section>
-          <h2>使用条款</h2>
-          <p>
-            本服务仅供个人使用，不得用于商业目的。请勿上传您没有使用权限的艺术作品或任何非法内容。
-          </p>
-        </section>
-        <section>
-          <h2>Cookie/本地存储</h2>
-          <p>
-            使用本服务即表示您同意在您的设备上使用本地存储和cookie。这些数据用于保存设置、偏好以及您选择保存的卡牌。
-          </p>
-        </section>
-        <section>
-          <h2>广告</h2>
-          <p>
-            本项目可能展示第三方网站、产品或服务的广告和链接。我们不对第三方内容的可用性、材料或由此造成的损失负责。
-          </p>
-        </section>
-        <section>
-          <h2>责任</h2>
-          <p>
-            我们不对使用本服务导致的任何设备损坏、数据丢失或其他损害负责。
-          </p>
-        </section>
-        <section>
-          <h2>变更</h2>
-          <p>
-            我们可能随时修改这些条款。继续使用本服务即表示您同意受最新版本约束。
-          </p>
-        </section>
-        <section>
-          <h2>联系方式</h2>
-          <p>
-            如果您对本协议有任何问题，可以通过CardConjurerMTG@gmail.com联系。
-          </p>
-        </section>
-      </article>
+      <h2 className="readable-background header-extension title center margin-bottom-large">
+        条款和条件
+      </h2>
+      <div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">简介</h2>
+          <h5 className="padding">
+            欢迎使用Card Conjurer！
+            <br />
+            <br />
+            在这些条款和条件（“条款”）中，CardConjurer.com将以“Card Conjurer”、“我们”或“我们的”来称呼自己。
+            <br />
+            <br />
+            使用我们的网站（“服务”）即表示您确认已阅读、理解并同意受这些条款的约束。
+          </h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">免责声明</h2>
+          <h5 className="padding">
+            我们与Wizards of the Coast没有任何关联，也未受其赞助或认可。字体、法术力符号、卡牌图像和其他相关图像是Hasbro, Inc.子公司Wizards of the Coast, LLC的商标和版权。
+            <br />
+            <br />
+            我们与Legend Story Studios没有任何关联，也未受其赞助或认可。字体、图标、卡牌图像和其他相关图像是Legend Story Studios的商标和版权。
+            <br />
+            <br />
+            我们与Scryfall LLC没有任何关联，也未受其赞助或认可。
+            <br />
+            <br />
+            所有用户上传的材料均为原创艺术家的财产，用户有责任确保这些材料得到适当的署名。
+            <br />
+            <br />
+            部分卡牌边框图像或其中使用的元素来自
+            <a target="_blank" rel="noreferrer" href="https://www.reddit.com/user/Chilli_Axe/">Chilli_Axe</a>
+            、Kentu、thevodkaboy、Timmy XD69、
+            <a target="_blank" rel="noreferrer" href="https://twitter.com/sheepycutie">Sheepwave</a>
+            、
+            <a target="_blank" rel="noreferrer" href="https://twitter.com/feuer_ameise">FeuerAmeise</a>
+            、
+            <a target="_blank" rel="noreferrer" href="https://www.reddit.com/user/Smyris">Smyris</a>
+            、
+            <a target="_blank" rel="noreferrer" href="https://twitter.com/vote_checkbox">Checkbox</a>
+            和TheGnomeRobotic。
+            <br />
+            <br />
+            所有其他内容版权所有 © 2020 Card Conjurer。
+          </h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">使用条款</h2>
+          <h5 className="padding">
+            我们的服务仅供个人使用，不得用于商业目的。
+            <br />
+            <br />
+            您不得上传您没有使用权限的艺术作品，或任何非法的内容。
+          </h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">Cookie/本地存储</h2>
+          <h5 className="padding">
+            使用我们的服务即表示您同意在您的设备上使用和存储本地存储和cookie。这些数据仅用于存储您之前输入的设置以改善您的体验，以及存储您可能选择保存的卡牌。
+          </h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">广告</h2>
+          <h5 className="padding">
+            我们可能会展示第三方网站、产品和/或服务的广告或链接（“第三方广告”）。我们对这些第三方广告的可用性、其包含的材料以及由此造成的任何损害或损失概不负责。
+          </h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">责任</h2>
+          <h5 className="padding">我们对使用我们服务而导致的任何设备损坏概不负责。</h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">变更</h2>
+          <h5 className="padding">
+            我们可能随时修改这些条款。我们没有责任通知用户任何条款的变更，继续使用我们的服务即表示您同意受最新修订版本的约束。
+          </h5>
+        </div>
+        <div className="readable-background layer margin-bottom-large">
+          <h2 className="center margin-bottom">联系方式</h2>
+          <h5 className="padding">
+            如果您对本协议有任何问题，可以通过CardConjurerMTG@gmail.com与我们联系。
+          </h5>
+        </div>
+      </div>
     </>
   );
 }
