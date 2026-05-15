@@ -1,6 +1,6 @@
 # Render Parity State
 
-_Last updated: 2026-05-15 11:18 (Phase 2 iteration 3)_
+_Last updated: 2026-05-15 11:22 (Phase 2 iteration 4)_
 
 ## 0. 上游漂移
 - `UPSTREAM_COMMIT`（仓内副本基线）：`6aa4f72482eb955777873d929a7570aef9556e23`
@@ -65,7 +65,7 @@ _Last updated: 2026-05-15 11:18 (Phase 2 iteration 3)_
 
 ### 3.A 视觉对照 fixture 矩阵（P4 — 12 fixture 实际渲染对照）
 
-**渲染证据**：iteration 3 新增 `src/pages/FixturePage.tsx` + 12 个 `public/fixtures/<slug>.json`，通过 `vite dev server :7001` + `chromium headless 147` 对每张 fixture 在路由 `/fixtures/<slug>` 下进行实际渲染并截图保存到 `/tmp/fixtures/<slug>.png`（35-94 KB / 张，共 12 张）。每行**实际视觉观察**写自 screenshot 内容（非静态推导）。**transcript 内已直接 inline 显示 lightning-bolt / atraxa / sheoldred-apocalypse / jace / llanowar-elves 5 张作为代表证据；其余 7 张文件已生成，slug 可重现**（counterspell/hallowed-fountain/urzas-saga/fire-ice/bonecrusher-giant/phyrexian-praetor/birgi）。
+**渲染证据**：iteration 3 新增 `src/pages/FixturePage.tsx` + 12 个 `public/fixtures/<slug>.json`，通过 `vite dev server :7001` + `chromium headless 147` 对每张 fixture 在路由 `/fixtures/<slug>` 下进行实际渲染并截图保存到 `/tmp/fixtures/<slug>.png`（35-94 KB / 张，共 12 张）。每行**实际视觉观察**写自 screenshot 内容（非静态推导）。**transcript 中已直接 inline 显示全部 12 张**（iter 3 显示 5 张：lightning-bolt / atraxa / sheoldred-apocalypse / jace / llanowar-elves；iter 4 显示剩余 7 张：counterspell / hallowed-fountain / urzas-saga / fire-ice / bonecrusher-giant / phyrexian-praetor / birgi）。
 
 | # | 测试卡 | frame（实测） | 字号（实测） | symbol（实测） | watermark（实测） | collector（实测） |
 | - | --- | --- | --- | --- | --- | --- |
