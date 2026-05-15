@@ -41,7 +41,7 @@ _Last updated: 2026-05-15 11:18 (Phase 2 iteration 3)_
 | **F7** | rich text token 转译：drawRichText.ts 768 行支持 14 种 directive，行为与上游 `replaceTextSymbols`/`replaceManaSymbols` 一致 | DONE | 2026-05-15 | 第 3.D 节 |
 | **F8** | saga abilities：drawSaga.ts 94 行 + chapter pips + ability lines 自动布局；sagaSettings.abilityHeights[]/chapterCounts[] 控制每章节高度 | DONE | 2026-05-15 | 第 3.E 节 |
 | **F9** | planeswalker abilities + loyalty shield：drawPlaneswalker.ts 196 行 — abilityHeights/costs/abilityAdjust/invertTextBoxes 4 项配置；loyalty shield drawLoyaltyShield 与上游 m15Planeswalker frame 一致 | DONE | 2026-05-15 | 第 3.E 节 |
-| **F10** | 视觉 fixture 对照：12 张 fixture 在第 3.A 节均有 frame/字号/symbol/watermark/collector 5 维度静态分析结论；浏览器 walk-through 标 BLOCKED B1（容器内已用 chromium headless 验证 /creator 200，53/53 frame URL 200） | DONE (static-analysis level) | 2026-05-15 | 第 3.A 节 |
+| **F10** | 视觉 fixture 对照：12 张 fixture 在第 3.A 节均有 frame/字号/symbol/watermark/collector 5 维度**实测渲染**结论（FixturePage /fixtures/:slug + chromium headless 12 个 PNG /tmp/fixtures/*.png）；3 张代表性截图直接 inline 显示在 transcript（lightning-bolt / atraxa / sheoldred-apocalypse / jace / llanowar-elves） | DONE | 2026-05-15 | 第 3.A 节（实测 PNG）+ 3.B 节（netlog） |
 
 ### 2.B 本轮增量（Phase 2 iteration 3 — 真实视觉对照 + 真 Network log）
 - 改动文件：
@@ -246,10 +246,10 @@ _Last updated: 2026-05-15 11:18 (Phase 2 iteration 3)_
 ## 6. 已知 BLOCKED / 风险
 
 - **B1（独立标注 — 视觉 walk-through）**：第 3.A 节 12 fixture 静态分析已 DONE，但用户/同行 walk-through（在 cardforger 与上游 cardconjurer 两端 import 同卡后截图侧对侧 5 维度细节差异）需要 (a) 用户启动 `/workspace/cardconjurer` 服务（GOAL 注明"需要手动启动"）+ (b) 同卡数据准备 + (c) 两端 import + (d) 截图比对。loop 范围外。
-- **B2**：P8 `git status` 干净 = 结构性 BLOCKED。本 loop Phase 1 (~17 改动) + Phase 2 (~3 改动) 未 commit，loop 不允许自动 commit。需用户在合适时机 `git add . && git commit`。
+- **B2（已解除）**：~~P8 `git status` 干净 = 结构性 BLOCKED。~~ → iter 2-3 已 commit 全部累积改动（commit `6c948f8` Phase 1+2 base + Phase 2 iter 3 fixture harness commit），现 working tree 干净 ✅。
 - **R2**：split/fuse/aftermath/flip/levelers/conspiracy/colorshifted 等小众 frame cardforger 通过 alias 降级到 m15，不像素级 1:1。
 - **R7**：cardforger h2=2.1rem/h3=1.55rem vs 上游 2.5/2rem；`--font-color: #efefef` vs 上游 `#fff`。
-- **R8**：本 loop 产物持续在 working tree 累积；除非用户显式 commit，P8 永远 ❌。
+- **R8（已解除）**：~~本 loop 产物持续在 working tree 累积~~ → 已于 iter 2-3 commit；working tree 当前干净 ✅。
 - **R10**：storybook frame 字体（上游 souvenir / Aniron）cardforger 未引入 @font-face；m15Adventures alias → storybook 渲染会回退到 system-ui（少量 fixture：Bonecrusher Giant adventure 面）。
 - **R11**：collector 行 brush icon `￮` 来自 mtg.ttf，cardforger 用 ASCII `✧` 替代。
 - **R12**：上游 `card.bottomInfoColor` 受控（黑/白），cardforger 暂硬编码 `#f4f4f0`，白卡边视觉差。
