@@ -1,0 +1,19 @@
+{
+  "key": "llanowar-elves",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "C",
+  "cardNumber": "182",
+  "setCode": "M15",
+  "artist": "Kev Walker",
+  "artUrl": null,
+  "manaCost": "{g}",
+  "name": "Llanowar Elves",
+  "typeLine": "Creature — Elf Druid",
+  "rulesText": "{t}: Add {g}.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameG.png",
+  "powerToughness": "1/1"
+}

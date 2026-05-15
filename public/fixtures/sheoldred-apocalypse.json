@@ -1,0 +1,20 @@
+{
+  "key": "sheoldred-apocalypse",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "M",
+  "cardNumber": "107",
+  "setCode": "DMU",
+  "artist": "Chris Rallis",
+  "artUrl": null,
+  "manaCost": "{2}{b}{b}",
+  "name": "Sheoldred, the Apocalypse",
+  "typeLine": "Legendary Creature — Phyrexian Praetor",
+  "rulesText": "Deathtouch\nWhenever you draw a card, each opponent loses 2 life and you gain 2 life.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameB.png",
+  "powerToughness": "4/5",
+  "flavorText": "Even the dead serve at her pleasure."
+}

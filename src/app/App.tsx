@@ -6,6 +6,7 @@ import { AskUrzaAbilityListPage } from '@/pages/AskUrzaAbilityListPage';
 import { AskUrzaPage } from '@/pages/AskUrzaPage';
 import { ConverterPage } from '@/pages/ConverterPage';
 import { CreatorPage } from '@/pages/CreatorPage';
+import { FixturePage } from '@/pages/FixturePage';
 import { GalleryPage } from '@/pages/GalleryPage';
 import { LandingPage } from '@/pages/LandingPage';
 import { LegalPage } from '@/pages/LegalPage';
@@ -30,6 +31,7 @@ export function App(): JSX.Element {
           <Route path={ROUTES.gallery.path} component={GalleryPage} />
           <Route path={ROUTES.print.path} component={PrintPage} />
           <Route path={ROUTES.creator.path} component={CreatorPage} />
+          <Route path={ROUTES.fixture.path} component={FixturePage} />
           <Route path={ROUTES.askUrza.path} component={AskUrzaPage} />
           <Route path={ROUTES.askUrzaAbilityList.path} component={AskUrzaAbilityListPage} />
           <Route path={ROUTES.askUrzaAbilityListLegacy.path} component={AskUrzaAbilityListPage} />

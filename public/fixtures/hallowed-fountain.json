@@ -1,0 +1,18 @@
+{
+  "key": "hallowed-fountain",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "R",
+  "cardNumber": "251",
+  "setCode": "RNA",
+  "artist": "Cliff Childs",
+  "artUrl": null,
+  "manaCost": "",
+  "name": "Hallowed Fountain",
+  "typeLine": "Land — Plains Island",
+  "rulesText": "({t}: Add {w} or {u}.)\nAs Hallowed Fountain enters, you may pay 2 life. If you don't, it enters tapped.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameL.png"
+}

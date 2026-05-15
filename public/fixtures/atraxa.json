@@ -1,0 +1,19 @@
+{
+  "key": "atraxa",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "M",
+  "cardNumber": "83",
+  "setCode": "CMR",
+  "artist": "Victor Adame Minguez",
+  "artUrl": null,
+  "manaCost": "{g}{w}{u}{b}",
+  "name": "Atraxa, Praetors' Voice",
+  "typeLine": "Legendary Creature — Phyrexian Angel Horror",
+  "rulesText": "Flying, vigilance, deathtouch, lifelink\nAt the beginning of your end step, proliferate.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameM.png",
+  "powerToughness": "4/4"
+}

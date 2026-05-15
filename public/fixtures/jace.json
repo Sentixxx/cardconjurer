@@ -1,0 +1,19 @@
+{
+  "key": "jace",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "M",
+  "cardNumber": "31",
+  "setCode": "WWK",
+  "artist": "Jason Chan",
+  "artUrl": null,
+  "manaCost": "{2}{u}{u}",
+  "name": "Jace, the Mind Sculptor",
+  "typeLine": "Legendary Planeswalker — Jace",
+  "rulesText": "+2: Look at the top card of target player's library. You may put that card on the bottom of that player's library.\n0: Draw three cards.\n−1: Return target creature to its owner's hand.\n−12: Exile all cards from target player's library.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameU.png",
+  "loyalty": "3"
+}

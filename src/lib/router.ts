@@ -30,6 +30,7 @@ export const ROUTES = {
     path: '/data/site/other/askUrza/askUrzaAbilityListGenerator.html',
     label: 'Ask Urza Ability List (legacy URL)',
   },
+  fixture: { key: 'fixture', path: '/fixtures/:slug', label: 'Fixture' },
 } as const satisfies Record<string, RouteDescriptor>;
 
 export type RouteKey = keyof typeof ROUTES;

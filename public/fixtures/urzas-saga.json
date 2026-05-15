@@ -1,0 +1,18 @@
+{
+  "key": "urzas-saga",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "R",
+  "cardNumber": "259",
+  "setCode": "MH2",
+  "artist": "Mike Bierek",
+  "artUrl": null,
+  "manaCost": "",
+  "name": "Urza's Saga",
+  "typeLine": "Enchantment Land — Urza's Saga",
+  "rulesText": "(As this Saga enters and after your draw step, add a lore counter.)\nI, II — Lands you control have \"{t}: Add {c}{c}.\"\nIII — Search your library for an artifact card.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameA.png"
+}

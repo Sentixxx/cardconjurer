@@ -1,0 +1,18 @@
+{
+  "key": "fire-ice",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "U",
+  "cardNumber": "128",
+  "setCode": "APC",
+  "artist": "Franz Vohwinkel",
+  "artUrl": null,
+  "manaCost": "{1}{r}",
+  "name": "Fire // Ice",
+  "typeLine": "Instant // Instant",
+  "rulesText": "Fire deals 2 damage divided as you choose among one or two targets.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameR.png"
+}

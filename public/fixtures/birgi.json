@@ -1,0 +1,19 @@
+{
+  "key": "birgi",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "R",
+  "cardNumber": "152",
+  "setCode": "KHM",
+  "artist": "Tuan Duong Chu",
+  "artUrl": null,
+  "manaCost": "{2}{r}",
+  "name": "Birgi, God of Storytelling",
+  "typeLine": "Legendary Creature — God",
+  "rulesText": "Whenever you cast a spell, add {r}. Until end of turn, you don't lose this mana as steps and phases end.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameR.png",
+  "powerToughness": "3/3"
+}

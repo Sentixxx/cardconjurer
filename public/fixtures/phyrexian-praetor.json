@@ -1,0 +1,19 @@
+{
+  "key": "phyrexian-praetor",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "M",
+  "cardNumber": "148",
+  "setCode": "NPH",
+  "artist": "Igor Kieryluk",
+  "artUrl": null,
+  "manaCost": "{5}{b}{b}",
+  "name": "Sheoldred, Whispering One",
+  "typeLine": "Legendary Creature — Phyrexian Praetor",
+  "rulesText": "Swampwalk\nAt the beginning of your upkeep, return target creature card from your graveyard to the battlefield.\nAt the beginning of each opponent's upkeep, that player sacrifices a creature.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameB.png",
+  "powerToughness": "6/6"
+}

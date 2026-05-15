@@ -1,0 +1,18 @@
+{
+  "key": "counterspell",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "C",
+  "cardNumber": "27",
+  "setCode": "LEB",
+  "artist": "Mark Poole",
+  "artUrl": null,
+  "manaCost": "{u}{u}",
+  "name": "Counterspell",
+  "typeLine": "Instant",
+  "rulesText": "Counter target spell.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameU.png"
+}

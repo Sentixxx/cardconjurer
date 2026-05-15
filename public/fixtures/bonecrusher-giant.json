@@ -1,0 +1,19 @@
+{
+  "key": "bonecrusher-giant",
+  "frameVersionId": "m15Regular",
+  "frameLayers": [],
+  "width": 1500,
+  "height": 2100,
+  "layout": "standard",
+  "rarity": "R",
+  "cardNumber": "115",
+  "setCode": "ELD",
+  "artist": "Jesper Ejsing",
+  "artUrl": null,
+  "manaCost": "{2}{r}",
+  "name": "Bonecrusher Giant",
+  "typeLine": "Creature — Giant",
+  "rulesText": "Whenever Bonecrusher Giant becomes the target of a spell, Bonecrusher Giant deals 2 damage to that spell's controller.",
+  "frameUrl": "/img/frames/m15/regular/m15FrameR.png",
+  "powerToughness": "4/3"
+}
