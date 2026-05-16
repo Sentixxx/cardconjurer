@@ -11,7 +11,7 @@ related:
 
 # 文档总导航
 
-cardforger 是 [CardConjurer](https://cardconjurer.com) 的 React 19 + Vite + wouter 静态实现，目标是在保持上游渲染保真度的前提下把它静态部署到任意 host。
+cardforger 是 React 19 + Vite + wouter 静态实现的 MTG 卡面生成器。起源参考自 [CardConjurer](https://cardconjurer.com)，但本项目方向是独立产品（详 [`dev/adr/0003-upstream-as-output-reference.md`](dev/adr/0003-upstream-as-output-reference.md)）；上游 conjurer 仅作产物对照参考，渲染字段以 cardforger 自身 spec 为权威。
 
 文档分为两个区：
 

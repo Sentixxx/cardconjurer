@@ -23,7 +23,7 @@ cardforger 的主体推进由 `/goal` 多轮循环驱动。每一轮的步骤、
 ### 0. 环境就绪 + transcript 自证
 
 - cardforger dev 起在 7002？`npm run dev -- --port 7002 --host 0.0.0.0`
-- 上游 cardconjurer 起在 7003？`cd /workspace/cardconjurer && python3 -m http.server 7003 --bind 0.0.0.0 &` + `curl -sI http://127.0.0.1:7003/ | head -1` 验证 200
+- 上游 cardconjurer 起在 7003？**仅当本轮执行视觉对照 / 需要上游产物参考时启动**——`cd /workspace/cardconjurer && python3 -m http.server 7003 --bind 0.0.0.0 &` + `curl -sI http://127.0.0.1:7003/ | head -1` 验证 200；非渲染 / 纯文档任务可跳过，并在 §0 transcript 中写明未启动原因（[`ADR-0003`](../adr/0003-upstream-as-output-reference.md) 生效后已不再每轮硬绑定）
 - `public/img/`、`public/fonts/`、`public/gallery/`、`public/data/images/` 是否齐？缺则按 [`spec/assets.md`](../spec/assets.md) 初始化
 - 把启动状态、URL 写到 `RENDER_PARITY_STATE.md` §0
 - **每轮必须 Read 一次完整的 `RENDER_PARITY_STATE.md`** 让其文本落到 transcript（evaluator 只能看到 transcript 内容）
@@ -32,11 +32,13 @@ cardforger 的主体推进由 `/goal` 多轮循环驱动。每一轮的步骤、
 
 从 `RENDER_PARITY_STATE.md` §2 表格 / §3 活跃残差挑**最小、最独立**的一项作为本轮目标。
 
-### 2. 比对（视觉证据）
+### 2. 比对（视觉证据，按任务需要）
 
-在 cardforger（`/fixtures/<slug>` 或 `/creator` import）和 cardconjurer 上游各跑同一张 fixture，分别截图到 `/tmp/forger-<slug>.png` 与 `/tmp/conjurer-<slug>.png`。截图编排详 [`parity-check.md`](parity-check.md)。
+> ⚠ **强制性已松绑**：[`ADR-0003`](../adr/0003-upstream-as-output-reference.md) 生效后，本步骤从"每轮必跑"降级为"按任务需要触发"。新 frame 接入 / 显著视觉改动 / 视觉合理性可疑时跑；纯字段值调整或非渲染任务可跳过。正式松绑表述（验收条件 / 强制度）等 GOAL.md 重写承接。
 
-transcript 至少 inline 显示其中一对 + 文字描述差异。
+按任务需要在 cardforger（`/fixtures/<slug>` 或 `/creator` import）和 cardconjurer 上游各跑同一张 fixture，分别截图到 `/tmp/forger-<slug>.png` 与 `/tmp/conjurer-<slug>.png`。截图编排详 [`parity-check.md`](parity-check.md)。
+
+执行本步时 transcript 至少 inline 显示其中一对 + 文字描述差异。
 
 ### 3. 最小增量
 
@@ -56,7 +58,7 @@ git diff --stat src/legacy-app/
 
 后三条必须干净 / 空。
 
-浏览器刷新后再截一次图，确认变化方向正确。
+涉及可视变化时刷新浏览器并截一次图确认变化方向正确；非渲染 / 纯文档 / 纯字段登记任务可跳过，并在验证说明中写明未截图原因。
 
 ### 5. 落盘
 

@@ -60,7 +60,7 @@ cardforger 渲染管线当前形态（详 [`architecture/overview.md`](../archit
 ### 选项 E — 自研 region tree 模板 + canvas walker
 
 - 描述：模板是声明式 schema（PoC 阶段 `framePresets.ts` 内存 derive，未来 JSON 落盘）；resolver 一次性求值出绝对像素 tree；walker 按 layer 顺序在 vanilla canvas 上绘；编辑器只读 resolved tree。
-- 优点：零新依赖（通过三依赖闸）；mask 合成、rich text directive 这些重头戏继续走 vanilla canvas 主场；layer cache / hit-test / resize handle 自研可控；上游 conjurer 字面量对齐路径不变。
+- 优点：零新依赖（通过三依赖闸）；mask 合成、rich text directive 这些重头戏继续走 vanilla canvas 主场；layer cache / hit-test / resize handle 自研可控；字段权威由 cardforger 自身 spec 承载（[`ADR-0003`](0003-upstream-as-output-reference.md) 决策后不再以上游为锚）。
 - 缺点：需要自研 schema 验证器、表达式求值器、L1/L2/L3 三层契约。是单点大重构（虽然可以 m15Regular 一个 frame 起步逐步并存）。模块预算见后续 [`process/template-poc.md`](../process/template-poc.md)（待建）。
 
 ## 决策
@@ -107,7 +107,7 @@ L3: Canvas walker + Editor（不知道 L1 存在）
 为什么 E 比其他更合适，挂钩到 cardforger 的具体约束：
 
 1. **三依赖闸是硬约束**（[CLAUDE.md §核心原则 3](../../../CLAUDE.md)）——B / D 直接被排除；C 不加包但 raster mask 合成场景仍是负优化，技术理由独立成立。
-2. **上游字面量对齐路径不变**（[核心原则 6](../../../CLAUDE.md)）——E 在 vanilla canvas 主场，frame mask / rich text directive / collector info 6 段的字面量都按 `creator-23.js` 写法继续保留，迁移期 RENDER_PARITY_STATE 不需要新增整套残差类。
+2. **vanilla canvas 工程惯性**（原写作"上游字面量对齐路径不变"——已被 [`ADR-0003`](0003-upstream-as-output-reference.md) 撤销 parity 论据，此条降级为非 load-bearing；保留是因为 vanilla canvas 仍是 mask 合成（`globalCompositeOperation`）/ rich-text directive / 高分辨率位图导出的工程主场，选 E 在该栈上落地的边际成本最低；frame mask / rich text directive / collector info 6 段的实现可继续沿用当前工程惯性，但**不再以"对齐上游某一行"为论据**）。
 3. **WYSIWYG 编辑器和模板格式必须解耦**——L1 不进 React 组件 props 这一约束（L3 只读 L2）切断了"编辑器 UI 改一次、模板 schema 改一次"的双向耦合，未来 schema 演化不会回 head-of-line 阻塞 UI 改动。
 4. **图层分类的物理对应**——art < frame < text 是 MTG 30 年印刷工艺约定（art 垫底，frame PNG 镂空透出 art，text 写在 frame 提供的 bar 上），不是 cardforger 的发明；把它编码进 schema 让 validator 强制比靠注释提示稳定得多。
 5. **NumExpr 字符串 vs CondExpr 结构化的不对称**——表面不一致，但根源是表达式**结构开放性**的差异：NumExpr 是开放结构（任意 binop / region ref / var ref 组合），字符串紧凑且符合数学直觉（`art.bottom + 60`），改写成结构化 AST `{ op: "add", args: [{ ref: "art.bottom" }, 60] }` 在 TS derive 里需要长链 builder helper，调试时也要在 AST 里跳 hop；CondExpr 是封闭谓词白名单（`hasSupertype / isFaceSide / ...`），本质已是 AST，序列化成字符串再 parse 回来是无意义工作。NumExpr 调试问题用 parser 单测 + 错误定位（行列号）+ 友好报错信息兜底（见 backlog）。

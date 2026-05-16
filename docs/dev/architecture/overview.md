@@ -121,7 +121,7 @@ HTMLCanvasElement (1500×2100)
 2. **顶层依赖闸**：`package.json` `dependencies` 不得超过 `react` / `react-dom` / `wouter` 三项；扩容前在 `RENDER_PARITY_STATE.md` §5 登记理由 + 替代方案。
 3. **上游基线只读**：`/workspace/cardconjurer/` 与 `src/legacy-app/` 不允许在 cardforger 的提交里出现 diff。
 4. **资源不入 git**：运行时资源由 `magic_resources` 初始化，`.gitignore` 已护住，禁止 `git add` 绕过；完整目录清单与初始化流程见 [`spec/assets.md`](../spec/assets.md)。
-5. **跨上游字段对齐**：渲染相关的字段命名 / 字号 / token 集合都以 `/workspace/cardconjurer/js/creator-23.js` 当前 HEAD 为权威，cardforger 侧不允许凭直觉"改良"——契约见 [`spec/canvas-render.md`](../spec/canvas-render.md)。
+5. **渲染字段权威单源**：字段命名 / 字号 / token 集合以 cardforger 自身 spec 为权威（[`spec/canvas-render.md`](../spec/canvas-render.md)、未来 `spec/template-schema.md`），不以上游 `creator-23.js` HEAD 为锚；上游 conjurer 是产物对照参考，不是字面量权威——详 [`adr/0003-upstream-as-output-reference.md`](../adr/0003-upstream-as-output-reference.md) + [`standards/coding.md` §上游产物对照](../standards/coding.md#上游产物对照)。改字段值必须先动 spec 文档，"凭直觉改良"违约。
 
 ## 不做的事
 

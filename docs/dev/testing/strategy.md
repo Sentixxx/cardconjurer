@@ -37,7 +37,9 @@ npm run build       # = tsc --noEmit && vite build
 
 ### 闸 3：fixture 视觉证据
 
-每个 `/goal` 轮次至少在两端（forger / conjurer）跑同一张 fixture 截图。流程编排见 [`process/parity-check.md`](../process/parity-check.md)。
+> ⚠ **强制性已松绑**：[`ADR-0003`](../adr/0003-upstream-as-output-reference.md) 生效后，本闸不再要求"每轮必跑"。同卡截图按任务需要做（如新 frame 接入、显著视觉改动），不是每轮硬性要求。正式松绑表述（含验收条件重写）等 GOAL.md 重写承接。
+
+按任务需要在两端（forger / conjurer）跑同一张 fixture 截图。流程编排见 [`process/parity-check.md`](../process/parity-check.md)。
 
 ## fixture 起点
 
@@ -70,7 +72,7 @@ JSON 位于 `public/fixtures/<slug>.json`；通过 `/fixtures/:slug` 路由（�
 | 单轮 transcript 截图（forger / conjurer 全图） | 否 | tmpfs 临时产物 |
 | 单轮区段切片（collector / rules / title） | 否 | 同上；每轮重新生成 |
 | milestone fixture 基线 PNG | 是（少量） | 代表性轮次留 git history 作可视回溯 |
-| 当前 fixture 矩阵结论 | 是 | 落 `RENDER_PARITY_STATE.md` §3，跨轮永久 |
+| 当前 fixture 矩阵结论 | 按需 | 任务需要时落 `RENDER_PARITY_STATE.md` §3；milestone 节点同步 |
 
 判据要点：
 

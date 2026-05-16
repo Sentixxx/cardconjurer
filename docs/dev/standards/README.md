@@ -18,5 +18,5 @@ related:
 - [`coding.md`](coding.md) — TypeScript strict / 顶层依赖闸 / wouter 单边界 / 命名与抽象
 - [`docs-style.md`](docs-style.md) — Frontmatter schema / 篇幅 / 语言 / 链接格式
 - [`doc-ownership.md`](doc-ownership.md) — owner 矩阵 + 跨 owner 冲突裁决
-- [`pitfalls.md`](pitfalls.md) — 容器环境 + Canvas parity 反复踩坑清单
+- [`pitfalls.md`](pitfalls.md) — 容器环境 + Canvas 渲染反复踩坑清单（含上游产物对照流程踩坑）
 - [`commit-style.md`](commit-style.md) — commit message 形态约束

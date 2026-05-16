@@ -79,9 +79,12 @@ related:
 - 系统边界（用户输入、`fetch`、`localStorage.getItem`、`Image.onerror`）才需要处理失败分支
 - 内部纯函数信任入参（用类型系统兜底）
 
-## 上游字面量对齐
+## 上游产物对照
 
-任何渲染相关的字面量（字号、字体名、token 名、y 比例、颜色规则）以 `/workspace/cardconjurer/js/creator-23.js` 当前 HEAD 为准。
-- 字面量见 [`spec/canvas-render.md`](../spec/canvas-render.md)
-- "凭直觉改良"是违约
-- 偏离须在 `RENDER_PARITY_STATE.md` §3 / §6 登记
+> 由 [`adr/0003-upstream-as-output-reference.md`](../adr/0003-upstream-as-output-reference.md) 决策——上游 conjurer 是「产物验证参考」，不是「字面量权威」。
+
+任何渲染相关的字段（字号、字体名、token 名、y 比例、颜色规则）的权威值由 [`spec/canvas-render.md`](../spec/canvas-render.md) 与未来的 `spec/template-schema.md` 承载，**不以上游 `creator-23.js` HEAD 为准**。
+- 与上游同名字段不一致**不构成违约**，前提是 cardforger spec 已显式登记当前值
+- "凭直觉改良"仍然违约——改字段值必须先动 spec 文档
+- 同卡产物对照在 [`process/parity-check.md`](../process/parity-check.md) 流程下：**字段值差异本身不是 reviewer 拒稿条件**；产物明显超出 MTG 卡面视觉合理范围（错版 / 重叠 / 不可读 / 错位）可拒稿或要求调查。具体判据归 [`testing/strategy.md`](../testing/strategy.md) 或后续 GOAL.md 重写承接
+- 偏离登记不再以"对齐上游"为锚；本节生效前 `RENDER_PARITY_STATE.md` §3 / §6 残留的"已知偏离上游"项可在下一次状态更新时清理

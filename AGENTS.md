@@ -24,7 +24,7 @@ related:
 3. **三依赖闸**：顶层运行时只允许 `react` / `react-dom` / `wouter`；扩容判据 → [`docs/dev/standards/coding.md` §顶层依赖闸](docs/dev/standards/coding.md#顶层依赖闸)
 4. **wouter 单边界**：`from 'wouter'` 字符串只许出现在 `src/lib/router.ts` → [`docs/dev/architecture/dependencies.md` §wouter-单边界](docs/dev/architecture/dependencies.md#wouter-单边界)
 5. **资源不入 git**：运行时资源由 `magic_resources` 填充；不跟踪目录清单 → [`docs/dev/spec/assets.md`](docs/dev/spec/assets.md)
-6. **上游字面量对齐**：渲染相关字段以 `creator-23.js` 当前 HEAD 为权威，不凭直觉改良 → [`docs/dev/spec/canvas-render.md`](docs/dev/spec/canvas-render.md)
+6. **上游产物对照**：渲染产物在 parity-check 流程下与上游同卡渲染保持视觉合理范围；字段值以 cardforger 自身 spec 为准，**不以上游 HEAD 为字面量权威** → [`docs/dev/adr/0003-upstream-as-output-reference.md`](docs/dev/adr/0003-upstream-as-output-reference.md)
 7. **SSOT**：每条事实只在唯一 owner 定义，其他位置只 link 不复述 → [`docs/dev/standards/doc-ownership.md`](docs/dev/standards/doc-ownership.md)
 
 ## 第一次进入项目

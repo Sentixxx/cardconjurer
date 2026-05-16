@@ -13,7 +13,7 @@ related:
 
 # 上游同卡视觉对照
 
-视觉对照是 `/goal` 每轮第 2 步（比对）的执行细节。流程编排在这里；fixture 起点 / 数量 / 归档要求归 [`testing/strategy.md`](../testing/strategy.md)；上游 DOM 触发条件 / 字段表归 [`spec/canvas-render.md`](../spec/canvas-render.md)。
+视觉对照是按任务需要触发的执行细节。[`ADR-0003`](../adr/0003-upstream-as-output-reference.md) 生效后已不再要求"每个 `/goal` 轮次必跑"——本流程从"硬性 parity loop"降级为"按需视觉合理性参考"。流程编排在这里；fixture 起点 / 数量 / 归档要求归 [`testing/strategy.md`](../testing/strategy.md)；上游 DOM 触发条件 / 字段表归 [`spec/canvas-render.md`](../spec/canvas-render.md)。正式表述重写（结论落点 / 归档强制度）等 GOAL.md 重写承接。
 
 ## 工具选择顺序
 
@@ -89,7 +89,7 @@ convert /tmp/conjurer-<slug>.png -trim -resize 1500x2100 /tmp/conjurer-<slug>-tr
 
 - 当轮 PNG 全部落 `/tmp/`，**不入 git**
 - transcript 至少 inline 一对（forger + conjurer，同 region），并附结论文字描述
-- 结论同步落 `RENDER_PARITY_STATE.md` §3 表格——这是跨轮的永久证据
+- 结论按任务需要登记到 `RENDER_PARITY_STATE.md` §3 表格；milestone 节点同步（[`ADR-0003`](../adr/0003-upstream-as-output-reference.md) 生效后已不再要求每轮永久落盘）
 - milestone 节点（如 F10 fixture baseline）才把代表性 PNG commit 到 git history
 
 ## 不做的事
