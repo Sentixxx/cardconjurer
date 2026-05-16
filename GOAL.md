@@ -1,8 +1,11 @@
-# Goal — Phase 2: 卡面渲染深度对齐
+# Goal — Phase 2 收尾: 残差消除（F3 collector + F4 rule text 排版）
 
-Phase 1（页面壳对齐：14 项 DONE — Landing/Creator-shell/Converter/Gallery/AskUrza/About/Legal/Tutorial/Theme/Phyrexian/Print/NotFound/字体与样式/资源路径契约）已通过 `RENDER_PARITY_STATE.md` 记录归档。**Phase 2 的目标是 Creator 画布渲染的逐项保真**：把 cardforger canvas 输出对齐到 CardConjurer 上游的真实渲染效果，以"同卡同貌"为验收标准。
+Phase 1（页面壳 14 项）+ Phase 2 主体（F1 frame 索引 / F2 mana symbol / F5 watermark / F6 set symbol / F7 rich-text token / F8 saga / F9 planeswalker / F10 12-fixture 视觉证据）均已 DONE 入库（详见 `RENDER_PARITY_STATE.md`）。**剩余残差集中在两处**：
 
-本文件由 Claude Code 的 `/goal` 命令（v2.1.139+）驱动：复制下文「`/goal` Condition」码块作为参数喂入 `/goal`，evaluator（默认 Haiku）会在每轮结束读取本轮 transcript，按 P1–P10 判定是否达成；未达成自动开新一轮，达成自动清除 goal。`/goal` 取代旧的 ralph-loop 触发方式。
+- **F3 collector**：当前 cardforger 用单行 `cardNumber•rarity•SET•EN` + 单独 artist 行 + 单独 copyright 行；上游 `setBottomInfoStyle()` 用 **6 个 text object** + `enableNewCollectorStyle` 双模式，字段顺序、`brush ￮` icon、`bottomInfoColor` 受控切换都没对齐（R11/R12）。
+- **F4 rule text 排版**：12 fixture 已截图，但 cardforger 与 `/workspace/cardconjurer` 上游服务的 **side-by-side 像素级对照** 尚未做（B1）；用户反馈 "ruletext 拍板部分仍不对"，需在两端同卡 import 后逐项核对字号 / 行距 / `{flavor}` divider / italic 切换 / planeswalker level / saga chapter 字号。
+
+本文件由 Claude Code 的 `/goal` 命令驱动：复制下文「`/goal` Condition」码块作为参数喂入 `/goal`，evaluator 按 P1–P6 判定是否达成；未达成自动开新一轮。
 
 调用示例：
 
@@ -23,29 +26,36 @@ claude -p "/goal $(awk '/^```goal-condition/{flag=1;next}/^```$/{flag=0}flag' GO
 把下面整段（不含围栏）粘到 `/goal` 后面：
 
 ````goal-condition
-Phase 2 Creator 卡面渲染对齐已收敛：cardforger 的 /creator 输出与本地 cardconjurer 上游实例（位于/workspace/cardconjurer,需要手动启动）在同卡 import 下视觉一致，且本轮 transcript 已展示下列全部证据；否则 stop after 40 turns。每轮必须在本轮 transcript 中显式回显 RENDER_PARITY_STATE.md 全文（Read 工具或 cat），以及下列命令的真实输出，evaluator 只判断 transcript 里出现过的内容。
+Phase 2 残差收尾：cardforger 与 `/workspace/cardconjurer` 上游侧对侧对照下，F3 collector + F4 rule text 排版与上游肉眼不可见差异。stop after 30 turns。evaluator 只判 transcript 内出现过的证据。
 
-P1（状态文件完整）：transcript 中可见 RENDER_PARITY_STATE.md 第 2 节 Phase 2 表，F1–F10 行全部为 DONE 并附最近改动日期；Phase 1 表 14 项保持 DONE。
+P1（上游服务起来 + 同卡截图）：transcript 含 `/workspace/cardconjurer` 在 7003 端口的启动证据（`curl -sI http://127.0.0.1:7003/ | head -1` 显示 200；或 `ps -ef | grep http.server` 列出 PID），且每轮至少在两端 import 同一张 fixture 后保存截图（如 chromium headless 出 `/tmp/forger-<slug>.png` + `/tmp/conjurer-<slug>.png`），结论落到 `RENDER_PARITY_STATE.md` 第 3 节。若上游服务确实启动不了，必须在第 6 节登记 B1 BLOCKED 并说明已尝试的启动命令，但本轮不得声称对齐完成。
 
-P2（typecheck）：transcript 含 `npm run typecheck` 实际输出，退出码 0，无 error；改动中未通过新增 `any` 或放宽 tsconfig 来绕过。
+P2（typecheck + build）：transcript 含 `npm run typecheck` 与 `npm run build` 实际输出，退出码均 0；未通过新增 `any` / 放宽 tsconfig / 改 `noEmit` 等手段绕过。
 
-P3（build）：transcript 含 `npm run build` 实际输出，退出码 0，产出 `dist/`；运行时资源 404（/img、/fonts、/gallery、/data 等）已在状态文件第 5 节登记。
+P3（F3 collector 残差清零 — 严格对齐 `creator-23.js:setBottomInfoStyle` 245–270）：cardforger 实现已落到 6 个 text object 且字段与上游一致，第 3.C 节附前后截图对照：
+- midLeft：`{set} • {language}  {savex}{fontbelerenbsc}{fontsize+δ}{upinline+δ}￮{savex2}{artist}`，主字体 `gothammedium` size≈0.0171，artist 段内联切 `belerenbsc`；
+- topLeft 新版=`{rarity}{kerning3}{number}{kerning0}` 旧版=仅 `{number}` + 独立 rarity object，`gothammedium` 0.0171；
+- bottomLeft `NOT FOR SALE` `gothammedium` 0.0143；
+- wizards `™ & © {year} Wizards of the Coast` `mplantin` 0.0162 align=right；
+- bottomRight 站点署名 `mplantin` 0.0143 align=right；
+- `enableNewCollectorStyle` 等价开关两种模式都视觉对照过；
+- brush icon 用 `￮`（mtg.ttf）而非 ASCII `✧`（R11 解除）；
+- `card.bottomInfoColor` 按 frame 受控（白卡边黑文本 / 黑卡边白文本），不再硬编码 `#f4f4f0`（R12 解除）。
+任一字段（字体名、相对字号、align、savex/upinline/kerning token、icon、color 切换）与上游不一致 → 未通过。
 
-P4（视觉对照）：fixture 列表（Lightning Bolt、Counterspell、Llanowar Elves、Hallowed Fountain、Atraxa Praetors' Voice、Jace the Mind Sculptor、Urza's Saga、Fire // Ice、Bonecrusher Giant、任一 Phyrexian Praetor、Sheoldred the Apocalypse、Birgi God of Storytelling）每张在状态文件第 3 节均有视觉对照条目，写明 frame、字号、symbol、watermark、collector 行的对照结论。任一卡出现字体回退到 system-ui、symbol 错位、frame 缺失、字号偏差 >10% 均视为未通过。
+P4（F4 rule text 排版 side-by-side 一致 — 严格对齐 `writeText` 3711+ 与 import 6670–6790）：≥5 张 fixture 在两端截图下排版一致，结论逐张落到第 3.D 节：
+- 长 rule（Atraxa）字号 / 行距与上游误差 ≤10%；
+- 含 `{flavor}` divider（Sheoldred）divider 横线位置 / italic 字体 / 颜色与上游一致；新版切 `{/indent}{lns}{bar}{lns}{fixtextalign}{i}` + cflavor bar，旧版 `{oldflavor}` 切 `gillsansbolditalic` + `fontsize-20`；
+- 含 reminder text（Llanowar Elves / Counterspell）`italicize-reminder-text` 包裹 `(...)`、`removeReminderText` 整段删除两种模式与上游一致；
+- planeswalker（Jace）loyalty cost / abilityHeights 字号 / 对齐与上游一致；
+- saga（Urza's Saga）chapter pip / ability line 字号与上游一致。
+import 预处理证据（在 `src/services/scryfall.ts` 或等价路径）须覆盖 `{Q}→{untap}`、`{∞}→{inf}`、`• →• {indent}`、`curlyQuotes`、companion 文案重写为 "as a sorcery"、keyword italic 豁免列表（Boast/Cycling/Visit/Prize/I–IV 组合/Prototype/Companion/To solve/Solved/`• Khans|Dragons|Mirran|Phyrexian`）。任一字段（字号、行距、italic 切换、divider 位置、token 解析、import 预处理）与上游肉眼可见差异 → 未通过。
 
-P5（cardframe 索引）：状态文件第 3 节包含浏览器 Network 面板检查记录，import 测试卡时无 /img/frames/* 404（除非该 frame 在上游本身也不存在并已在状态文件登记）；framePresetConfig.json 已枚举 magic_resources 现有 frame family。
+P5（基线未被改 + 工作区干净）：transcript 含 `git status` 干净；含 `git -C /workspace/cardconjurer status` 干净；含 `git diff --stat src/legacy-app/` 输出为空。
 
-P6（collector 行）：F3 collector 渲染（artist 用 goudymedieval/mplantin/belerenbsc、set+rarity+语言+卡号顺序、版权行字号）已在状态文件第 3 节登记并与上游一致。
+P6（workaround 登记）：本轮新引入的 `@ts-ignore` / `eslint-disable` / `TODO` / `FIXME` 已在状态文件第 4 节按"文件:行号 — 解除条件"列出；无新增则显式声明"本轮无新增 workaround"。
 
-P7（rule text）：F4 rule text 在短/中/长/含 flavor divider/含 italic 五种长度下自动字号缩放与上游一致；{w}/{u}/{flavor}/{i}/{cardname} 等 token 渲染正确，状态文件第 3 节附对应 fixture 证据。
-
-P8（仓库干净）：transcript 含 `git status` 输出，工作区干净；public/img、public/fonts、public/gallery、public/data/images、public/data/site、public/favicon.ico 均未被 git 跟踪。
-
-P9（基线未被改）：transcript 含 `git -C /workspace/cardconjurer status` 输出且工作区干净；含 `git diff --stat src/legacy-app/` 输出且为空。
-
-P10（workaround 已登记）：新引入的 @ts-ignore / eslint-disable / TODO / FIXME 已在状态文件第 4 节按"文件:行号 — 解除条件"逐条列出；若本轮未引入此类条目，transcript 须显式声明"本轮无新增 workaround"。
-
-任一 P 条目缺少证据、未通过、或被跳过 → 未达成。evaluator 返回未达成原因时应点名具体编号，引导下一轮补齐。
+任一 P 缺证据、未通过或被跳过 → 未达成。evaluator 返回未达成原因时点名编号，引导下一轮补齐。
 ````
 
 `/goal` 自身判断完成，**不需要、也禁止**在回复中输出诸如 `<promise>PARITY_DONE</promise>` 之类的 sentinel——旧机制已废弃。
@@ -81,64 +91,35 @@ P10（workaround 已登记）：新引入的 @ts-ignore / eslint-disable / TODO 
 
 ---
 
-## 3. Phase 2 对齐范围（Creator 渲染细项）
+## 3. 本轮聚焦：F3 collector + F4 rule text（剩余两个残差点）
 
-每项在 `RENDER_PARITY_STATE.md` 中记录状态。**比对方法**：两侧本地实例都打开 `/creator`，**用同一张 Scryfall 卡 import**（推荐先准备一个 8–12 张代表卡的 fixture 列表，覆盖 normal / planeswalker / saga / 双面 / split / 多色 / 无色 / land 等典型场景），逐项 diff。
+F1（frame 索引）/ F2（mana symbol）/ F5 watermark / F6 set symbol / F7 rich-text token / F8 saga / F9 planeswalker / F10 fixture 视觉证据 **均已 DONE 入库**，详见 `RENDER_PARITY_STATE.md` 第 2.A 表与 3.A–3.E 节。本轮聚焦表如下：
 
-| 项 | 现行实现位置 | 关注点 |
+| 项 | 现行实现位置 | 残差与对照点 |
 | --- | --- | --- |
-| **F1 字体渲染模式** | `src/styles/global.css` 的 `@font-face`、`drawCard.ts` 的 `ctx.font` 拼接、字体回退链 | 是否所有 canvas 文字（name / type / rules / flavor / power-toughness / collector）都用对了 face；上游 49 个未声明 @font-face 是否在本轮目标内（按 frame 实际触发情况补）。比对：同卡 name/type 字形、粗细、字距、上下行高。 |
-| **F2 缺失 cardframe 索引** | `src/services/framePresetConfig.json`、`src/services/creatorAssetConfig.json`、`src/services/templates.ts` | `magic_resources` 现在解出 99 个 `public/img/frames/*` 子目录，cardforger 配置里只索引了 ≈20 个 preset。逐 family 加索引，参考上游 `js/creator-23.js` 中 `frames[...]` 定义。 |
-| **F3 collector 信息样式** | `drawCard.ts` 底栏（artist / set code / rarity / language / number / 版权行）、`drawRichText.ts` 中相关 token | 字体（goudymedieval / mplantin / belerenbsc）、字号、位置、与 set symbol 对齐方式。比对：同卡底栏完整一行 vs 上游。 |
-| **F4 rule text 渲染** | `src/features/creator/canvas/drawRichText.ts`（768 行）、`drawCard.ts:308-326` 调用点 | 自动字号缩放、换行、`{w}/{u}/{flavor}/{i}/{b}/{cardname}` 等 token 解析、flavor divider、italic 切换。比对：长 rule（如 Atraxa, Praetors' Voice）vs 上游字号、行距、对齐、divider 位置。 |
-| **F5 mana symbol 渲染** | `src/features/creator/canvas/drawManaSymbols.ts`、`src/services/manaSymbols.ts`、`/img/manaSymbols/*` | 形状、阴影、混合色（hybrid/phyrexian/X/T/Q）、name line 中嵌入的代价 token。比对：复杂 cost（如 `{X}{R/W}{R/W}`）vs 上游。 |
-| **F6 set symbol 渲染** | `src/features/creator/canvas/drawCard.ts` 中 set symbol 绘制、`creatorAssetConfig.json` 中的 set 列表 | 位置、缩放、稀有度着色（common 黑 / uncommon 银 / rare 金 / mythic 橘）、混合色处理。 |
-| **F7 watermark 渲染** | `drawCard.ts` watermark layer | 透明度（默认 ~40%）、blend mode、定位（rules box 居中）、缩放。 |
-| **F8 special layout** | `drawSaga.ts`、`drawPlaneswalker.ts`、双面/split/fuse/flip/aftermath/adventure 等分支 | 每种 layout 至少 1 张 fixture 卡 import 对照。 |
-| **F9 Scryfall import 行为** | `src/services/scryfall.ts`、`src/pages/CreatorPage.tsx` 中 import 调用链 | 同一张卡 import 后两侧自动选 frame / 字段映射结果是否一致；不一致先记录差异再决定是否修。 |
-| **F10 资源路径与 manifest 一致性** | `creatorAssetConfig.json` + `framePresetConfig.json` 引用的所有 URL 应与 `magic_resources/manifest.json` 目标路径吻合 | 每加一个 frame preset 都顺手核对 `magic_resources` 里对应路径是否真存在，避免 404 silent fail。 |
+| **F3 collector** | `src/features/creator/canvas/drawCard.ts` 的 `drawCollectorInfo`（≈781–825）、`drawRichText.ts` 中 `{savex}/{savex2}/{kerningN}/{upinlineN}/{fontbelerenbsc}` token | **完全照搬 `/workspace/cardconjurer/js/creator-23.js` 中 `setBottomInfoStyle()` 245–270 行**：6 个 text object（midLeft/topLeft/note/bottomLeft/wizards/bottomRight）+ `enableNewCollectorStyle` 双模式开关。主字体 `gothammedium`（**不是** goudymedieval），artist 段内联切 `belerenbsc`，wizards/bottomRight 用 `mplantin`+align=right，相对字号 0.0143/0.0162/0.0171。残差：(1) 当前主行 `cardNumber•rarity•SET•EN` 单行布局 → 必须拆成 midLeft + topLeft；(2) brush icon 改为 `￮`（mtg.ttf），废弃 ASCII `✧`（R11）；(3) `card.bottomInfoColor` 按 frame 受控，停止硬编码 `#f4f4f0`（R12）。 |
+| **F4 rule text 排版** | `src/features/creator/canvas/drawRichText.ts`、`drawCard.ts:308-326` 调用点、`src/services/scryfall.ts` import 预处理 | **完全照搬 `/workspace/cardconjurer/js/creator-23.js` 中 `writeText()` 3711+ 行及 import 6670–6790 行**：① binary-fit 字号缩放（递归 `tryFit` -1 fontsize 直到收敛）；② token 解析覆盖 condition P4 列表；③ italic reminder 两种模式（`italicize-reminder-text` 包裹 / `removeReminderText` 删除）；④ `{flavor}` 新版 `{/indent}{lns}{bar}{lns}{fixtextalign}{i}` + cflavor bar vs 旧版 `{oldflavor}` + `gillsansbolditalic` + `fontsize-20`；⑤ import 预处理 `{Q}→{untap}`、`{∞}→{inf}`、`• →• {indent}`、`curlyQuotes`、companion 文案重写、keyword italic 豁免；⑥ planeswalker level / saga 行首 inline `{fontsize+N}` 指令。残差：cardforger fitTextToHeight 当前 `minScale=0.48` + 5 次截断；上游无下限。需在 ≥5 张 fixture 上对照后决定是否对齐上游或保留差异（保留差异必须在状态文件 §3.D 写明理由）。 |
 
-未覆盖的 frame family / 特殊 layout 默认不属于本轮目标；如发现 fixture 触发了未实现路径，先在 `RENDER_PARITY_STATE.md` 第 3 节登记理由再动手。
-
-### Scryfall fixture 起点（自由扩充）
-
-每个 fixture 名后括号是 layout / 关键特性。两侧实例都用 Creator → "Import from Scryfall" 输入同名导入：
-
-- `Lightning Bolt` — 最基础 instant，红色 mana
-- `Counterspell` — 蓝色 instant，多色 mana
-- `Llanowar Elves` — 绿色 creature with P/T
-- `Hallowed Fountain` — 双色 land
-- `Atraxa, Praetors' Voice` — 长 rule text + 多色 mana + 神器生物
-- `Jace, the Mind Sculptor` — planeswalker
-- `Urza's Saga` — saga
-- `Fire // Ice` — split
-- `Bonecrusher Giant` — adventure
-- `Phyrexian Praetors` 任一 — phyrexian
-- `Sheoldred, the Apocalypse` — modern legendary
-- `Birgi, God of Storytelling` — modal DFC
+未覆盖的 frame family / 特殊 layout 默认不属于本轮目标。fixture 起点：Lightning Bolt / Counterspell / Llanowar Elves / Hallowed Fountain / Atraxa, Praetors' Voice / Jace, the Mind Sculptor / Urza's Saga / Fire // Ice / Bonecrusher Giant / 任一 Phyrexian Praetor / Sheoldred, the Apocalypse / Birgi, God of Storytelling — 与 Phase 2 主体阶段使用的 12 张一致，复用 `public/fixtures/*.json` + `/fixtures/:slug` 路由。
 
 ---
 
 ## 4. 每轮工作流（必须按序执行）
 
-0. **环境就绪 + transcript 自证**（每轮快速核对，不重复初始化）：
-   - cardforger dev 已起在 7002？没起就 `npm run dev -- --port 7002 --host 0.0.0.0`。
-   - cardconjurer 实例已起在 7003？`/workspace/cardconjurer/` 是否非空、index.html 存在？如缺，先按第 2 节流程 clone + LFS pull 后启服务。
+0. **环境就绪 + transcript 自证**：
+   - cardforger dev 起在 7002？没起就 `npm run dev -- --port 7002 --host 0.0.0.0`。
+   - **`/workspace/cardconjurer` 起在 7003**？没起就 `cd /workspace/cardconjurer && python3 -m http.server 7003 --bind 0.0.0.0 &`，并用 `curl -sI http://127.0.0.1:7003/ | head -1` 验证 200；若启不来（目录空、依赖缺等）按第 2 节流程恢复或写入第 6 节 BLOCKED。
    - `public/img/`、`public/fonts/`、`public/gallery/`、`public/data/images/` 是否齐？缺则按第 2 节 init-assets。
    - 把启动状态、URL 写到 `RENDER_PARITY_STATE.md` 第 0 节。
-   - **每轮必须 Read 一次完整的 `RENDER_PARITY_STATE.md` 让其文本落到 transcript**——`/goal` evaluator 只能看到 transcript 内容，不读文件系统。
-1. **体检**：基于刚回显的 `RENDER_PARITY_STATE.md`，挑出当前状态为 `TODO` 或 `BLOCKED` 中**最小、最独立**的一项（F1–F10 之一的子片段，例如"F2: m15Modern 这一 family"）作为本轮目标。
-2. **比对**：在两侧实例上 import 同一张 fixture 卡，截图或记录 DOM 差异。把差异落到状态文件本轮增量里。
+   - **每轮必须 Read 一次完整的 `RENDER_PARITY_STATE.md` 让其文本落到 transcript**——`/goal` evaluator 只能看到 transcript 内容。
+1. **体检**：从 §3 表格 F3 / F4 残差里挑**最小、最独立**的一项作为本轮目标。
+2. **比对**：在 cardforger（`/fixtures/<slug>` 或 `/creator` import）和 cardconjurer 上游各跑同一张 fixture，分别 chromium headless 截图到 `/tmp/forger-<slug>.png` 与 `/tmp/conjurer-<slug>.png`；transcript 中至少 inline 显示其中一对，并文字描述差异。
 3. **最小增量**：只改与本轮目标相关的文件。禁止顺手 refactor、改格式、改命名、动无关页面。
-4. **验证并把命令输出留在 transcript**：
-   - 运行 `npm run typecheck`，输出必须出现在 transcript 中且退出码 0。
-   - 运行 `npm run build`，输出必须出现在 transcript 中且退出码 0。
-   - 运行 `git status`、`git -C /workspace/cardconjurer status`、`git diff --stat src/legacy-app/`，三条输出都要留在 transcript。
-   - 浏览器刷新 cardforger，重新 import 同一张 fixture，确认渲染变化方向正确并在状态文件中文字描述对照结论。
-5. **落盘**：更新 `RENDER_PARITY_STATE.md` 中本项的状态、日期、改动概要、遗留问题；若发现新阻塞项，新增 `BLOCKED` 条目并说明依赖；任何 workaround 进第 4 节。
-6. **自检 P1–P10**：照下文 condition 中 P1–P10 自查；缺哪条证据就在本轮补出来。**不要在回复中输出任何"完成 sentinel"，是否达成由 `/goal` evaluator 决定**。
+4. **验证并把命令输出留在 transcript**：`npm run typecheck`、`npm run build`、`git status`、`git -C /workspace/cardconjurer status`、`git diff --stat src/legacy-app/`；浏览器刷新后再截一次图，确认变化方向正确。
+5. **落盘**：更新 `RENDER_PARITY_STATE.md` 中本项的状态、日期、改动概要、遗留问题；workaround 进第 4 节。
+6. **自检 P1–P6**：照下文 condition 中 P1–P6 自查。**不输出任何完成 sentinel**，evaluator 决定。
 
-每轮严格保持「工作区干净 → 单次小步推进 → 工作区干净」。不允许跨轮残留半成品。
+每轮严格保持「工作区干净 → 单次小步推进 → 工作区干净」。
 
 ---
 
@@ -163,27 +144,27 @@ _Last updated: YYYY-MM-DD HH:MM_
 | Landing | DONE | 2026-05-15 |
 | …（14 项 Phase 1 全部 DONE）
 
-## 2. Phase 2 范围对齐表
+## 2. Phase 2 范围对齐表（F1/F2/F5–F10 维持 DONE；本轮聚焦 F3/F4）
 | 项 | 状态 | 最近改动 | 备注 |
 | --- | --- | --- | --- |
-| F1 字体渲染模式 | TODO / IN_PROGRESS / DONE / BLOCKED | YYYY-MM-DD | … |
-| F2 cardframe 索引 | … | … | … |
-| F3 collector 样式 | … | … | … |
-| F4 rule text 渲染 | … | … | … |
-| F5 mana symbol | … | … | … |
-| F6 set symbol | … | … | … |
-| F7 watermark | … | … | … |
-| F8 special layout | … | … | … |
-| F9 Scryfall import | … | … | … |
-| F10 资源路径一致性 | … | … | … |
+| F1 frame 索引 | DONE | … | 53/53 URL 200 |
+| F2 mana symbol | DONE | … | drawManaSymbols 行为对齐 |
+| F3 collector 样式 | IN_PROGRESS | YYYY-MM-DD | 6 text object / brush icon / bottomInfoColor |
+| F4 rule text 排版 | IN_PROGRESS | YYYY-MM-DD | side-by-side 对照中 |
+| F5 watermark | DONE | … | drawWatermark + 双色 tint |
+| F6 set symbol | DONE | … | rarity 颜色映射 + image upload |
+| F7 rich-text token | DONE | … | 14 directive |
+| F8 saga | DONE | … | chapter pip + ability lines |
+| F9 planeswalker | DONE | … | loyalty cost + shield |
+| F10 fixture 视觉证据 | DONE | … | 12 PNG 已 inline |
 
 ## 3. 本轮增量
-- 目标项：F? — …
-- fixture 卡：…
+- 目标项：F3 或 F4 的子片段 — …
+- fixture 卡：…（至少 1 对 forger/conjurer 截图）
 - 改动文件：…
 - 改动概要：…
-- 验证结果：typecheck ✅ / build ✅ / 视觉对照 ✅/未做（原因）
-- 视觉对照逐卡条目：每张 fixture 卡一行，写明 frame、字号、symbol、watermark、collector 对照结论
+- 验证结果：typecheck ✅ / build ✅ / side-by-side 截图对照 ✅
+- 两端截图对照逐卡条目：每张 fixture 一行，cardforger vs cardconjurer 的字号 / 位置 / 字体 / divider / italic 差异结论
 
 ## 4. 遗留问题与阻塞 / Workaround
 - BLOCKED：…
