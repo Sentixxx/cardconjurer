@@ -45,3 +45,6 @@ Thumbs.db
 # AI
 .claude
 .codex
+
+# Session handoff notes (transient, session-scoped)
+/handoff/

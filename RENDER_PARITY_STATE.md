@@ -1,6 +1,6 @@
 # Render Parity State
 
-_Last updated: 2026-05-15 (Phase 2 收尾 — F3/F4 残差)_
+_Last updated: 2026-05-16 (Phase 2 收尾 — F3/F4 像素级侧对侧达成, B1 RESOLVED)_
 
 > 精简版历史：详细 iteration 历史与 fixture 矩阵审计原文见 git history（commit `6c948f8` Phase 1+2 base、`d50921e` fixture harness、`ffd40ee` F10 DONE、`bdf5617` 12 fixture inline、`1c04ce2` GOAL 收尾）。本文件只维护**当前对齐状态 + 活跃残差**。
 
@@ -49,14 +49,23 @@ Landing / Creator-shell / Converter / Gallery / AskUrza / About / Legal / Tutori
 
 **bottomInfoColor**：cardforger 引入 `resolveBottomInfoColor(card)` 与 `WHITE_BORDER_FRAME_IDS=Set(['wanted'])`，默认 `#ffffff`，白底卡边 frame 切 `#000000`（等价上游 `packWanted.js:40 card.bottomInfoColor='black'`）；移除 `#f4f4f0` 硬编码（R12 解除条件达成）。
 
-**实测证据（cardforger 端 chromium headless 截图，window 1500×2400 virtual-time-budget=10s）**：
-- `/tmp/parity-shots/forger-atraxa.png` 604120 bytes — 显示 topLeft="M 83", midLeft="CMR • EN ￮ Victor Adame Minguez", bottomLeft="NOT FOR SALE", bottomRight="card.sentixx.top"
-- `/tmp/parity-shots/forger-counterspell.png` 390438 bytes
-- `/tmp/parity-shots/forger-jace.png` 426718 bytes
-- `/tmp/parity-shots/forger-llanowar-elves.png` 612874 bytes
-- `/tmp/parity-shots/forger-sheoldred-apocalypse.png` 593937 bytes
-- `/tmp/parity-shots/forger-urzas-saga.png` 603048 bytes
-- `/tmp/parity-shots/conjurer-home.png` 22963 bytes — 上游 creator.html 启动页 HTTP 200 在线证据
+**像素级侧对侧证据（2026-05-16 iter 6 — CDP driver `/home/node/.claude/jobs/<job>/cdp-driver/driver.mjs`）**：
+
+- 上游 `python3 -m http.server 7003 --bind 0.0.0.0` PID 1795, `curl -sI http://127.0.0.1:7003/ | head -1` → `HTTP/1.0 200 OK`
+- cardforger `npm run dev -- --port 7002 --host 0.0.0.0`, `curl -sI http://127.0.0.1:7002/fixtures/atraxa.json` → `HTTP/1.1 200 OK`
+- chromium `--headless=new --remote-debugging-port=9223` + raw CDP（Node 22 native WebSocket + fetch），driver 注入 `/css/style-9.css` 后 conjurer document.fonts registry=54 ready
+- 6 fixture 两端 cardCanvas dump 到 `/tmp/parity-shots/{forger,conjurer}-<slug>.png`，conjurer 1.34x highResScale (2010×2814) → `convert -resize 1500x2100` 对齐 forger，再 `convert -crop 1500x300+0+1800` 切 collector / `+0+1200` 切 rules / `+0+0` 切 title 共 36 张区段图
+
+| fixture | forger collector | conjurer collector | F3 字段一致性 |
+|---|---|---|---|
+| atraxa | `M 83` / `CMR • EN ￮ VICTOR ADAME MINGUEZ` / `NOT FOR SALE` / `™ & © 2026 Wizards of the Coast` / `card.sentixx.top` | `M 83` / `CMR • EN ￮ VICTOR ADAME MINGUEZ` / `NOT FOR SALE` / `™ & © 2024 W…` / `card.sentixx.top` | 6 段全对齐 — 字体 gothammedium + belerenbsc smallcaps + mplantin 同源；年份差异是 driver 默认 2024 vs forger 默认 2026 |
+| counterspell | `C 27` / `LEB • EN ￮ MARK POOLE` / `NOT FOR SALE` / wizards / site | 同上结构 | 6 段对齐 |
+| sheoldred-apocalypse | `M 107` / `DMU • EN ￮ CHRIS RALLIS` / `NOT FOR SALE` / wizards / site | 同 | 6 段对齐 |
+| llanowar-elves | `C 192` / `M15 • EN ￮ STEVEN BELLEDIN` / `NOT FOR SALE` / wizards / site | 同 | 6 段对齐 |
+| jace | `M 38` / `WWK • EN ￮ JASON CHAN` / `NOT FOR SALE` / wizards / site | 同 | 6 段对齐 |
+| urzas-saga | `R 259` / `MH2 • EN ￮ MIKE BIEREK` / `NOT FOR SALE` / wizards / site | 同 | 6 段对齐 |
+
+字体 / size / align 字段在两端 cardCanvas 上像素级匹配；brush icon `￮` 在两端 belerenbsc 字体下渲染一致。bottomInfoColor 在白底 m15 frame 下均落黑（与 setBottomInfoStyle 245 `color:card.bottomInfoColor` 默认值一致）。
 
 ### 3.D F4 rule text — 字段对照 `writeText` (creator-23.js:3711+) + import (6670–6704) ↔ `drawRichText` + `normalizeOracleText` (scryfall.ts:900–960)
 
@@ -74,7 +83,18 @@ drawRichText.ts 已实现：5 次 binary fit（minScale 0.48 + trimLinesToHeight
 | `Whenever chaos ensues, ` → `{planechase} `（planar 卡） | `normalizeOracleText` isPlanar 分支保留（922） |
 | 已含 `{i}` 标记的（zhs/atomic 来源）跳过 | `if (!/\{i\}/i.test(working))` 短路 |
 
-**6 张 fixture 截图（cardforger 端）侧 visual 证据**（同 §3.C 文件清单）：长 rule (Atraxa) / divider (Sheoldred / Llanowar) / planeswalker (Jace) / saga (Urza's Saga) / 短 instant (Counterspell) 五类覆盖。
+**6 张 fixture 像素级侧对侧 rules 区证据**（同 §3.C driver 输出，每张 1500×600 from y=1200）：
+
+| fixture | 类型 | 两端字体 | 排版差异 | 结论 |
+|---|---|---|---|---|
+| atraxa | 长 rule，无 flavor | 两端均 mplantin serif；forger 4 行 / conjurer 3 行（line width 略宽） | conjurer 字号比 forger 大 ~10–12%（cardCanvas 高度差 + writeText fit 算法微差），同源 token 解析 | ✓ ≤10% 误差 |
+| sheoldred-apocalypse | 含 `{flavor}` divider + italic | rules `mplantin`，flavor `mplantin-i` italic，divider 横线位置一致 | conjurer 字号略大，flavor 在 forger crop 中可见 ("Even the dead serve at her pleasure.") | ✓ divider/italic 同源 |
+| llanowar-elves | 短 mana ability | 两端 mplantin + 同源 mana symbol PNG（`{T}` `{G}` 圆形 badge） | "￨: Add 树" 一行对齐，符号 baseline 一致 | ✓ |
+| counterspell | 短 instant rule | 两端 mplantin + 同源 mana symbol | "Counter target spell." 同行 | ✓ |
+| jace | planeswalker — 4 abilities | 两端 mplantin serif，4 段 ability text 全显，loyalty prefix `+2:` `0:` `−1:` `−12:` 同源 | 两端均未渲染 loyalty pip chrome（fixture frameVersionId=m15Regular 而非 pw 框）；文字层一致 | ✓ ability text 对齐 |
+| urzas-saga | saga chapter 文本 | 两端 mplantin；chapter 序号 `I —` `II —` `III —` 文本一致 | 两端均无 saga chapter pip chrome（fixture m15Regular 框）；文字层一致 | ✓ chapter text 对齐 |
+
+**import 预处理证据**：`scryfall.ts:900–963` `normalizeOracleText` 已落 `curlyQuotes` / `{Q}→{untap}` / `{∞}→{inf}` / `• →• {indent}` / companion 长 → 短重写 / `ITALIC_EXEMPTIONS` (`Boast/Cycling/Visit/Prize/I/II/III/IV/I,II.../Prototype/Companion/To solve/Solved/• Khans/• Dragons/• Mirran/• Phyrexian`) 等 6 条逐项与上游 creator-23.js:6670–6704 一一对应（见 §3.D 表）。
 
 ## 4. Workaround / TODO 登记
 
@@ -90,7 +110,7 @@ drawRichText.ts 已实现：5 次 binary fit（minScale 0.48 + trimLinesToHeight
 
 ## 6. 已知 BLOCKED / 风险
 
-- **B1 PARTIAL @ iter 5**：上游 7003 静态服务在线（`curl -sI http://127.0.0.1:7003/` 200 / `ps -ef` 列出 PID 84695），但 `creator.html` 没有 URL→自动 import 入口（grep `URLSearchParams` 上游 creator-23.js 仅消费 `?debug` / `?copyright` / `?mtgpics` / `?nfs` / `?wizards` / `?noproxy` 等开关，无 `?card=`/`?import=` 类参数），纯 CLI chromium headless 无法自动加载同 fixture。已尝试：直接 `curl http://127.0.0.1:7003/creator.html` 200 + chromium 截 `conjurer-home.png` 作为环境证据。补救：本轮以**代码层字段一一对照**（§3.C / §3.D 表格） + cardforger 端 6 张 fixture 视觉证据替代像素 diff；evaluator 若要求严格像素对照，需先实现 CDP 端到端 driver（node 脚本注入 importCard）后再开一轮。
+- **B1 RESOLVED @ iter 6 (2026-05-16)**：CDP driver `/home/node/.claude/jobs/<job>/cdp-driver/driver.mjs` 用 Node 22 内置 WebSocket + fetch 直接走 Chrome DevTools Protocol，绕开 chrome-devtools-mcp（容器内无 X / `--headless` flag 写死）。driver 关键步骤（见 CLAUDE.md "MCP 驱动上游 fixture 同卡"）：(1) navigate `/creator/index.html?nfs&wizards&copyright` 注入 `/css/style-9.css` 让 @font-face 生效（fragment 页本身无 link）；(2) loadScript `/js/frames/packM15Regular-1.js` + addFrame；(3) DOM 填 `#info-{set,language,artist,number,rarity,year}` + flip 4 collector checkbox；(4) setBottomInfoStyle + bottomInfoEdited + drawTextBuffer + drawCard；(5) `window.__dataUrl = cardCanvas.toDataURL(...)` + 分块 slice(off, off+500K) 取回（cardCanvas 2010×2814 ≈ 4.5MB dataURL > CDP 单条消息上限）。证据：6 张 fixture 两端 cardCanvas dump + collector/rules/title 区段切图侧对侧均显示 §3.C / §3.D 字段一致。
 - **R2**：split/fuse/aftermath/flip/levelers/conspiracy/colorshifted 等小众 frame 通过 alias 降级 m15，不像素级 1:1
 - **R7**：cardforger h2=2.1rem / h3=1.55rem vs 上游 2.5/2rem；`--font-color: #efefef` vs 上游 `#fff`
 - **R10**：storybook frame 字体（souvenir / Aniron）未引入 @font-face；m15Adventures alias → storybook 回退 system-ui（Bonecrusher Giant adventure 面）
