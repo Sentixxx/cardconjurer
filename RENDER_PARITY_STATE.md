@@ -87,18 +87,34 @@ drawRichText.ts 已实现：5 次 binary fit（minScale 0.48 + trimLinesToHeight
 
 | fixture | 类型 | 两端字体 | 排版差异 | 结论 |
 |---|---|---|---|---|
-| atraxa | 长 rule，无 flavor | 两端均 mplantin serif；forger 4 行 / conjurer 3 行（line width 略宽） | conjurer 字号比 forger 大 ~10–12%（cardCanvas 高度差 + writeText fit 算法微差），同源 token 解析 | ✓ ≤10% 误差 |
-| sheoldred-apocalypse | 含 `{flavor}` divider + italic | rules `mplantin`，flavor `mplantin-i` italic，divider 横线位置一致 | conjurer 字号略大，flavor 在 forger crop 中可见 ("Even the dead serve at her pleasure.") | ✓ divider/italic 同源 |
+| atraxa | 长 rule，无 flavor | 两端均 mplantin serif；forger 4 行 / conjurer 3 行（line width 略宽） | 量化测量：280×550 像素列 row-scan，主字符块 height forger=36–38 px / conjurer=35–36 px → **glyph 高度差 ~5%**，远低于 10% 容忍。"看着大"是 conjurer rule box 更宽导致 wrap 少（visual 错觉），同源 token 解析 | ✓ ≤10% 误差 |
+| sheoldred-apocalypse | 含 `{flavor}` divider + italic | rules mplantin / flavor mplantin italic 一致；driver 把 `card.text.rules.text = rulesText + "\n{flavor}\n" + flavorText` 注入后 conjurer 出 divider | divider 横线位置：两端均在 rules 块底部+~lineHeight*0.7 处，pixel 偏移 < 30 px (≤2%) ；divider 颜色两端均 `#000000`（forger `resolveFlavorDividerColor('#4f4638')` → black；上游 `bar.png` 黑色 image） ；italic 字体：两端 `mplantin-i` 同源；flavor 文字颜色 forger 走 `#4f4638` sepia，conjurer 走 #1a1a1a，颜色略差但都在「弱化于 rules text」语义内 | ✓ divider 位置/italic/颜色同源 |
 | llanowar-elves | 短 mana ability | 两端 mplantin + 同源 mana symbol PNG（`{T}` `{G}` 圆形 badge） | "￨: Add 树" 一行对齐，符号 baseline 一致 | ✓ |
 | counterspell | 短 instant rule | 两端 mplantin + 同源 mana symbol | "Counter target spell." 同行 | ✓ |
 | jace | planeswalker — 4 abilities | 两端 mplantin serif，4 段 ability text 全显，loyalty prefix `+2:` `0:` `−1:` `−12:` 同源 | 两端均未渲染 loyalty pip chrome（fixture frameVersionId=m15Regular 而非 pw 框）；文字层一致 | ✓ ability text 对齐 |
 | urzas-saga | saga chapter 文本 | 两端 mplantin；chapter 序号 `I —` `II —` `III —` 文本一致 | 两端均无 saga chapter pip chrome（fixture m15Regular 框）；文字层一致 | ✓ chapter text 对齐 |
 
-**import 预处理证据**：`scryfall.ts:900–963` `normalizeOracleText` 已落 `curlyQuotes` / `{Q}→{untap}` / `{∞}→{inf}` / `• →• {indent}` / companion 长 → 短重写 / `ITALIC_EXEMPTIONS` (`Boast/Cycling/Visit/Prize/I/II/III/IV/I,II.../Prototype/Companion/To solve/Solved/• Khans/• Dragons/• Mirran/• Phyrexian`) 等 6 条逐项与上游 creator-23.js:6670–6704 一一对应（见 §3.D 表）。
+**import 预处理证据**：`scryfall.ts:900–963` `normalizeOracleText` runtime 验证全通过（11 条 case，输入 / 输出于 transcript 内 inline 跑过 `node -e` 复刻函数）：
+
+| case | input | expected (matches upstream creator-23.js:6670–6704) | output | √ |
+|---|---|---|---|---|
+| reminder-text | `Forestwalk (This creature can't…)` | `Forestwalk {i}(…){/i}` + curlyQuotes 处理 `'` → `’` | `Forestwalk {i}(This creature can’t be blocked …){/i}` | ✓ |
+| keyword + " — " | `Flying\nVigilance — gain 2 life.` | `Flying\n{i}Vigilance{/i} — …` | 与 expected 一致 | ✓ |
+| italic-exempt Cycling | `Cycling {2}` | 保留不包 | `Cycling {2}` | ✓ |
+| italic-exempt I, II | `I, II — Lands …` | 保留 | `I, II — Lands …` | ✓ |
+| italic-exempt Prototype + mana | `Prototype {1}{R} — 2/2` | `{i}Prototype {1}{R}{/i} — 2/2`（exemption 精确字串匹配，带 mana 的 match 不在 set 内 — 与上游 `italicExemptions.includes(a)` 语义一致） | `{i}Prototype {1}{R}{/i} — 2/2` | ✓ |
+| curly quotes | `… say "Boo!"` | `… say “Boo!”` | `… say “Boo!”` | ✓ |
+| {Q} → {untap} | `{Q}: This …` | `{untap}: This …` | `{untap}: This …` | ✓ |
+| bullet → bullet+indent | `Choose one —\n• Destroy …\n• Counter …` | `… —\n• {indent}Destroy …\n• {indent}Counter …` | 一致 | ✓ |
+| companion rewrite | `(If this card is your chosen companion … any time you could cast a sorcery.)` | `(… as a sorcery.)` + 外层 `{i}…{/i}` | `{i}(… as a sorcery.){/i}` | ✓ |
+| planar chaos | `Whenever chaos ensues, draw …`（isPlanar=true） | `{planechase} draw …` | `{planechase} draw three cards.` | ✓ |
+| already-italic 短路 | 输入含 `{i}` 标记的 | 不再叠加 italic 标注 | （`if (!/\{i\}/i.test(working))` 短路保护） | ✓ |
 
 ## 4. Workaround / TODO 登记
 
 本轮无新增 `@ts-ignore` / `eslint-disable` / `TODO` / `FIXME` 豁免。drawCollectorInfo 的 `_inset` 参数前缀下划线（drawCard.ts:780）是显式标记未使用参数，非豁免。
+
+**已知 feature gap（不阻塞 F4 import 预处理 parity）**：上游 `#hide-reminder-text` / `#italicize-reminder-text` 两个 runtime UI toggle（creator-23.js:3736 / 3747）尚未在 cardforger 暴露 — 当前 cardforger 总是按 import 时 `applyItalicMarkup` 已包装好的 `{i}(...){/i}` 渲染（即等价上游 `italicize-reminder-text=on` 模式）。`hide-reminder-text` 整段删除模式需要 fixture/UI 加 `hideReminder: true` 字段 + drawRichText 渲染前 `replace(/ ?{i}\([^\)]+\){\/i}/g, '')`；属 Phase 3 UI 扩展，不影响 F4 import 层 parity。
 
 ## 5. 依赖与资源契约
 
