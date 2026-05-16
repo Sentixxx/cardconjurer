@@ -10,41 +10,9 @@
   <priority>1.00</priority>
   <changefreq>monthly</changefreq>
 </url>
-
 <url>
   <loc>https://card.sentixx.top/legal/</loc>
   <priority>0.80</priority>
   <changefreq>monthly</changefreq>
-
-</url>
-<url>
-  <loc>https://card.sentixx.top/theme/</loc>
-  <priority>0.40</priority>
-  <changefreq>monthly</changefreq>
-
-</url>
-<url>
-  <loc>https://card.sentixx.top/about/</loc>
-  <priority>0.60</priority>
-  <changefreq>monthly</changefreq>
-
-</url>
-<url>
-  <loc>https://card.sentixx.top/phyrexian/</loc>
-  <priority>0.60</priority>
-  <changefreq>monthly</changefreq>
-
-</url>
-<url>
-  <loc>https://card.sentixx.top/askurza/</loc>
-  <priority>0.60</priority>
-  <changefreq>monthly</changefreq>
-
-</url>
-<url>
-  <loc>https://card.sentixx.top/old/</loc>
-  <priority>0.20</priority>
-  <changefreq>monthly</changefreq>
-
 </url>
 </urlset>

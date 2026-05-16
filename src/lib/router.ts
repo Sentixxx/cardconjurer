@@ -10,41 +10,14 @@ export interface RouteDescriptor {
 
 export const ROUTES = {
   home: { key: 'home', path: '/', label: '主页' },
-  about: { key: 'about', path: '/about', label: '关于' },
-  legal: { key: 'legal', path: '/legal', label: '条款和条件' },
-  tutorial: { key: 'tutorial', path: '/tutorial', label: '教程' },
-  theme: { key: 'theme', path: '/theme', label: '主题编辑器' },
-  phyrexian: { key: 'phyrexian', path: '/phyrexian', label: '非瑞克西亚文生成器' },
-  converter: { key: 'converter', path: '/converter', label: '转换器' },
-  gallery: { key: 'gallery', path: '/gallery', label: '画廊' },
-  print: { key: 'print', path: '/print', label: '打印工具' },
   creator: { key: 'creator', path: '/creator', label: '制卡' },
-  askUrza: { key: 'askUrza', path: '/askurza', label: '询问克撒 2.0' },
-  askUrzaAbilityList: {
-    key: 'askUrzaAbilityList',
-    path: '/askurza/askUrzaAbilityListGenerator.html',
-    label: 'Ask Urza Ability List',
-  },
-  askUrzaAbilityListLegacy: {
-    key: 'askUrzaAbilityListLegacy',
-    path: '/data/site/other/askUrza/askUrzaAbilityListGenerator.html',
-    label: 'Ask Urza Ability List (legacy URL)',
-  },
+  legal: { key: 'legal', path: '/legal', label: '条款和条件' },
   fixture: { key: 'fixture', path: '/fixtures/:slug', label: 'Fixture' },
 } as const satisfies Record<string, RouteDescriptor>;
 
 export type RouteKey = keyof typeof ROUTES;
 
-export const NAV_ROUTE_KEYS: readonly RouteKey[] = [
-  'home',
-  'creator',
-  'print',
-  'askUrza',
-  'phyrexian',
-  'gallery',
-  'theme',
-  'legal',
-];
+export const NAV_ROUTE_KEYS: readonly RouteKey[] = ['home', 'creator', 'legal'];
 
 export function routePath(key: RouteKey): string {
   return ROUTES[key].path;

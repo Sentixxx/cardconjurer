@@ -19,11 +19,6 @@
 }
 
 @font-face {
-  font-family: phyrexian;
-  src: url("/fonts/phy.woff2") format("woff2");
-}
-
-@font-face {
   font-family: goudymedieval;
   src: url("/fonts/goudy-medieval.ttf") format("truetype");
 }
@@ -249,7 +244,7 @@ p {
   margin: 0.5rem auto 0;
 }
 
-.main-content > article:not(.landing-page, .gallery-page),
+.main-content > article,
 .main-content > section:not(.creator-grid, .layer, .page-heading) {
   width: min(100%, 75rem);
   margin: 1rem auto;
@@ -257,7 +252,7 @@ p {
   background: var(--layer-background);
 }
 
-.main-content > article:not(.landing-page, .gallery-page) section + section,
+.main-content > article section + section,
 .main-content > section:not(.creator-grid, .layer, .page-heading) + section:not(.creator-grid, .layer, .page-heading) {
   margin-top: 1rem;
 }
@@ -350,202 +345,6 @@ p {
 
 .layer {
   padding: 0.75rem;
-}
-
-.askUrzaGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto 90pt auto;
-  align-items: center;
-  justify-items: center;
-  grid-gap: 2rem;
-}
-
-.urzaCard {
-  width: 90vw;
-  text-align: center;
-  grid-column: 1 / span 3;
-}
-
-.urzaCard > img {
-  width: 100%;
-  height: auto;
-}
-
-.askUrzaButton {
-  height: auto;
-  width: 22vw;
-  transition: 0.25s;
-  cursor: pointer;
-}
-
-#askUrzaResult {
-  grid-column: 1 / span 3;
-  padding: 1rem;
-  margin: 0.5rem;
-  border-radius: 1rem;
-  font: 1.5rem belerenb;
-}
-
-@media screen and (min-width: 380pt) {
-  .urzaCard {
-    width: 360pt;
-  }
-  .askUrzaButton {
-    height: auto;
-    width: 100pt;
-    transition: 0.25s;
-  }
-  .askUrzaButton:hover {
-    width: 110pt;
-  }
-  .askUrzaButton:active {
-    width: 120pt !important;
-  }
-}
-
-@media screen and (min-width: 864pt) {
-  .askUrzaGrid {
-    grid-template-columns: calc(360pt) 1fr 1fr 1fr !important;
-    grid-template-rows: 92pt auto !important;
-  }
-  .urzaCard {
-    grid-column: 1;
-    grid-row: 1 / span 2 !important;
-  }
-  #askUrzaResult {
-    grid-column: 2 / span 3 !important;
-  }
-}
-
-textarea.input.phyrexian-textarea {
-  resize: none;
-  max-height: 66vh;
-  height: 30rem;
-}
-
-textarea.input.phyrexian-textarea:disabled {
-  opacity: 1;
-}
-
-.tutorial-grid {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr;
-}
-
-.tutorial-grid > img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 1rem auto;
-}
-
-.readable-background > .tutorial-grid > img {
-  border: 0.1rem solid gray;
-}
-
-@media only screen and (min-width: 750px) {
-  .tutorial-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.landing-hero {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
-.landing-hero h3 {
-  color: var(--font-color-2);
-}
-
-.sample-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  align-items: center;
-  max-width: 75rem;
-  margin: 0 auto;
-}
-
-.sample-grid img {
-  display: block;
-  width: min(100%, 375px);
-  height: auto;
-  margin: 1rem auto;
-}
-
-.animated-scene {
-  perspective: 100rem;
-}
-
-.animated-card-1 {
-  animation: animatedcardone 3s ease-in-out 0s alternate infinite;
-  transform-style: preserve-3d;
-}
-
-.animation-delay-2 {
-  animation-delay: 1s !important;
-}
-
-.animation-delay-4 {
-  animation-delay: 2s !important;
-}
-
-@keyframes animatedcardone {
-  0% {
-    transform: rotateY(15deg);
-  }
-  100% {
-    transform: rotateY(-15deg);
-  }
-}
-
-.start-link {
-  display: inline-block;
-  padding: 0.85rem 2.5rem;
-  background: var(--input-background);
-  border-top: 0.35rem solid var(--color-selected);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.55);
-  font-size: 2rem;
-}
-
-.gallery-grid-title {
-  margin-bottom: 4rem;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
-  gap: 2rem;
-  align-content: start;
-  margin-bottom: 0.5rem;
-  padding-top: 0;
-}
-
-.gallery-grid-item {
-  width: min(20rem, 80vw);
-  max-width: 80vw;
-  height: auto;
-  margin: auto;
-  padding: 0.5rem;
-  border-radius: 1rem;
-}
-
-.gallery-grid-item > img {
-  width: 100%;
-  aspect-ratio: 5 / 7;
-  object-fit: cover;
-  background: #050505;
-}
-
-.gallery-grid-item > h4 {
-  padding: 0.25rem;
-}
-
-.gallery-grid-item > p {
-  padding: 0.125rem;
 }
 
 .input-grid {

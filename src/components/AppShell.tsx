@@ -60,7 +60,7 @@ export function AppShell({ children }: AppShellProps): JSX.Element {
           本项目不隶属于 Wizards of the Coast、Legend Story Studios 或 Scryfall。字体、法术力符号、卡牌图像和相关素材归各自权利人所有。
         </p>
         <p>
-          <Link href={ROUTES.legal.path}>条款和条件</Link> · <Link href={ROUTES.about.path}>关于</Link>
+          <Link href={ROUTES.legal.path}>条款和条件</Link>
         </p>
       </footer>
     </div>
