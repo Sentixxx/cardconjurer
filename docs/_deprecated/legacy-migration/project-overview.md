@@ -1,3 +1,13 @@
+---
+title: Card Forger 项目总览（已弃用）
+type: index
+status: deprecated
+summary: 旧 Next.js 迁移期总览；当前总览入口在 docs/dev/architecture/overview.md
+tags: [deprecated, history]
+---
+
+> **DEPRECATED**：本文档地图指向旧 architecture/01–10 分册（Next.js 静态导出），均已归档。当前总览见 [`docs/dev/architecture/overview.md`](../../dev/architecture/overview.md)。
+
 # Card Forger 项目总览
 
 更新时间：2026-05-14

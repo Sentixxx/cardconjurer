@@ -1,3 +1,13 @@
+---
+title: Next.js Framework Migration（已弃用）
+type: architecture
+status: deprecated
+summary: 旧 Next.js App Router + 静态导出方案，已被 React 19 + Vite 取代
+tags: [deprecated, history]
+---
+
+> **DEPRECATED**：项目已不再使用 Next.js。当前栈与目录结构见 [`docs/dev/architecture/overview.md`](../../dev/architecture/overview.md)。
+
 # Next.js Framework Migration
 
 This project keeps the legacy Card Conjurer public file layout as the

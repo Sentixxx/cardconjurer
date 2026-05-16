@@ -1,4 +1,17 @@
+---
+title: 架构文档索引（已弃用）
+type: index
+status: deprecated
+summary: Next.js 静态导出方案的历史架构索引；当前实现已切换为 React 19 + Vite，事实失效
+tags: [deprecated, history]
+related:
+  - root/AGENTS
+  - dev/architecture/overview
+---
+
 # 架构文档索引
+
+> **DEPRECATED**：本目录描述 Next.js 静态导出 + legacy HTML 复制方案，已被 React 19 + Vite SPA 取代。当前架构看 [`docs/dev/architecture/overview.md`](../../../dev/architecture/overview.md)。
 
 更新时间：2026-05-14
 

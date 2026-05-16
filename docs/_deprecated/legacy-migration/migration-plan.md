@@ -1,3 +1,13 @@
+---
+title: Card Forger Migration Plan（已弃用）
+type: process
+status: deprecated
+summary: 旧 Next.js 静态导出迁移计划；当前 React 19 + Vite 不再适用
+tags: [deprecated, history]
+---
+
+> **DEPRECATED**：本文描述的 import-source / build / verify-baseline 流水线随 Next.js 方案一同移除。当前流程见 [`docs/dev/process/workflow.md`](../../dev/process/workflow.md)。
+
 # Card Forger Migration Plan
 
 ## Objective
