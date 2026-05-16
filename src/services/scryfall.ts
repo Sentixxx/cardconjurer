@@ -897,14 +897,59 @@ function inferFrameUrl(
   return '/img/frames/planechase/tall.png';
 }
 
+// 上游 creator-23.js:6670–6704 import 流程在 oracle_text 上做的预处理：
+//   1. 行首 keyword（前导到 " — "）+ 括号 reminder text 包 `{i}...{/i}`，但豁免列表跳过
+//   2. curlyQuotes（直引号 → 弯引号）
+//   3. token：{Q}→{untap}、{∞}→{inf}、`• `→`• {indent}`
+//   4. companion 文案 "any time you could cast a sorcery" → "as a sorcery"
+const ITALIC_EXEMPTIONS: ReadonlySet<string> = new Set([
+  'Boast', 'Cycling', 'Visit', 'Prize',
+  'I', 'II', 'III', 'IV',
+  'I, II', 'II, III', 'III, IV',
+  'I, II, III', 'II, III, IV', 'I, II, III, IV',
+  '• Khans', '• Dragons', '• Mirran', '• Phyrexian',
+  'Prototype', 'Companion', 'To solve', 'Solved',
+]);
+
+const COMPANION_LONG = '(If this card is your chosen companion, you may put it into your hand from outside the game for {3} any time you could cast a sorcery.)';
+const COMPANION_SHORT = '(If this card is your chosen companion, you may put it into your hand from outside the game for {3} as a sorcery.)';
+
 function normalizeOracleText(text: string, isPlanar: boolean): string {
-  const planarText = isPlanar ? text.replace(/(^|\n)Whenever chaos ensues,?\s*/gi, '$1{planechase} ') : text;
-  return italicizeReminderText(planarText);
+  if (!text) return text;
+  let working = isPlanar ? text.replace(/(^|\n)Whenever chaos ensues,?\s*/gi, '$1{planechase} ') : text;
+  // 已包含 {i} 的认为是已加工过的（zhs/atomic 来源），跳过 italic 标注
+  if (!/\{i\}/i.test(working)) {
+    working = applyItalicMarkup(working);
+  }
+  working = curlyQuotes(working);
+  working = working
+    .replace(/\{Q\}/g, '{untap}')
+    .replace(/\{∞\}/g, '{inf}')
+    .replace(/• /g, '• {indent}');
+  working = working.replace(COMPANION_LONG, COMPANION_SHORT);
+  return working;
 }
 
-function italicizeReminderText(text: string): string {
-  if (!text || /\{i\}/i.test(text)) return text;
-  return text.replace(/\([^()\n]+\)/g, (match) => `{i}${match}{/i}`);
+// 等价上游 6684-6687 的正则：匹配 `(...)` 或行首 keyword（直到 " — "）
+function applyItalicMarkup(text: string): string {
+  return text.replace(/\((?:.*?)\)|[^"\n]+(?= — )/g, (match) => {
+    if (ITALIC_EXEMPTIONS.has(match)) return match;
+    return `{i}${match}{/i}`;
+  });
+}
+
+// 等价上游 4802 curlyQuotes：直引号 → 弯引号
+function curlyQuotes(input: string): string {
+  return input
+    .replace(/ '/g, ' ‘')
+    .replace(/^'/, '‘')
+    .replace(/'/g, '’')
+    .replace(/ "/g, ' “')
+    .replace(/" /g, '” ')
+    .replace(/\."/, '.”')
+    .replace(/"$/, '”')
+    .replace(/"\)/g, '”)')
+    .replace(/"/g, '“');
 }
 
 function inferFrameColor(source: Record<string, unknown>, face: Record<string, unknown> = source): FrameColor | null {

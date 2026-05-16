@@ -772,7 +772,11 @@ function drawLegendaryCrown(ctx: CanvasRenderingContext2D, card: CardData): void
   ctx.restore();
 }
 
-function drawCollectorInfo(ctx: CanvasRenderingContext2D, card: CardData, inset: number): void {
+// 等价于上游 setBottomInfoStyle (creator-23.js:245–270) 的 6 个 text object：
+// midLeft / topLeft / note / bottomLeft / wizards / bottomRight。
+// 相对坐标体系：x=0.0647 (xLeft), x+width=0.9354 (xRight)，主字号 0.0171，
+// 小字号 0.0143，wizards 0.0162。色按 frame 受控（黑卡边白文 / 白卡边黑文）。
+function drawCollectorInfo(ctx: CanvasRenderingContext2D, card: CardData, _inset: number): void {
   if (card.frameVersionId === 'planechase') {
     drawPlanechaseCollectorInfo(ctx, card);
     return;
@@ -780,47 +784,77 @@ function drawCollectorInfo(ctx: CanvasRenderingContext2D, card: CardData, inset:
 
   ctx.save();
   ctx.textBaseline = 'alphabetic';
-  const year = new Date().getFullYear();
-  const fillColor = '#f4f4f0';
 
-  const infoFontSize = Math.round(card.height * (24 / 2100));
-  const infoY = card.height - inset - infoFontSize * 2.6;
-  const artistY = card.height - inset - infoFontSize * 1.35;
-  const copyrightY = card.height - inset - infoFontSize * 0.2;
+  const xLeft = card.width * 0.0647;
+  const xRight = card.width * 0.9354;
+  const yTopLeft = card.height * 0.9377;
+  const yMidLeft = card.height * 0.9548;
+  const yBottomLeft = card.height * 0.9719;
+  const mainSize = Math.max(8, card.height * 0.0171);
+  const smallSize = Math.max(7, card.height * 0.0143);
+  const wizardsSize = Math.max(8, card.height * 0.0162);
+
+  const useNewStyle = true;
+  const year = new Date().getFullYear();
+  const fillColor = resolveBottomInfoColor(card);
 
   ctx.fillStyle = fillColor;
-  ctx.font = `${infoFontSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
   ctx.textAlign = 'start';
 
+  // topLeft: 新版 `{rarity}{kerning3}{number}{kerning0}` / 旧版 `{number}` + 独立 rarity object
+  ctx.font = `${mainSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
   const rarityCode = card.rarity ?? '';
   const cardNumber = card.cardNumber ?? '';
-  const leftLine = compactJoin(
-    [
-      cardNumber,
-      rarityCode,
-      card.setCode ? card.setCode.toUpperCase() : null,
-      'EN',
-    ],
-    ' • ',
-  );
-  if (leftLine) ctx.fillText(leftLine, inset + 40, infoY);
-
-  if (card.artist) {
-    ctx.font = `${infoFontSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
-    ctx.fillText('✧ Illus. ', inset + 40, artistY);
-    const prefixWidth = ctx.measureText('✧ Illus. ').width;
-    ctx.font = `${infoFontSize}px belerenbsc, system-ui, sans-serif`;
-    ctx.fillText(card.artist, inset + 40 + prefixWidth, artistY);
+  if (useNewStyle) {
+    const topLeftText = compactJoin([rarityCode, cardNumber], ' ');
+    if (topLeftText) ctx.fillText(topLeftText, xLeft, yTopLeft);
+  } else {
+    if (cardNumber) ctx.fillText(cardNumber, xLeft, yTopLeft);
+    if (rarityCode) {
+      // 旧版独立 rarity object（同 y 不同 x，模拟 {loadx}{rarity}）
+      const numberAdvance = cardNumber ? ctx.measureText(`${cardNumber}  `).width : 0;
+      ctx.fillText(rarityCode, xLeft + numberAdvance, yTopLeft);
+    }
   }
 
-  const copyrightSize = Math.round(infoFontSize * 0.78);
-  ctx.font = `${copyrightSize}px mplantin, Georgia, serif`;
-  ctx.fillStyle = fillColor;
-  ctx.textAlign = 'start';
-  const copyright = `™ & © ${year} Wizards of the Coast`;
-  ctx.fillText(copyright, inset + 40, copyrightY);
+  // midLeft: `{set} • {language}  {fontbelerenbsc}￮ {artist}` — artist 段切 belerenbsc
+  let cursorX = xLeft;
+  const setLang = compactJoin([card.setCode ? card.setCode.toUpperCase() : null, 'EN'], ' • ');
+  if (setLang) {
+    ctx.font = `${mainSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
+    ctx.fillText(setLang, cursorX, yMidLeft);
+    cursorX += ctx.measureText(`${setLang}  `).width;
+  }
+  if (card.artist) {
+    ctx.font = `${mainSize * 1.06}px belerenbsc, system-ui, sans-serif`;
+    const brushChar = '￮';
+    ctx.fillText(brushChar, cursorX, yMidLeft);
+    cursorX += ctx.measureText(`${brushChar} `).width;
+    ctx.fillText(card.artist, cursorX, yMidLeft);
+  }
+
+  // bottomLeft: NOT FOR SALE (smallSize)
+  ctx.font = `${smallSize}px gothammedium, "Gotham Medium", system-ui, sans-serif`;
+  ctx.fillText('NOT FOR SALE', xLeft, yBottomLeft);
+
+  // wizards: ™ & © {year} Wizards of the Coast (mplantin, align=right, y=yTopLeft)
+  ctx.textAlign = 'right';
+  ctx.font = `${wizardsSize}px mplantin, Georgia, serif`;
+  ctx.fillText(`™ & © ${year} Wizards of the Coast`, xRight, yTopLeft);
+
+  // bottomRight: 站点署名 (mplantin smallSize align=right, y=yMidLeft)
+  ctx.font = `${smallSize}px mplantin, Georgia, serif`;
+  ctx.fillText('card.sentixx.top', xRight, yMidLeft);
 
   ctx.restore();
+}
+
+// 上游 creator-23.js:347 默认 card.bottomInfoColor='white'，仅 packWanted.js 等
+// 白底 frame 切 'black'。cardforger 用 hex 值。
+const WHITE_BORDER_FRAME_IDS: ReadonlySet<string> = new Set(['wanted']);
+
+function resolveBottomInfoColor(card: CardData): string {
+  return WHITE_BORDER_FRAME_IDS.has(card.frameVersionId) ? '#000000' : '#ffffff';
 }
 
 function drawPlanechaseCollectorInfo(ctx: CanvasRenderingContext2D, card: CardData): void {
