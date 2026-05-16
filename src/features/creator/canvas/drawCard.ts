@@ -783,7 +783,9 @@ function drawCollectorInfo(ctx: CanvasRenderingContext2D, card: CardData, _inset
   }
 
   ctx.save();
-  ctx.textBaseline = 'alphabetic';
+  // 上游 writeText 语义：textObject.y 是文本框顶 (top-of-rect)，逐行从顶往下绘制。
+  // 用 textBaseline='top' 让 fillText(text, x, y) 的 y 也是文本顶，等价 effective baseline = y + ascent。
+  ctx.textBaseline = 'top';
 
   const xLeft = card.width * 0.0647;
   const xRight = card.width * 0.9354;
