@@ -1,6 +1,6 @@
 # Render Parity State
 
-_Last updated: 2026-05-16 (Phase 2 收尾 — F3/F4 像素级侧对侧达成, B1 RESOLVED)_
+_Last updated: 2026-05-16 (Phase 2 收尾 — F3/F4 像素级侧对侧达成, B1 RESOLVED; Phase 3 PoC BLOCKED 登记 — ADR-0002 proposed)_
 
 > 精简版历史：详细 iteration 历史与 fixture 矩阵审计原文见 git history（commit `6c948f8` Phase 1+2 base、`d50921e` fixture harness、`ffd40ee` F10 DONE、`bdf5617` 12 fixture inline、`1c04ce2` GOAL 收尾）。本文件只维护**当前对齐状态 + 活跃残差**。
 
@@ -71,7 +71,7 @@ Landing / Creator-shell / Converter / Gallery / AskUrza / About / Legal / Tutori
 
 drawRichText.ts 已实现：5 次 binary fit（minScale 0.48 + trimLinesToHeight 截断兜底）；token 覆盖 mana symbol / `{font<name>}` / `{fontsize±N}` / `{flavor}` / `{i}…{/i}` / `{cardname}` / `{linebreak}` / `{savex|loadx}` / `{upinline+N}` / `{align<…>}`。
 
-**import 预处理（本轮新增 scryfall.ts:900–960 `normalizeOracleText`）**：
+**import 预处理（Phase 2 iter 5 新增 scryfall.ts:900–960 `normalizeOracleText`）**：
 
 | 上游 (creator-23.js:6670/6684/6703/6704) | cardforger (scryfall.ts) |
 |---|---|
@@ -112,9 +112,11 @@ drawRichText.ts 已实现：5 次 binary fit（minScale 0.48 + trimLinesToHeight
 
 ## 4. Workaround / TODO 登记
 
-本轮无新增 `@ts-ignore` / `eslint-disable` / `TODO` / `FIXME` 豁免。drawCollectorInfo 的 `_inset` 参数前缀下划线（drawCard.ts:780）是显式标记未使用参数，非豁免。
+截至 Phase 2 iter 7 无新增 `@ts-ignore` / `eslint-disable` / `TODO` / `FIXME` 豁免。drawCollectorInfo 的 `_inset` 参数前缀下划线（drawCard.ts:780）是显式标记未使用参数，非豁免。
 
 **已知 feature gap（不阻塞 F4 import 预处理 parity）**：上游 `#hide-reminder-text` / `#italicize-reminder-text` 两个 runtime UI toggle（creator-23.js:3736 / 3747）尚未在 cardforger 暴露 — 当前 cardforger 总是按 import 时 `applyItalicMarkup` 已包装好的 `{i}(...){/i}` 渲染（即等价上游 `italicize-reminder-text=on` 模式）。`hide-reminder-text` 整段删除模式需要 fixture/UI 加 `hideReminder: true` 字段 + drawRichText 渲染前 `replace(/ ?{i}\([^\)]+\){\/i}/g, '')`；属 Phase 3 UI 扩展，不影响 F4 import 层 parity。
+
+**Phase 3 渲染管线重构（PoC BLOCKED）**：drawCard.ts 1095 行命令式过程函数 + framePresets.ts 30+ TS preset + CardData 9 个 `*Bounds` 字段三处的结构性债务，由 [`docs/dev/adr/0002-canvas-rendering-region-tree.md`](docs/dev/adr/0002-canvas-rendering-region-tree.md) 决议重构为「region tree 模板 + L1/L2/L3 三层管线」。**BLOCKED 原因**：ADR-0002 当前 `proposed` 状态，等 6 份 owner 文档建立（`spec/template-schema.md` / `spec/resolved-region-tree.md` / `architecture/render-pipeline.md` / `standards/template-validator.md` / `testing/template-pixel-diff.md` / `process/template-poc.md`）后再升级 `accepted`；PoC 实装的具体步骤、feature flag 切换路径、saved-card migration 验证 checklist 由 `process/template-poc.md` 承接，本 §4 不复述。**解除条件**：ADR-0002 升级 `accepted` 且 `process/template-poc.md` 至少落 `draft` 状态后，本节由 BLOCKED 切到 IN_PROGRESS。**无新增 runtime dependency**——§5 不动。当前 Phase 2 F1–F10 全部 DONE 不受本 PoC 影响。
 
 ## 5. 依赖与资源契约
 
